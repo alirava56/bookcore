@@ -6,8 +6,9 @@
 | `.env.example` | `c108235a74dd6e8b6136997566c4ca6596dce145a1b47cc2fd497f8a333b0160` | 2430 |
 | `.gitattributes` | `2edb25a34f91d987e66197c158dac162b115d7f9b43ccea12ae49f9f1691d037` | 80 |
 | `.github/workflows/backend-phase15-recovery.yml` | `c413dd1e9299a05ffd39b3082055c7e904a1bd618eb150074289cbf8f5c0c957` | 5953 |
-| `.github/workflows/backend-phase15.yml` | `55a9adfd69dea175efe86f3d8f31682c76e9f9c842ab96171642a319aaa9a011` | 4335 |
+| `.github/workflows/backend-phase15.yml` | `2f5c6be5f3016a2988d38b9bfc92a23dbadffa21ad9fae1a22947209b4a5e3e5` | 5101 |
 | `.gitignore` | `0ee85b2b500df7e1ad75007ecf02dc5b770a5038e82911dce5682990f6257130` | 103 |
+| `.gitleaksignore` | `c31505d926d9d559635ef94a9fef0b21d1b573ee0a2821cfb4ffa580047532d8` | 2671 |
 | `.prettierrc.json` | `673f7eb35df241be018376a802510f823debcb35aff3f8fbb3efcd892c228d95` | 60 |
 | `BOOKCORE_BACKUP_RESTORE_VERIFICATION_FA.md` | `be0fb4a38d4b6e00a09350639551026318ffc8b295a9c6e9eb196b80a72f8ee5` | 2152 |
 | `BOOKCORE_CONCURRENCY_TEST_REPORT_FA.md` | `67a7f157d6c6f2e4e9e9ff2ce2a890a721e04ea696bb71485966678babf725b4` | 3723 |
@@ -25,7 +26,7 @@
 | `BOOKCORE_VERIFICATION_EVIDENCE_MANIFEST.json` | `241c5a1de0126cc6cdd21f17647c2061f27ed9af24b18a911986d84e5cb3c916` | 3570 |
 | `LICENSE` | `00ee09ba5074336238432f2c7e1bfc56f35ba2bb3d611869ba35d8661adc6762` | 1065 |
 | `PHASE_16_FINAL_REPORT_FA.md` | `48e40096bddd62dca5d4f1e6791d36c7e045a4013c34d0ed79adca874380686f` | 2635 |
-| `README.md` | `52a7f6ec0eb052f9e8ec4d19400f602b6c293eaf2422ccd923108fcb2935496c` | 20026 |
+| `README.md` | `6218ddf158419c24df02c8ced6f118fd7c257db2ebbbc388e2f0467d5ef00411` | 20449 |
 | `apps/api/src/app.module.ts` | `637cf5b8f7d2b24f41e717be54f8131d3e203890145cc575d3170562bb50cb73` | 1590 |
 | `apps/api/src/bootstrap.ts` | `d4bc77ae97c2687f50ea8aed35a5e6aefc6b36b234c5aa4529d7d4a81eda98b7` | 4366 |
 | `apps/api/src/common/errors/problem.filter.ts` | `b7d94f9e08646a90ff880748b36d75e23cfc72fc42a7c60e80dee541f82a4c7f` | 1292 |
@@ -41,8 +42,8 @@
 | `apps/api/src/common/security/authorization.ts` | `0eba274856902526b43e96390bb517adf10db86274d26050379a26d2924faef8` | 2569 |
 | `apps/api/src/common/security/monitor.guard.ts` | `6f94e40d00ad77e973b2ba72d44b84e73b0f4f9e0cceb8fdd26c70f2d263fc49` | 1561 |
 | `apps/api/src/common/security/principal.ts` | `b9156f1e4abf50f253435d1454069c6f476f7b6a761b9aa6ecc18c9959f8650f` | 475 |
-| `apps/api/src/common/security/rate-limit.guard.ts` | `80e759847fca7779b038ed5a0598f8995b75e5b0f85c5bcd326946b6649e2db8` | 2110 |
-| `apps/api/src/config/app-config.ts` | `6a793f60fa5645d7f989a61406132893df4da48328212319b3fb0fe0674a553f` | 6055 |
+| `apps/api/src/common/security/rate-limit.guard.ts` | `0936db7a3e0e44bddb630504408c0e563827937690067bd4d2f54fbf4707255f` | 2694 |
+| `apps/api/src/config/app-config.ts` | `af66d8e0d82ff4be806168b2938a2135175ae61ce2afb9e2a9c352a873e06443` | 6200 |
 | `apps/api/src/infrastructure/database/database.module.ts` | `d887e7693f1af1e5ccf8d0f2910ef09ae44bd855014fc8e21ed80cfcd8b1d89d` | 407 |
 | `apps/api/src/infrastructure/database/database.service.ts` | `559c1e4bee8cf11926d71922ecd90d2c454d76f9b3f0559bc0b8ff1abad35cdb` | 3755 |
 | `apps/api/src/infrastructure/database/migration-checksums.ts` | `81d6d7d51836a789e1c397e131255c7f51bff66b91fc9be4fb40d292aec06a71` | 1659 |
@@ -96,7 +97,7 @@
 | `apps/api/src/modules/scheduling/session.service.ts` | `d64f64e58236a7ea25c706cf7f0f475c3831a824dace30f70b49c1ac99a73573` | 23331 |
 | `apps/api/test/integration/booking-postgres.test.ts` | `033eee0bed5f705a92035719201df37ac9a8e35534d5771b62279f928685f6a3` | 21660 |
 | `apps/api/test/integration/catalog-postgres.test.ts` | `a55ca61e7f0a482e7cee1c5c2e014fac132192dc08a4bc76fbeaba8b955d2f15` | 9167 |
-| `apps/api/test/integration/identity-tenant-postgres.test.ts` | `faf8ced565b481f7d8c8f38a6885e2dbbb85968509b1aca5a862fbdf1a8a0574` | 12863 |
+| `apps/api/test/integration/identity-tenant-postgres.test.ts` | `d2497f4240d709713e0af44e5a8490dc8a80528bf23e6308094a9971a71a4dfd` | 13777 |
 | `apps/api/test/integration/phase07-api-worker.cjs` | `050b3225d0e24e3cd502354a9c6cabe16bf473e568d55fadd4779b4e88f76ffa` | 1311 |
 | `apps/api/test/integration/phase08-postgres.test.ts` | `598402cdf0e888a182e84bc0607f3f88228d040023cbf01e8a47c7c6d220026b` | 17160 |
 | `apps/api/test/integration/phase09-postgres.test.ts` | `793961b68e30be686798362e7d4eff7f6525bf26223f50a015ee1d7f02754245` | 17226 |
@@ -118,7 +119,7 @@
 | `apps/api/test/unit/http.test.ts` | `dcfd18b27c41bf701647e67dcb0e5092ec9bf130ccb11a93f860393a3af0994e` | 2300 |
 | `apps/api/test/unit/jwt.test.ts` | `2014cb790533a106a70c30f47d4e54a535327fb84363efb95843ee47ed839994` | 3195 |
 | `apps/api/test/unit/phase04-policy.test.ts` | `c325bd376461ae188ee5ac797e3a1fb98f941a85411aea913c8c29c9b4611fed` | 2726 |
-| `apps/api/test/unit/phase06-rate-limit.test.ts` | `c81d1bbf222ca2d77bc8b1bf235b3ba4ce3eedd4227cb54cb298acb5b5472eaf` | 1175 |
+| `apps/api/test/unit/phase06-rate-limit.test.ts` | `6bb6db62601288b5d03320348abc459b239eea2e7a1a1545ae99018965e0c0ab` | 2833 |
 | `apps/api/test/unit/phase07-dto.test.ts` | `e5e1a0ec272d11f67fb834f6c31c753c2d07eeffea7bd4e433912f044b4b9fb8` | 1278 |
 | `apps/api/test/unit/phase08-cursor.test.ts` | `ed1d50278cff866722ff06e4c09446a72ce9e8d697750924e4aa716e49d28947` | 1376 |
 | `apps/api/test/unit/phase08-db-errors.test.ts` | `6d220bb76d71e9a4922b6cbb1694e79697a85d46b3abac60a86180363b07c1c0` | 876 |
@@ -353,6 +354,7 @@
 | `evidence/final/checks.log` | `30da025f50f3751034dd1457b79b8b2398216dbe51d942823e57ea5c7c8aa82c` | 3821 |
 | `evidence/final/database-acl.log` | `e585bda1afef6f6c520eb6149ab901b5f7864d3f2c5803cb2340c5cfacd4cbc7` | 1263 |
 | `evidence/final/final-cert.log` | `54791662a28a575cc973327ade3283d20f1a46f04d93f2022acc0d1f3cb3fd67` | 584433 |
+| `evidence/final/historical-secret-adjudication.md` | `693df233e2f346801e141e5594cc8bcd7d4bdd8ea418d0cca4278f8c004d144d` | 7545 |
 | `evidence/final/http-coverage.json` | `edccd76cb88533ca203159d9f84a4ddc050ef4be6ffdf123f07f5add85772013` | 7152 |
 | `evidence/final/image-final.log` | `9ad4a65d16af1dc35c3667c8def72acaca66361f74db9deccf9e8bf4a644837b` | 3401 |
 | `evidence/final/initial-findings-fa.md` | `9a0b93321604511b44e453d9e9eeeb4d3624c9b2c1772e5e899a16f819343242` | 1440 |
@@ -363,6 +365,7 @@
 | `evidence/final/recovery-final.log` | `75b1246d448a7b50e0935bb51353456d690fa058f0d66463a9100f4917077f99` | 3220 |
 | `evidence/final/sbom.cdx.json` | `6233069586cfd80b0201130cfc866de42bfa54afc7fb644882a76b9827cbd0f7` | 49154 |
 | `evidence/final/secret-adjudication.log` | `bbe7e708e7d05133be3115b66c38ded23157c05b68dfb65efdba59cfe12f92e5` | 365 |
+| `evidence/final/secret-exception-files.sha256` | `ed404c2e7cb415f4bf608d849f1aa4d9044b7fa398b676a0fa79a233956d3f1e` | 1047 |
 | `evidence/final/secret-scan.log` | `21d12d3d694539fa018ed1e1f35db9a7fb53e324466238cf993a8773baa436d1` | 117 |
 | `evidence/final/source-files.sha256` | `3f32614939c867d38c3665029ff83f0ce12b19fb6906316391c146a3582defe5` | 23104 |
 | `evidence/final/source.sha256` | `7b39542aee8064e07b3db35b234a04c975a91a4a9b4cf1fa6537bcdd2390f5d9` | 86 |

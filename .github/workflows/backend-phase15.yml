@@ -7,6 +7,18 @@ on:
 permissions:
   contents: read
 jobs:
+  secret-scanning:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - name: Scan the source and reachable Git history
+        run: |
+          sha256sum --check evidence/final/secret-exception-files.sha256
+          image='zricethezav/gitleaks@sha256:e1b35e12a8c6fa8901f060459cfb6b2fc4c484d3afbe3b029733a3bbfab07055'
+          docker run --rm -v "$PWD:/repo:ro" "$image" dir --redact=100 --gitleaks-ignore-path=/repo/.gitleaksignore /repo
+          docker run --rm -v "$PWD:/repo:ro" -e GIT_CONFIG_COUNT=1 -e GIT_CONFIG_KEY_0=safe.directory -e GIT_CONFIG_VALUE_0=/repo "$image" git --redact=100 --gitleaks-ignore-path=/repo/.gitleaksignore --log-opts=--all /repo
   source-build:
     runs-on: ubuntu-latest
     timeout-minutes: 35
@@ -25,7 +37,7 @@ jobs:
       - run: npm run test:unit
   postgres-verification:
     name: ${{ matrix.suite.name }}
-    needs: source-build
+    needs: [source-build, secret-scanning]
     strategy:
       fail-fast: false
       matrix:

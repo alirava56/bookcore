@@ -15,6 +15,7 @@ export interface AppConfig {
   healthQueryTimeoutMs: number;
   logLevel: 'debug' | 'info' | 'warn' | 'error';
   trustedProxyHops: number;
+  authRateLimitProxyIps?: readonly string[];
   corsOrigins: string[];
   jsonBodyLimit: string;
   monitorApiKey: string;
@@ -107,6 +108,7 @@ export function parseConfig(env: NodeJS.ProcessEnv): AppConfig {
     corsOrigins,
     jsonBodyLimit,
     monitorApiKey,
+    authRateLimitProxyIps: env.AUTH_RATE_LIMIT_PROXY_IPS ? ips(env.AUTH_RATE_LIMIT_PROXY_IPS) : [],
     monitorAllowedIps: ips(env.MONITOR_ALLOWED_IPS ?? '127.0.0.1,::1'),
     swaggerUi,
     maxInflightRequests:integer('MAX_INFLIGHT_REQUESTS',env.MAX_INFLIGHT_REQUESTS,64,1,10000),
