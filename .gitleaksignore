@@ -1,0 +1,44 @@
+# SHA-256 evidence checksum
+/repo/BOOKCORE_VERIFICATION_EVIDENCE_MANIFEST.json:generic-api-key:63
+# SHA-256 evidence checksum
+/repo/BOOKCORE_VERIFICATION_EVIDENCE_MANIFEST.json:generic-api-key:68
+# SHA-256 evidence checksum
+/repo/BOOKCORE_VERIFICATION_EVIDENCE_MANIFEST.json:generic-api-key:69
+# Unit-only monitor fixture
+/repo/apps/api/test/unit/config.test.ts:generic-api-key:7
+# Unit-only monitor fixture
+/repo/apps/api/test/unit/database-ready.test.ts:generic-api-key:8
+# Unit-only monitor fixture
+/repo/apps/api/test/unit/http.test.ts:generic-api-key:12
+# Unit-only monitor fixture
+/repo/apps/api/test/unit/phase13-observability-http.test.ts:generic-api-key:13
+# Unit-only monitor fixture
+/repo/apps/api/test/unit/security.test.ts:generic-api-key:9
+# Unit-only monitor fixture
+/repo/apps/api/test/unit/transaction.test.ts:generic-api-key:11
+# Disposable CI cursor fixture
+/repo/docs/history/ci/backend-phase11.yml:generic-api-key:39
+# Idempotency example
+/repo/reference/Phase_02/runnable-spike/BookCore_Phase_02/reference/Phase_01/BookCore_Phase_01/BOOKCORE_SOFTWARE_ENGINEERING_BLUEPRINT_FA.md:generic-api-key:355
+# SHA-256 evidence checksum
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:BOOKCORE_VERIFICATION_EVIDENCE_MANIFEST.json:generic-api-key:63
+# SHA-256 evidence checksum
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:BOOKCORE_VERIFICATION_EVIDENCE_MANIFEST.json:generic-api-key:68
+# SHA-256 evidence checksum
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:BOOKCORE_VERIFICATION_EVIDENCE_MANIFEST.json:generic-api-key:69
+# Unit-only monitor fixture
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:apps/api/test/unit/config.test.ts:generic-api-key:7
+# Unit-only monitor fixture
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:apps/api/test/unit/database-ready.test.ts:generic-api-key:8
+# Unit-only monitor fixture
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:apps/api/test/unit/http.test.ts:generic-api-key:12
+# Unit-only monitor fixture
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:apps/api/test/unit/phase13-observability-http.test.ts:generic-api-key:13
+# Unit-only monitor fixture
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:apps/api/test/unit/security.test.ts:generic-api-key:9
+# Unit-only monitor fixture
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:apps/api/test/unit/transaction.test.ts:generic-api-key:11
+# Disposable CI cursor fixture
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:docs/history/ci/backend-phase11.yml:generic-api-key:39
+# Idempotency example
+d1b5e7ee59fb50e81729cdc54b0da86d995c5125:reference/Phase_02/runnable-spike/BookCore_Phase_02/reference/Phase_01/BookCore_Phase_01/BOOKCORE_SOFTWARE_ENGINEERING_BLUEPRINT_FA.md:generic-api-key:355

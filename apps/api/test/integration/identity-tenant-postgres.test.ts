@@ -17,8 +17,8 @@ const cfg=parseConfig({...process.env,NODE_ENV:'test'});
 const suffix=String(Date.now())+'-'+String(Math.floor(Math.random()*10000));
 const mkEmail=(s:string)=>`${s}-${suffix}@bookcore.example.invalid`;
 type Obj=Record<string,unknown>;
-async function start():Promise<{app:INestApplication;url:string;pool:Pool}> {
- const app=await buildApplication(cfg);await app.listen(0,'127.0.0.1');
+async function start(config=cfg):Promise<{app:INestApplication;url:string;pool:Pool}> {
+ const app=await buildApplication(config);await app.listen(0,'127.0.0.1');
  const port=(app.getHttpServer().address() as {port:number}).port;
  const pool=new Pool({connectionString:dbUrl,max:3});
  return {app,url:`http://127.0.0.1:${port}/api/v1`,pool};
@@ -193,4 +193,23 @@ test('PostgreSQL suspended account cannot log in, and operational audit is appen
   await assert.rejects(()=>ownerPool.query(`UPDATE audit_events SET action='TAMPER' WHERE id=$1`,[requireValue(events.rows[0]).id]),
     (err:unknown)=>Boolean(err&&typeof err==='object'&&'code' in err&&err.code==='23514'));
  }finally{await ownerPool.end();await pool.end();await app.close();}
+});
+
+test('PostgreSQL login buckets separate ingress clients under concurrent requests',async()=>{
+ const {app,url,pool}=await start({...cfg,authRateLimitProxyIps:['127.0.0.1']});
+ try{
+  const base=100+Math.floor(Math.random()*100);
+  const login=async(ip:string)=>{
+   const r=await fetch(url+'/auth/login',{method:'POST',headers:{'content-type':'application/json','x-forwarded-for':ip},
+    body:'{}',signal:AbortSignal.timeout(10000)});
+   await r.text();
+   return r.status;
+  };
+  const client='2001:db8:'+crypto.randomUUID().slice(0,4)+'::'+base;
+  const burst=await Promise.all(Array.from({length:11},()=>login(client)));
+  assert.equal(burst.filter(status=>status===400).length,10);
+  assert.equal(burst.filter(status=>status===429).length,1);
+  assert.equal(await login(client+'1'),400);
+  assert.equal(await login(client+', 192.0.2.1'),403);
+ }finally{await pool.end();await app.close();}
 });

@@ -282,3 +282,5 @@ The recovery workflow has a separate protected environment and a separately appr
 ## License
 
 BookCore is licensed under the [MIT License](LICENSE). Third-party material remains subject to its existing terms.
+
+For login rate limiting behind a dedicated ingress, set AUTH_RATE_LIMIT_PROXY_IPS to its exact TCP peer addresses. The ingress must discard incoming X-Forwarded-For and write one client IP observed at the trust boundary. Keep this setting empty for direct connections. An allowlisted peer with a missing, chained or malformed value is denied. TRUSTED_PROXY_HOPS does not grant trust to this header in auth rate limiting.
