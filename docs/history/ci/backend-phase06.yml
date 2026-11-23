@@ -1,0 +1,75 @@
+name: BookCore Phase 06 session scheduling (requires genuine npm lock)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  session-scheduling:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    services:
+      postgres:
+        image: postgres:17.6-bookworm
+        env:
+          POSTGRES_USER: bookcore_owner
+          POSTGRES_PASSWORD: phase06_ci_owner_only
+          POSTGRES_DB: bookcore
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U bookcore_owner -d bookcore"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgres://bookcore_app:phase06_ci_runtime_only@127.0.0.1:5432/bookcore
+      MIGRATION_DATABASE_URL: postgres://bookcore_owner:phase06_ci_owner_only@127.0.0.1:5432/bookcore
+      MONITOR_API_KEY: phase06_ci_monitor_only_not_production_32chars
+      MONITOR_ALLOWED_IPS: 127.0.0.1,::1
+      AUTH_JWT_ISSUER: https://bookcore.test
+      AUTH_JWT_AUDIENCE: bookcore-ci
+      AUTH_JWT_ACTIVE_KID: ci-2026-p06
+      AUTH_JWT_KEYS_JSON: '{"ci-2026-p06":"ONLY_FOR_CI_TESTS_32_OR_MORE_RANDOM_LIKE_BYTES_AND_NEVER_PRODUCTION"}'
+      HTTP_HOST: 127.0.0.1
+      CORS_ORIGINS: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+      - name: Dependencies must have authentic lockfile
+        run: npm ci --no-audit --no-fund
+      - name: Reference and source
+        run: npm run verify:reference && npm run verify:static
+      - name: Pure availability validation (real independent TS execution)
+        run: npm run test:availability:isolated
+      - name: Pure session domain tests (source executed)
+        run: npm run test:session-domain:isolated
+      - name: Strict OpenAPI structure and public leakage review
+        run: python3 -m pip install --disable-pip-version-check PyYAML==6.0.2 && python3 scripts/phase05_contract_check.py && python3 scripts/phase06_contract_check.py
+      - name: Typecheck lint build
+        run: npm run typecheck && npm run lint && npm run build
+      - name: Unit and HTTP tests (zero tests are a failure)
+        run: npm run test:unit
+      - name: Create runtime DB role before migration
+        run: |
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE ROLE bookcore_app LOGIN PASSWORD 'phase06_ci_runtime_only'"
+      - name: Run migrations twice and verify checksums
+        run: npm run migrate && npm run migrate
+      - name: Real PostgreSQL integration, Phase02-06 including Session concurrency and authorization tests
+        run: npm run test:integration
+      - name: Generate only implemented routes
+        run: npm run openapi:current
+      - name: Reconcile phase02 core invariants
+        run: |
+          if test -f reference/Phase_02/runnable-spike/BookCore_Phase_02/spike/package.json; then
+            echo 'Phase02 spike tests remain reference-only; execute separately in validated environment';
+          fi
+      - name: Failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase06-failure-evidence
+          path: |
+            evidence/
+            docs/verification/
+          if-no-files-found: warn

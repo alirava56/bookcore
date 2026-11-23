@@ -1,0 +1,39 @@
+COMMAND: npm run test:phase16:isolated
+UTC: 2026-11-23T18:41:45.350096+00:00
+CWD: /mnt/data/bc1516/phase16
+EXIT: 0
+
+
+> bookcore-backend@0.16.0 test:phase16:isolated
+> node scripts/test-phase16-pure.cjs
+
+TAP version 13
+# Subtest: backup rejects untrusted PATH even when fake pg_dump is on PATH
+ok 1 - backup rejects untrusted PATH even when fake pg_dump is on PATH
+  ---
+  duration_ms: 2.673197
+  type: 'test'
+  ...
+# Subtest: backup policy requires pinned psql and pg_dump independently
+ok 2 - backup policy requires pinned psql and pg_dump independently
+  ---
+  duration_ms: 0.160327
+  type: 'test'
+  ...
+# Subtest: pinned producer tool rejects group writable executable and symlink
+ok 3 - pinned producer tool rejects group writable executable and symlink
+  ---
+  duration_ms: 0.830065
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 54.17266
+
+--- STDERR ---

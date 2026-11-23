@@ -1,0 +1,2 @@
+$ tsc --target ES2022 --module commonjs --strict --noEmit apps/api/src/common/observability/metrics.domain.ts
+

@@ -1,0 +1,14 @@
+COMMAND: python tools/phase09_validate_openapi.py
+UTC: 2026-11-23T18:41:35.379507+00:00
+CWD: /mnt/data/bc1516/phase16
+EXIT: 0
+
+{
+  "static_yaml": "PASS",
+  "operations": 46,
+  "unique_operation_ids": 46,
+  "internal_refs_resolved": 507,
+  "errors": []
+}
+
+--- STDERR ---

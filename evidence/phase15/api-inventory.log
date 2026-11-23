@@ -1,0 +1,14 @@
+COMMAND: python scripts/phase11-api-inventory.py
+UTC: 2026-11-23T18:37:48.771253+00:00
+CWD: /mnt/data/bc1516/work
+EXIT: 0
+
+{
+  "designOperationCount": 46,
+  "sourceControllerRouteCount": 46,
+  "sourceMatched": 46,
+  "unexpectedSourceRoutes": [],
+  "duplicates": []
+}
+
+--- STDERR ---

@@ -1,0 +1,77 @@
+
+> bookcore-backend@0.16.0 openapi:current
+> node dist/scripts/generate-openapi.js
+
+{"at":"2026-11-23T21:40:02.292Z","level":"info","context":"NestFactory","message":"Starting Nest application..."}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"AppModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"AppConfigModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"DatabaseModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"CommonModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"ObservabilityModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"HealthModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"ReportingModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"OrganizationsModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"CatalogModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"IdentityModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"GovernanceModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"BookingModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"InstanceLoader","message":"SessionModule dependencies initialized"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RoutesResolver","message":"MetricsController {/api/v1/internal/metrics}:"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/internal/metrics, GET} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RoutesResolver","message":"IdentityController {/api/v1}:"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/register, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/login, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/refresh, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/logout, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/me, GET} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RoutesResolver","message":"OrganizationsController {/api/v1/organizations}:"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId, GET} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/members, GET} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/members, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/members/:userId, PATCH} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RoutesResolver","message":"GovernanceController {/api/v1}:"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/staff-invitations, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/staff-invitations, GET} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/staff-invitations/:invitationId/revoke, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/me/staff-invitations/accept, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/me/staff-invitations/decline, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/booking-consents, POST} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/booking-consents/me, GET} route"}
+{"at":"2026-11-23T21:40:02.293Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/booking-consents/:consentId/revoke, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RoutesResolver","message":"CatalogController {/api/v1/organizations/:orgId}:"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/branches, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/branches, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/services, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/services, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/resources, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/resources, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/business-hours, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/business-hours, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/business-hours/:hourId, PATCH} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/schedule-exceptions, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/schedule-exceptions, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/schedule-exceptions/:exceptionId, PATCH} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RoutesResolver","message":"StaffSessionController {/api/v1/organizations/:orgId/sessions}:"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/publish, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/cancel, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/finish, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/capacity, PATCH} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RoutesResolver","message":"PublicSessionController {/api/v1/public/organizations/:orgId/sessions}:"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/public/organizations/:orgId/sessions, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/public/organizations/:orgId/sessions/:sessionId, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RoutesResolver","message":"BookingController {/api/v1/organizations/:orgId}:"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/bookings, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/bookings/me, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/bookings/:bookingId/cancel, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/bookings/:bookingId/attendance, POST} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RoutesResolver","message":"ReportingController {/api/v1/organizations/:orgId/reports}:"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/reports/occupancy, GET} route"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RoutesResolver","message":"HealthController {/api/v1/health}:"}
+{"at":"2026-11-23T21:40:02.294Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/health/live, GET} route"}
+{"at":"2026-11-23T21:40:02.295Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/health/ready, GET} route"}
+{"at":"2026-11-23T21:40:02.295Z","level":"info","context":"NestApplication","message":"Nest application successfully started"}
+Generated JSON is byte-identical to docs/api/implemented.openapi.json (cmp exit 0).

@@ -1,0 +1,79 @@
+name: BookCore Phase 10 Operational Integrity (runtime verification required)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  phase10:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    services:
+      postgres:
+        image: postgres:17.6-bookworm
+        env:
+          POSTGRES_USER: bookcore_owner
+          POSTGRES_PASSWORD: phase10_ci_owner_dev_only
+          POSTGRES_DB: bookcore
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd 'pg_isready -U bookcore_owner -d bookcore'
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgres://bookcore_app:phase10_ci_runtime_dev_only@127.0.0.1:5432/bookcore
+      MIGRATION_DATABASE_URL: postgres://bookcore_owner:phase10_ci_owner_dev_only@127.0.0.1:5432/bookcore
+      OUTBOX_DATABASE_URL: postgres://bookcore_worker_login:phase10_ci_worker_dev_only@127.0.0.1:5432/bookcore
+      OUTBOX_OPS_DATABASE_URL: postgres://bookcore_ops_login:phase10_ci_ops_dev_only@127.0.0.1:5432/bookcore
+      BOOKCORE_INSPECT_DATABASE_URL: postgres://bookcore_inspector_login:phase10_ci_inspector_dev_only@127.0.0.1:5432/bookcore
+      BOOKCORE_MAINTENANCE_DATABASE_URL: postgres://bookcore_maintenance_login:phase10_ci_maintenance_dev_only@127.0.0.1:5432/bookcore
+      MONITOR_API_KEY: phase10_monitor_test_only_not_a_real_secret_32chars
+      MONITOR_ALLOWED_IPS: 127.0.0.1,::1
+      AUTH_JWT_ISSUER: https://bookcore.test
+      AUTH_JWT_AUDIENCE: bookcore-ci
+      AUTH_JWT_ACTIVE_KID: p10-ci
+      AUTH_JWT_KEYS_JSON: '{"p10-ci":"PHASE10_TEST_KEY_NOT_FOR_PRODUCTION_32_RANDOMLIKE_BYTES_ONLY"}'
+      HTTP_HOST: 127.0.0.1
+      CORS_ORIGINS: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+      - name: Authentic installation and compile
+        run: |
+          npm ci --no-audit --no-fund
+          npm run verify:reference
+          npm run verify:static
+          npm run test:phase10:isolated
+          npm run typecheck
+          npm run lint
+          npm run build
+          npm run test:unit
+      - name: Create test-only runtime roles before migrations
+        run: |
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE ROLE bookcore_app LOGIN PASSWORD 'phase10_ci_runtime_dev_only'"
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE ROLE bookcore_worker_login LOGIN PASSWORD 'phase10_ci_worker_dev_only'"
+      - name: Migrate twice and verify ledger
+        run: npm run migrate && npm run migrate
+      - name: Create independent operational login principals
+        run: |
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE ROLE bookcore_ops_login LOGIN PASSWORD 'phase10_ci_ops_dev_only'"
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "GRANT bookcore_ops TO bookcore_ops_login"
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE ROLE bookcore_inspector_login LOGIN PASSWORD 'phase10_ci_inspector_dev_only'"
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "GRANT bookcore_inspector TO bookcore_inspector_login"
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE ROLE bookcore_maintenance_login LOGIN PASSWORD 'phase10_ci_maintenance_dev_only'"
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "GRANT bookcore_maintenance TO bookcore_maintenance_login"
+      - name: Real PostgreSQL and HTTP integration (must discover tests)
+        run: npm run test:integration
+      - name: Implemented OpenAPI (not full MVP claim)
+        run: npm run openapi:current
+      - name: Capture evidence on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bookcore-phase10-verification-failure
+          path: |
+            docs/verification/
+            evidence/
+          if-no-files-found: warn

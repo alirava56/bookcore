@@ -1,0 +1,27 @@
+name: BookCore Phase12 Source and Recovery Gates
+on:
+  push:
+    paths: ['apps/**','scripts/**','db/**','infra/**','docs/**','package*.json','.github/workflows/backend-phase12.yml']
+  workflow_dispatch:
+jobs:
+  source-and-pure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Enforce genuine lockfile (fail rather than silently skip)
+        run: test -s package-lock.json
+      - name: Install real dependency graph
+        run: npm ci --no-audit --no-fund
+      - run: npm run verify:reference
+      - run: npm run verify:static
+      - run: npm run test:phase12:isolated
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+      - name: Validate zero-test guard and execute unit suite
+        run: npm run test:unit
+      # PostgreSQL dump/restore proof needs a dedicated disposable DB and manually provided secrets;
+      # it must be a separately authorized integration workflow, not a fake green CI step.

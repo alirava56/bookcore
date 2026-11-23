@@ -1,0 +1,8 @@
+{
+  "001_core.sql": "d83fdc0165aca2ad451a8aeeabaa13b24419632b1bebd1e84ad8705552c17454",
+  "002_resource_guard.sql": "ca330e5e009baed904384724304658aeef578bd4d1a04c53067b0a8c7e0fc728",
+  "003_hardening.sql": "ec225d749b25eb6372e0723318f2553a1774876f4138761353ffec7653835798",
+  "004_history_consistency.sql": "4a5bb3c92384d8aa9e71e2822ce74d4bc0c31e12be6fbf04ea4879ddb77b89dd",
+  "005_identity_security.sql": "16634916fc696eac599a0d459ee35952f8649cf77a1300c58baaea95e73921fd",
+  "006_catalog_availability.sql": "9c280855da277cf3ca2fa29bbfdabb3315fbceeb97023a0138ed1bece6876401"
+}

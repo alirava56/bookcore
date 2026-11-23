@@ -1,0 +1,10 @@
+availability:isolated|exit=0|tests=|pass=|fail=|skipped=
+session-domain:isolated|exit=0|tests=8|pass=8|fail=0|skipped=0
+booking:isolated|exit=0|tests=6|pass=6|fail=0|skipped=0
+phase08:isolated|exit=0|tests=24|pass=24|fail=0|skipped=0
+phase09:isolated|exit=0|tests=6|pass=6|fail=0|skipped=0
+phase10:isolated|exit=0|tests=8|pass=8|fail=0|skipped=0
+phase11:isolated|exit=0|tests=12|pass=12|fail=0|skipped=0
+phase12:isolated|exit=0|tests=10|pass=10|fail=0|skipped=0
+phase13:isolated|exit=0|tests=16|pass=16|fail=0|skipped=0
+phase14:isolated|exit=0|tests=12|pass=12|fail=0|skipped=0

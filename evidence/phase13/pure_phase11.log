@@ -1,0 +1,88 @@
+$ npm run test:phase11:isolated
+
+> bookcore-backend@0.13.0 test:phase11:isolated
+> node scripts/test-phase11-pure.cjs
+
+TAP version 13
+# Subtest: inspection signed cursor roundtrip preserves six digit timestamp
+ok 1 - inspection signed cursor roundtrip preserves six digit timestamp
+  ---
+  duration_ms: 2.417527
+  type: 'test'
+  ...
+# Subtest: cursor tampering, different tenant and different kind are rejected
+ok 2 - cursor tampering, different tenant and different kind are rejected
+  ---
+  duration_ms: 0.524839
+  type: 'test'
+  ...
+# Subtest: cursor key must have >= 256 bits entropy
+ok 3 - cursor key must have >= 256 bits entropy
+  ---
+  duration_ms: 0.227312
+  type: 'test'
+  ...
+# Subtest: bounded inspection rejects oversized batch, pages, and total work
+ok 4 - bounded inspection rejects oversized batch, pages, and total work
+  ---
+  duration_ms: 0.29259
+  type: 'test'
+  ...
+# Subtest: inspection response cannot claim completed scan with pending cursor
+ok 5 - inspection response cannot claim completed scan with pending cursor
+  ---
+  duration_ms: 0.25921
+  type: 'test'
+  ...
+# Subtest: inspection kinds cover session booking outbox and governance
+ok 6 - inspection kinds cover session booking outbox and governance
+  ---
+  duration_ms: 0.104517
+  type: 'test'
+  ...
+# Subtest: event-order beats equal wall clock timestamps and reverse UUID sort order
+ok 7 - event-order beats equal wall clock timestamps and reverse UUID sort order
+  ---
+  duration_ms: 0.191057
+  type: 'test'
+  ...
+# Subtest: attendance and no-show are both valid terminal states
+ok 8 - attendance and no-show are both valid terminal states
+  ---
+  duration_ms: 0.156335
+  type: 'test'
+  ...
+# Subtest: missing or duplicate initial event is detected
+ok 9 - missing or duplicate initial event is detected
+  ---
+  duration_ms: 0.308845
+  type: 'test'
+  ...
+# Subtest: terminal transition cannot be reversed or chained
+ok 10 - terminal transition cannot be reversed or chained
+  ---
+  duration_ms: 0.350007
+  type: 'test'
+  ...
+# Subtest: booking status must match last logical event not last UUID
+ok 11 - booking status must match last logical event not last UUID
+  ---
+  duration_ms: 0.149454
+  type: 'test'
+  ...
+# Subtest: Phase12 CLI: one-kind completed/partial, six-kind completed/partial and findings
+ok 12 - Phase12 CLI: one-kind completed/partial, six-kind completed/partial and findings
+  ---
+  duration_ms: 0.132539
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 78.335637
+

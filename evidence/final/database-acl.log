@@ -1,0 +1,49 @@
+        server_version
+-------------------------------
+ 17.6 (Debian 17.6-2.pgdg12+1)
+(1 row)
+
+  current_database   |  current_user
+---------------------+----------------
+ bookcore_final_cert | bookcore_owner
+(1 row)
+
+ migrations
+------------
+         15
+(1 row)
+
+   tableowner   | count
+----------------+-------
+ bookcore_owner |    26
+(1 row)
+
+ foreign_keys
+--------------
+           49
+(1 row)
+
+ indexes
+---------
+      76
+(1 row)
+
+ user_triggers
+---------------
+            24
+(1 row)
+
+ api_update_users | api_update_resources | worker_delete_receipt | worker_api_lock
+------------------+----------------------+-----------------------+-----------------
+ f                | f                    | f                     | f
+(1 row)
+
+              proname               | prosecdef |        proconfig
+------------------------------------+-----------+--------------------------
+ bookcore_requeue_outbox_bound      | t         | {search_path=pg_catalog}
+ bookcore_share_active_catalog      | t         | {search_path=pg_catalog}
+ bookcore_share_active_organization | t         | {search_path=pg_catalog}
+ bookcore_share_active_user         | t         | {search_path=pg_catalog}
+ lock_resource_for_allocation       | t         | {search_path=pg_catalog}
+(5 rows)
+

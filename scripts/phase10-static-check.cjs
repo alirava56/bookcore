@@ -1,0 +1,15 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const read=x=>fs.readFileSync(x,'utf8');
+const m=read('db/migrations/011_operational_integrity.sql');
+assert.match(m,/session_user/);assert.match(m,/bookcore_operator_identities/);
+assert.match(m,/REVOKE ALL ON FUNCTION public\.bookcore_requeue_outbox\(uuid,uuid,uuid,text\)/);
+assert.match(m,/FOR UPDATE SKIP LOCKED/);assert.match(m,/bookcore_inspect_tenant/);
+assert.match(m,/bookcore_prune_auth_rate_buckets/);assert.match(m,/bookcore_maintenance_audit/);
+assert.match(read('scripts/outbox-recovery.ts'),/bookcore_requeue_outbox_bound/);
+assert.doesNotMatch(read('scripts/outbox-recovery.ts'),/actor,reason/);
+assert.match(read('apps/api/test/integration/phase09-postgres.test.ts'),/trainerActor\.id/);
+assert.match(read('apps/api/src/modules/governance/governance.domain.ts'),/staff_invite_one_pending/);
+assert.match(read('scripts/prune-auth-rate-limits.ts'),/LEGACY_UNBOUNDED_MAINTENANCE_DISABLED/);
+assert.ok(!fs.existsSync('package-lock.json') || JSON.parse(read('package-lock.json')).lockfileVersion>=2);
+console.log('PASS phase10 source-only structural security checks');

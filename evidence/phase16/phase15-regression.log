@@ -1,0 +1,65 @@
+COMMAND: node --test scripts/phase15-regression.test.cjs
+UTC: 2026-11-23T18:41:45.628970+00:00
+CWD: /mnt/data/bc1516/phase16
+EXIT: 0
+
+TAP version 13
+# Subtest: release manifest matches exact package inventory
+ok 1 - release manifest matches exact package inventory
+  ---
+  duration_ms: 6.179944
+  type: 'test'
+  ...
+# Subtest: release rejects a new lockfile until re-frozen
+ok 2 - release rejects a new lockfile until re-frozen
+  ---
+  duration_ms: 4.617077
+  type: 'test'
+  ...
+# Subtest: release detects file deletion
+ok 3 - release detects file deletion
+  ---
+  duration_ms: 1.416191
+  type: 'test'
+  ...
+# Subtest: workspace detects modification of tracked files
+ok 4 - workspace detects modification of tracked files
+  ---
+  duration_ms: 1.778195
+  type: 'test'
+  ...
+# Subtest: release detects unexpected file addition
+ok 5 - release detects unexpected file addition
+  ---
+  duration_ms: 2.298423
+  type: 'test'
+  ...
+# Subtest: normal integration discovery excludes destructive recovery; recovery has explicit prereqs
+ok 6 - normal integration discovery excludes destructive recovery; recovery has explicit prereqs
+  ---
+  duration_ms: 0.207015
+  type: 'test'
+  ...
+# Subtest: dedicated recovery source is retained without mutation
+ok 7 - dedicated recovery source is retained without mutation
+  ---
+  duration_ms: 0.213715
+  type: 'test'
+  ...
+# Subtest: runner actually excludes recovery from normal integration and rejects zero tests
+ok 8 - runner actually excludes recovery from normal integration and rejects zero tests
+  ---
+  duration_ms: 150.987645
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 217.216834
+
+--- STDERR ---

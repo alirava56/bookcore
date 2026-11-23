@@ -1,0 +1,69 @@
+COMMAND: npm run test:phase10:isolated
+UTC: 2026-11-23T18:41:42.920217+00:00
+CWD: /mnt/data/bc1516/phase16
+EXIT: 0
+
+
+> bookcore-backend@0.16.0 test:phase10:isolated
+> node scripts/test-phase10-pure.cjs
+
+TAP version 13
+# Subtest: inspection requires tenant UUID and bounded page
+ok 1 - inspection requires tenant UUID and bounded page
+  ---
+  duration_ms: 1.012275
+  type: 'test'
+  ...
+# Subtest: counter drift classified as manual repair only
+ok 2 - counter drift classified as manual repair only
+  ---
+  duration_ms: 0.298961
+  type: 'test'
+  ...
+# Subtest: out-of-bound count is separately detected
+ok 3 - out-of-bound count is separately detected
+  ---
+  duration_ms: 0.573487
+  type: 'test'
+  ...
+# Subtest: minimum retention and bounded maintenance are required
+ok 4 - minimum retention and bounded maintenance are required
+  ---
+  duration_ms: 0.225483
+  type: 'test'
+  ...
+# Subtest: idempotency history deletion is disabled
+ok 5 - idempotency history deletion is disabled
+  ---
+  duration_ms: 0.103753
+  type: 'test'
+  ...
+# Subtest: maintenance reason is trimmed and validated
+ok 6 - maintenance reason is trimmed and validated
+  ---
+  duration_ms: 0.817356
+  type: 'test'
+  ...
+# Subtest: only invitation pending uniqueness is translated to business conflict
+ok 7 - only invitation pending uniqueness is translated to business conflict
+  ---
+  duration_ms: 0.303638
+  type: 'test'
+  ...
+# Subtest: consent/invitation expiry is fail closed on exact boundary
+ok 8 - consent/invitation expiry is fail closed on exact boundary
+  ---
+  duration_ms: 0.122922
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 53.528419
+
+--- STDERR ---

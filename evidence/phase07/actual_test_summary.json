@@ -1,0 +1,73 @@
+{
+  "phase": "BookCore 07",
+  "execution_scope": "pure domain runtime and static validation only",
+  "environment": {
+    "node": "v22.16.0",
+    "npm": "10.9.2",
+    "postgresql": null,
+    "docker": null,
+    "package_lockfile_present": false
+  },
+  "pure_tests": {
+    "availability": {
+      "executed": 13,
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0
+    },
+    "session": {
+      "executed": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0
+    },
+    "booking": {
+      "executed": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0
+    },
+    "total_executed": 26,
+    "total_passed": 26,
+    "total_failed": 0,
+    "total_skipped": 0
+  },
+  "postgresql_tests": {
+    "executed": 0,
+    "passed": 0,
+    "status": "NOT VERIFIED"
+  },
+  "http_nestjs_tests": {
+    "executed": 0,
+    "passed": 0,
+    "status": "NOT VERIFIED"
+  },
+  "checks": {
+    "phase06_baseline_manifest": "PASS 273 hashes",
+    "migrations_001_to_007_unchanged": "PASS",
+    "migration_008_static_checksum": "PASS",
+    "typescript_syntax": "PASS 71 files",
+    "openapi_static": "PASS 423 refs and 38 operations",
+    "typecheck": "FAIL missing installed dependencies",
+    "lint": "FAIL missing installed eslint",
+    "build": "FAIL missing installed dependencies",
+    "npm_ci": "FAIL authentic lockfile unavailable",
+    "github_actions": "NOT VERIFIED"
+  },
+  "gates": {
+    "G1": "NOT VERIFIED",
+    "G2": "NOT VERIFIED",
+    "G3": "NOT VERIFIED",
+    "G4": "NOT VERIFIED",
+    "G5": "NOT VERIFIED",
+    "G6": "NOT VERIFIED",
+    "G7": "NOT VERIFIED",
+    "G8": "NOT VERIFIED",
+    "G9": "NOT VERIFIED",
+    "G10": "NOT VERIFIED",
+    "G11": "NOT VERIFIED",
+    "G12": "FAIL"
+  },
+  "source_verdict": "SOURCE IMPLEMENTATION CANDIDATE — POSTGRESQL/NESTJS RUNTIME NOT VERIFIED",
+  "production_ready": false
+}

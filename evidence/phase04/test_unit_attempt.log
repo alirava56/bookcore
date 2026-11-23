@@ -1,0 +1,5 @@
+
+> bookcore-identity-tenancy@0.4.0 test:unit
+> node scripts/run-tests.cjs unit
+
+FAIL: compiled test directory absent; build first: /mnt/data/BookCore_Phase_04/bookcore/dist/apps/api/test/unit

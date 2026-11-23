@@ -1,0 +1,120 @@
+name: BookCore Separate Disposable Recovery Drill (Manual Only)
+on:
+  workflow_dispatch:
+    inputs:
+      explicit_disposable_authorization:
+        description: 'Type I_AUTHORIZE_DISPOSABLE_RECOVERY to opt in'
+        required: true
+        type: string
+jobs:
+  recovery:
+    if: ${{ inputs.explicit_disposable_authorization == 'I_AUTHORIZE_DISPOSABLE_RECOVERY' }}
+    runs-on: ubuntu-24.04
+    environment: bookcore-disposable-recovery
+    timeout-minutes: 60
+    services:
+      postgres:
+        image: postgres:17.6-bookworm
+        env: {POSTGRES_USER: bookcore_owner, POSTGRES_PASSWORD: strictly_disposable_recovery, POSTGRES_DB: bookcore_source}
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U bookcore_owner -d bookcore_source"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      NODE_ENV: test
+      BOOKCORE_ENVIRONMENT: test
+      BOOKCORE_TEST_DATABASE_DISPOSABLE: 'yes'
+      BOOKCORE_PHASE12_DISPOSABLE_SOURCE: 'yes'
+      BOOKCORE_PHASE12_RUN_RESTORE: 'yes'
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: bookcore_recovery_login
+      PGPASSWORD: disposable_recovery_operator
+      PGDATABASE: bookcore_source
+      BOOKCORE_DISPOSABLE_RESTORE_TARGET: bookcore_target
+      BOOKCORE_RESTORE_ALLOWED_LOGIN: bookcore_recovery_login
+      BOOKCORE_EXPECTED_SOURCE_DATABASE: bookcore_source
+      BOOKCORE_RESTORE_ISOLATED_INSTANCE: 'yes'
+      BOOKCORE_RESTORE_ACK: RESTORE_DISPOSABLE:bookcore_target
+      MIGRATION_DATABASE_URL: postgres://bookcore_owner:strictly_disposable_recovery@127.0.0.1:5432/bookcore_source
+      BOOKCORE_RESTORED_DATABASE_URL: postgres://bookcore_recovery_login:disposable_recovery_operator@127.0.0.1:5432/bookcore_target
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.16.0', cache: npm}
+      - name: Require genuine lockfile
+        run: test -s package-lock.json && npm ci --no-audit --no-fund
+      - name: Verify postgres client 17 and pin trusted executable paths
+        shell: bash
+        run: |
+          sudo apt-get update
+          if ! apt-cache show postgresql-client-17 >/dev/null 2>&1; then
+            sudo apt-get install -y postgresql-common
+            sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+            sudo apt-get update
+          fi
+          sudo apt-get install -y postgresql-client-17 age
+          for bin in psql pg_dump pg_restore; do
+            "/usr/lib/postgresql/17/bin/$bin" --version
+          done
+          echo '/usr/lib/postgresql/17/bin' >> "$GITHUB_PATH"
+          {
+            echo 'BOOKCORE_PSQL_BIN=/usr/lib/postgresql/17/bin/psql'
+            echo 'BOOKCORE_PGDUMP_BIN=/usr/lib/postgresql/17/bin/pg_dump'
+            echo 'BOOKCORE_PGRESTORE_BIN=/usr/lib/postgresql/17/bin/pg_restore'
+            echo 'BOOKCORE_AGE_BIN=/usr/bin/age'
+          } >> "$GITHUB_ENV"
+      - name: Require independently approved synthetic backup metadata
+        env:
+          BOOKCORE_RECOVERY_ARTIFACT_RUN_ID: ${{ vars.BOOKCORE_RECOVERY_ARTIFACT_RUN_ID }}
+          BOOKCORE_TRUSTED_MANIFEST_SHA256: ${{ vars.BOOKCORE_TRUSTED_MANIFEST_SHA256 }}
+        shell: bash
+        run: |
+          [[ "$BOOKCORE_RECOVERY_ARTIFACT_RUN_ID" =~ ^[1-9][0-9]+$ && "$BOOKCORE_RECOVERY_ARTIFACT_RUN_ID" != "$GITHUB_RUN_ID" && "$BOOKCORE_TRUSTED_MANIFEST_SHA256" =~ ^[a-f0-9]{64}$ ]] || {
+            echo 'BLOCKED: protected environment must pin a separate trusted producer run and its independently approved manifest digest'; exit 2;
+          }
+      - uses: actions/download-artifact@v4
+        with:
+          name: bookcore-synthetic-recovery-fixture
+          path: ${{ runner.temp }}/bookcore-synthetic-recovery-fixture
+          github-token: ${{ github.token }}
+          run-id: ${{ vars.BOOKCORE_RECOVERY_ARTIFACT_RUN_ID }}
+      - name: Provision distinct empty target and restricted roles on this dedicated runner
+        run: |
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+          CREATE ROLE bookcore_app LOGIN PASSWORD 'only_disposable_app';
+          CREATE ROLE bookcore_worker_login LOGIN PASSWORD 'only_disposable_worker';
+          CREATE ROLE bookcore_recovery_login LOGIN PASSWORD 'disposable_recovery_operator';
+          GRANT pg_read_all_data TO bookcore_recovery_login;
+          CREATE DATABASE bookcore_target OWNER bookcore_recovery_login;
+          COMMENT ON DATABASE bookcore_target IS 'bookcore-disposable-restore-v1';
+          SQL
+      - run: npm run typecheck && npm run build
+      - name: Migrate synthetic source, not target
+        run: npm run migrate
+      - name: Run real recovery suite explicitly on separate disposable source and target
+        env:
+          BOOKCORE_TRUSTED_MANIFEST_SHA256: ${{ vars.BOOKCORE_TRUSTED_MANIFEST_SHA256 }}
+          BOOKCORE_SYNTHETIC_AGE_IDENTITY: ${{ secrets.BOOKCORE_SYNTHETIC_AGE_IDENTITY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          fixture="$RUNNER_TEMP/bookcore-synthetic-recovery-fixture"
+          chmod 700 "$fixture"
+          shopt -s nullglob
+          manifests=("$fixture"/*.dump.age.manifest.json)
+          if [[ ${#manifests[@]} -ne 1 || -z "$BOOKCORE_SYNTHETIC_AGE_IDENTITY" ]]; then
+            echo 'BLOCKED: a single encrypted synthetic fixture and its independently held age identity are required'; exit 2
+          fi
+          chmod 600 "$fixture"/*
+          export BOOKCORE_RECOVERY_MANIFEST_FILE="${manifests[0]}"
+          BOOKCORE_AGE_IDENTITY_FILE="$(mktemp "$RUNNER_TEMP/bookcore-age.XXXXXXXX")"
+          export BOOKCORE_AGE_IDENTITY_FILE
+          trap 'rm -f -- "$BOOKCORE_AGE_IDENTITY_FILE"' EXIT
+          printf '%s\n' "$BOOKCORE_SYNTHETIC_AGE_IDENTITY" > "$BOOKCORE_AGE_IDENTITY_FILE"
+          unset BOOKCORE_SYNTHETIC_AGE_IDENTITY
+          npm run test:recovery

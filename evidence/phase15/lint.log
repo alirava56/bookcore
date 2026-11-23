@@ -1,0 +1,12 @@
+COMMAND: npm run lint
+UTC: 2026-11-23T18:37:57.962318+00:00
+CWD: /mnt/data/bc1516/work
+EXIT: 127
+
+
+> bookcore-backend@0.15.0 lint
+> eslint 'apps/api/**/*.ts' 'scripts/**/*.ts' --max-warnings=0
+
+
+--- STDERR ---
+sh: 1: eslint: not found

@@ -1,0 +1,125 @@
+{
+  "executed": true,
+  "runtime_database_tests_passed": 0,
+  "commands": [
+    {
+      "check": "reference",
+      "command": "npm run verify:reference",
+      "exit_code": 0,
+      "duration_seconds": 0.18,
+      "status": "PASS"
+    },
+    {
+      "check": "static",
+      "command": "npm run verify:static",
+      "exit_code": 0,
+      "duration_seconds": 0.27,
+      "status": "PASS"
+    },
+    {
+      "check": "phase10_pure",
+      "command": "npm run test:phase10:isolated",
+      "exit_code": 0,
+      "duration_seconds": 0.65,
+      "status": "PASS"
+    },
+    {
+      "check": "phase09_pure",
+      "command": "npm run test:phase09:isolated",
+      "exit_code": 0,
+      "duration_seconds": 0.54,
+      "status": "PASS"
+    },
+    {
+      "check": "phase08_pure",
+      "command": "npm run test:phase08:isolated",
+      "exit_code": 0,
+      "duration_seconds": 0.63,
+      "status": "PASS"
+    },
+    {
+      "check": "booking_pure",
+      "command": "npm run test:booking:isolated",
+      "exit_code": 0,
+      "duration_seconds": 0.53,
+      "status": "PASS"
+    },
+    {
+      "check": "session_pure",
+      "command": "npm run test:session-domain:isolated",
+      "exit_code": 0,
+      "duration_seconds": 0.45,
+      "status": "PASS"
+    },
+    {
+      "check": "availability_pure",
+      "command": "npm run test:availability:isolated",
+      "exit_code": 0,
+      "duration_seconds": 0.69,
+      "status": "PASS"
+    },
+    {
+      "check": "openapi_contract",
+      "command": "python tools/phase09_validate_openapi.py",
+      "exit_code": 0,
+      "duration_seconds": 0.95,
+      "status": "PASS"
+    },
+    {
+      "check": "syntax_scan",
+      "command": "node tools/phase09_syntax_check.cjs",
+      "exit_code": 0,
+      "duration_seconds": 0.36,
+      "status": "PASS"
+    },
+    {
+      "check": "migrations",
+      "command": "node scripts/verify-migration-checksums.cjs",
+      "exit_code": 0,
+      "duration_seconds": 0.03,
+      "status": "PASS"
+    },
+    {
+      "check": "npm_lock",
+      "command": "npm install --package-lock-only --offline --ignore-scripts --no-audit --no-fund --fetch-retries=0",
+      "exit_code": 1,
+      "duration_seconds": 0.24,
+      "status": "FAIL_OR_BLOCKED"
+    },
+    {
+      "check": "npm_ci",
+      "command": "npm ci --offline --no-audit --no-fund",
+      "exit_code": 1,
+      "duration_seconds": 0.21,
+      "status": "FAIL_OR_BLOCKED"
+    },
+    {
+      "check": "typecheck",
+      "command": "npm run typecheck",
+      "exit_code": 2,
+      "duration_seconds": 1.54,
+      "status": "FAIL_OR_BLOCKED"
+    },
+    {
+      "check": "lint",
+      "command": "npm run lint",
+      "exit_code": 127,
+      "duration_seconds": 0.1,
+      "status": "FAIL_OR_BLOCKED"
+    },
+    {
+      "check": "build",
+      "command": "npm run build",
+      "exit_code": 1,
+      "duration_seconds": 1.56,
+      "status": "FAIL_OR_BLOCKED"
+    },
+    {
+      "check": "integration",
+      "command": "npm run test:integration",
+      "exit_code": 2,
+      "duration_seconds": 0.13,
+      "status": "FAIL_OR_BLOCKED"
+    }
+  ]
+}

@@ -1,0 +1,2735 @@
+openapi: 3.1.0
+info:
+  title: BookCore MVP API — DESIGN CONTRACT (NOT IMPLEMENTED)
+  version: 1.1.1-design
+  description: PHASE 01 DESIGN CONTRACT ONLY — no backend or runtime tests. Public published-session GET endpoints
+    are separate from staff-only session endpoints. Scheduling writes require RFC3339 offset plus matching organization
+    IANA timezone; response instants and event timestamps are canonical UTC (Z). See docs/security/AUTHORIZATION_MATRIX.md,
+    DOMAIN_MODEL_FA.md, STATE_MACHINES_FA.md, ARCHITECTURE_FA.md, PRD_FA.md and THREAT_MODEL_FA.md for rules. Internal
+    and public response types are never interchangeable.
+servers:
+- url: https://api.example.invalid/api/v1
+  description: Illustrative placeholder; not a real deployment
+tags:
+- name: Auth
+- name: Organizations
+- name: Catalog
+- name: Scheduling
+- name: Booking
+- name: Reporting
+- name: Health
+- name: PublicScheduling
+  description: Unauthenticated, published-only, minimum-field read models
+security:
+- bearerAuth: []
+paths:
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      operationId: postAuthregister
+      summary: Create a global user account
+      description: Email+password; registration does not imply a tenant membership.
+      x-authorized-actors: PUBLIC
+      x-business-rules: Email+password; registration does not imply a tenant membership.
+      x-idempotency: not required for this operation
+      parameters: []
+      responses:
+        '201':
+          description: Registered user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                password:
+                  type: string
+                  minLength: 12
+                  maxLength: 128
+              required:
+              - email
+              - password
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      operationId: postAuthlogin
+      summary: Authenticate and create refresh session
+      description: Generic 401 on invalid credentials; rate limit. Refresh token in JSON for API/mobile; cookie
+        strategy deferred.
+      x-authorized-actors: PUBLIC
+      x-business-rules: Generic 401 on invalid credentials; rate limit. Refresh token in JSON for API/mobile; cookie
+        strategy deferred.
+      x-idempotency: not required for this operation
+      parameters: []
+      responses:
+        '200':
+          description: Tokens issued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tokens'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                password:
+                  type: string
+                  minLength: 1
+                  maxLength: 128
+              required:
+              - email
+              - password
+  /auth/refresh:
+    post:
+      tags:
+      - Auth
+      operationId: postAuthrefresh
+      summary: Rotate refresh token
+      description: Lock auth_session then refresh_token, mark old token consumed and insert new. Reusing consumed
+        token revokes token family. Atomic.
+      x-authorized-actors: REFRESH_TOKEN_HOLDER
+      x-business-rules: Lock auth_session then refresh_token, mark old token consumed and insert new. Reusing consumed
+        token revokes token family. Atomic.
+      x-idempotency: not required for this operation
+      parameters: []
+      responses:
+        '200':
+          description: Rotated tokens
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tokens'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                refreshToken:
+                  type: string
+                  minLength: 1
+                  maxLength: 4096
+              required:
+              - refreshToken
+  /auth/logout:
+    post:
+      tags:
+      - Auth
+      operationId: postAuthlogout
+      summary: Revoke own auth session
+      description: Token sid must belong to actor; revoke same auth_session. No other user sessions affected.
+      x-authorized-actors: AUTH_SELF
+      x-business-rules: Token sid must belong to actor; revoke same auth_session. No other user sessions affected.
+      x-idempotency: not required for this operation
+      parameters: []
+      responses:
+        '204':
+          description: Session revoked
+        '401':
+          $ref: '#/components/responses/Error401'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /me:
+    get:
+      tags:
+      - Auth
+      operationId: getMe
+      summary: Read authenticated global user and ACTIVE staff memberships
+      description: '200 returns exactly MeResponse: user plus an array of ACTIVE organizational staff memberships
+        (possibly empty). Customer is not a membership role. Never include refresh tokens, password hashes or revoked
+        memberships.'
+      x-authorized-actors: AUTH_SELF
+      x-business-rules: '200 returns exactly MeResponse: user plus an array of ACTIVE organizational staff memberships
+        (possibly empty). Customer is not a membership role. Never include refresh tokens, password hashes or revoked
+        memberships.'
+      x-idempotency: not required for this operation
+      parameters: []
+      responses:
+        '200':
+          description: Caller profile and current active staff memberships (possibly empty)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeResponse'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /organizations:
+    post:
+      tags:
+      - Organizations
+      operationId: postOrganizations
+      summary: Create organization plus Owner membership
+      description: Organization and initial Owner Membership created atomically; timezone must resolve to IANA zone.
+        No role in body.
+      x-authorized-actors: AUTH_SELF
+      x-business-rules: Organization and initial Owner Membership created atomically; timezone must resolve to IANA
+        zone. No role in body.
+      x-idempotency: not required for this operation
+      parameters: []
+      responses:
+        '201':
+          description: Created organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 160
+                timezone:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                cancellationCutoffMin:
+                  type: integer
+                  minimum: 0
+                  maximum: 10080
+              required:
+              - name
+              - timezone
+  /organizations/{orgId}:
+    get:
+      tags:
+      - Organizations
+      operationId: getOrganizationsorgid
+      summary: Read tenant profile
+      description: Requires ACTIVE staff membership; otherwise hidden 404.
+      x-authorized-actors: OWNER|MANAGER|RECEPTIONIST|TRAINER
+      x-business-rules: Requires ACTIVE staff membership; otherwise hidden 404.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      responses:
+        '200':
+          description: Tenant details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /organizations/{orgId}/members:
+    get:
+      tags:
+      - Organizations
+      operationId: getOrganizationsorgidmembers
+      summary: List staff members
+      description: Active membership in tenant; no customer directory. Cursor sorted by userId ascending.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Active membership in tenant; no customer directory. Cursor sorted by userId ascending.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: Members
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipList'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+    post:
+      tags:
+      - Organizations
+      operationId: postOrganizationsorgidmembers
+      summary: Add staff membership for existing user
+      description: Owner may create an additional Owner (existing User) with audit, Manager only Trainer/Receptionist;
+        no external invite flow. Requires active Tenant membership and role validation.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Owner may create an additional Owner (existing User) with audit, Manager only Trainer/Receptionist;
+        no external invite flow. Requires active Tenant membership and role validation.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      responses:
+        '201':
+          description: Created membership
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                userId:
+                  type: string
+                  format: uuid
+                role:
+                  type: string
+                  enum:
+                  - OWNER
+                  - MANAGER
+                  - RECEPTIONIST
+                  - TRAINER
+              required:
+              - userId
+              - role
+  /organizations/{orgId}/members/{userId}:
+    patch:
+      tags:
+      - Organizations
+      operationId: patchOrganizationsorgidmembersuserid
+      summary: Change staff role or revoke/reactivate
+      description: At least one property. Owner cannot revoke last active Owner. Lock organization for mutation.
+        Manager only Trainer/Receptionist, cannot elevate own role.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: At least one property. Owner cannot revoke last active Owner. Lock organization for mutation.
+        Manager only Trainer/Receptionist, cannot elevate own role.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: Updated membership
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                role:
+                  type: string
+                  enum:
+                  - OWNER
+                  - MANAGER
+                  - RECEPTIONIST
+                  - TRAINER
+                status:
+                  enum:
+                  - ACTIVE
+                  - REVOKED
+              minProperties: 1
+  /organizations/{orgId}/branches:
+    post:
+      tags:
+      - Catalog
+      operationId: postOrganizationsorgidbranches
+      summary: Create a branch
+      description: Branch owned by tenant; no cross-tenant references.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Branch owned by tenant; no cross-tenant references.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      responses:
+        '201':
+          description: Created branch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branch'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 120
+                address:
+                  type: string
+                  maxLength: 500
+              required:
+              - name
+    get:
+      tags:
+      - Catalog
+      operationId: getOrganizationsorgidbranches
+      summary: List tenant branches
+      description: Tenant scoped; cursor sort by id.
+      x-authorized-actors: OWNER|MANAGER|RECEPTIONIST|TRAINER
+      x-business-rules: Tenant scoped; cursor sort by id.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: Branches
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchList'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /organizations/{orgId}/resources:
+    post:
+      tags:
+      - Catalog
+      operationId: postOrganizationsorgidresources
+      summary: Create exclusive Trainer or Room resource
+      description: TRAINER requires trainerUserId of active tenant staff and forbids branchId; ROOM requires branchId
+        and forbids trainerUserId; a trainer has one Resource per tenant.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: TRAINER requires trainerUserId of active tenant staff and forbids branchId; ROOM requires
+        branchId and forbids trainerUserId; a trainer has one Resource per tenant.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      responses:
+        '201':
+          description: Created resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                type:
+                  enum:
+                  - TRAINER
+                  - ROOM
+                displayName:
+                  type: string
+                  minLength: 1
+                  maxLength: 160
+                branchId:
+                  type: string
+                  format: uuid
+                trainerUserId:
+                  type: string
+                  format: uuid
+                bufferBeforeMin:
+                  type: integer
+                  minimum: 0
+                  maximum: 240
+                bufferAfterMin:
+                  type: integer
+                  minimum: 0
+                  maximum: 240
+              required:
+              - type
+              - displayName
+              allOf: &id001
+              - if:
+                  properties:
+                    type:
+                      const: TRAINER
+                  required:
+                  - type
+                then:
+                  required:
+                  - trainerUserId
+                  not:
+                    required:
+                    - branchId
+              - if:
+                  properties:
+                    type:
+                      const: ROOM
+                  required:
+                  - type
+                then:
+                  required:
+                  - branchId
+                  not:
+                    required:
+                    - trainerUserId
+              description: 'Type-specific required fields: TRAINER must include trainerUserId and MUST NOT include
+                branchId; ROOM must include branchId and MUST NOT include trainerUserId. Both require type and displayName.
+                The referenced member/branch must belong to the same tenant.'
+    get:
+      tags:
+      - Catalog
+      operationId: getOrganizationsorgidresources
+      summary: List tenant resources
+      description: Only authenticated ACTIVE Owner/Manager/Receptionist Membership in this Tenant; Resource response
+        includes trainerUserId and internal resource links. Trainer is not allowed to enumerate Resource records;
+        assigned Trainer calendar is available only through scoped staff Sessions.
+      x-authorized-actors: OWNER|MANAGER|RECEPTIONIST
+      x-business-rules: Only authenticated ACTIVE Owner/Manager/Receptionist Membership in this Tenant; Resource
+        response includes trainerUserId and internal resource links. Trainer is not allowed to enumerate Resource
+        records; assigned Trainer calendar is available only through scoped staff Sessions.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: Resources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceList'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /organizations/{orgId}/services:
+    post:
+      tags:
+      - Catalog
+      operationId: postOrganizationsorgidservices
+      summary: Create service
+      description: Duration is default, not an absolute session bound.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Duration is default, not an absolute session bound.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      responses:
+        '201':
+          description: Created service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                title:
+                  type: string
+                  minLength: 1
+                  maxLength: 160
+                durationMin:
+                  type: integer
+                  minimum: 5
+                  maximum: 1440
+              required:
+              - title
+              - durationMin
+    get:
+      tags:
+      - Catalog
+      operationId: getOrganizationsorgidservices
+      summary: List services
+      description: Tenant-scoped staff catalog.
+      x-authorized-actors: OWNER|MANAGER|RECEPTIONIST|TRAINER
+      x-business-rules: Tenant-scoped staff catalog.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: Services
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceList'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /organizations/{orgId}/business-hours:
+    post:
+      tags:
+      - Scheduling
+      operationId: postOrganizationsorgidbusiness_Hours
+      summary: Create weekly working-hours rule
+      description: Exactly one of branchId/resourceId; local time in tenant IANA zone; no conflicting weekly ranges.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Exactly one of branchId/resourceId; local time in tenant IANA zone; no conflicting weekly
+        ranges.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      responses:
+        '201':
+          description: Created weekly schedule rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessHour'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                branchId:
+                  type: string
+                  format: uuid
+                resourceId:
+                  type: string
+                  format: uuid
+                isoWeekday:
+                  type: integer
+                  minimum: 1
+                  maximum: 7
+                startLocal:
+                  type: string
+                  pattern: ^([01][0-9]|2[0-3]):[0-5][0-9]$
+                endLocal:
+                  type: string
+                  pattern: ^([01][0-9]|2[0-3]):[0-5][0-9]$
+                endDayOffset:
+                  type: integer
+                  enum:
+                  - 0
+                  - 1
+              required:
+              - isoWeekday
+              - startLocal
+              - endLocal
+              - endDayOffset
+    get:
+      tags:
+      - Scheduling
+      operationId: getOrganizationsorgidbusiness_Hours
+      summary: List weekly working-hours rules
+      description: Tenant scoped; no updates retroactively change published Sessions.
+      x-authorized-actors: OWNER|MANAGER|RECEPTIONIST|TRAINER
+      x-business-rules: Tenant scoped; no updates retroactively change published Sessions.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: Hours rules
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessHourList'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /organizations/{orgId}/business-hours/{hourId}:
+    patch:
+      tags:
+      - Scheduling
+      operationId: patchOrganizationsorgidbusiness_Hourshourid
+      summary: Deactivate working-hours rule
+      description: Only deactivate in MVP; no silent cancellation of existing sessions.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Only deactivate in MVP; no silent cancellation of existing sessions.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/hourId'
+      responses:
+        '200':
+          description: Deactivated rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessHour'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                active:
+                  const: false
+              required:
+              - active
+  /organizations/{orgId}/schedule-exceptions:
+    post:
+      tags:
+      - Scheduling
+      operationId: postOrganizationsorgidschedule_Exceptions
+      summary: Create closure or open override
+      description: Exactly one target; OPEN_OVERRIDE must have nonblank reason, audit Actor. Existing sessions remain
+        unchanged.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Exactly one target; OPEN_OVERRIDE must have nonblank reason, audit Actor. Existing sessions
+        remain unchanged.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      responses:
+        '201':
+          description: Created exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleException'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                branchId:
+                  type: string
+                  format: uuid
+                resourceId:
+                  type: string
+                  format: uuid
+                kind:
+                  enum:
+                  - CLOSED
+                  - OPEN_OVERRIDE
+                startAt:
+                  type: string
+                  format: date-time
+                  description: 'Scheduling input: RFC3339 timestamp with explicit numeric offset or Z. Offset MUST
+                    be valid for organization IANA timezone at represented local wall time; invalid/nonexistent
+                    local times are rejected. Persist the resulting instant in UTC.'
+                endAt:
+                  type: string
+                  format: date-time
+                  description: 'Scheduling input: RFC3339 timestamp with explicit numeric offset or Z. Offset MUST
+                    be valid for organization IANA timezone at represented local wall time; invalid/nonexistent
+                    local times are rejected. Persist the resulting instant in UTC.'
+                reason:
+                  type: string
+                  minLength: 1
+                  maxLength: 500
+              required:
+              - kind
+              - startAt
+              - endAt
+              - reason
+    get:
+      tags:
+      - Scheduling
+      operationId: getOrganizationsorgidschedule_Exceptions
+      summary: List schedule exceptions
+      description: Filter interval max 31 days; tenant scoped.
+      x-authorized-actors: OWNER|MANAGER|RECEPTIONIST|TRAINER
+      x-business-rules: Filter interval max 31 days; tenant scoped.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/from'
+      - $ref: '#/components/parameters/to'
+      responses:
+        '200':
+          description: Exceptions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleExceptionList'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /organizations/{orgId}/schedule-exceptions/{exceptionId}:
+    patch:
+      tags:
+      - Scheduling
+      operationId: patchOrganizationsorgidschedule_Exceptionsexceptionid
+      summary: Deactivate schedule exception
+      description: Only deactivation in MVP; no automatic Session edits.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Only deactivation in MVP; no automatic Session edits.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/exceptionId'
+      responses:
+        '200':
+          description: Updated exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleException'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                active:
+                  const: false
+              required:
+              - active
+  /public/organizations/{orgId}/sessions:
+    get:
+      tags:
+      - PublicScheduling
+      operationId: listPublicOrganizationSessions
+      summary: List upcoming publicly published Sessions
+      description: No authentication. Returns only published, upcoming sessions with PublicSession fields; 31-day
+        maximum query window; stable (startAt,id) cursor and non-guaranteed seat snapshot. No internal resource
+        IDs, committed counts, capacity totals, version, internal status history, or staff notes.
+      x-authorized-actors: PUBLIC_PUBLISHED
+      x-business-rules: No authentication. Returns only published, upcoming sessions with PublicSession fields;
+        31-day maximum query window; stable (startAt,id) cursor and non-guaranteed seat snapshot. No internal resource
+        IDs, committed counts, capacity totals, version, internal status history, or staff notes.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/from'
+      - $ref: '#/components/parameters/to'
+      responses:
+        '200':
+          description: Public-safe paginated published Sessions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicSessionList'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      security: []
+  /organizations/{orgId}/sessions:
+    post:
+      tags:
+      - Scheduling
+      operationId: postOrganizationsorgidsessions
+      summary: Create Draft Session and allocations atomically
+      description: Uses DB resource GiST exclusion; offset must match IANA organization zone; Draft allocations
+        active and block other drafts. Resource buffers apply to allocations.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Uses DB resource GiST exclusion; offset must match IANA organization zone; Draft allocations
+        active and block other drafts. Resource buffers apply to allocations.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      responses:
+        '201':
+          description: Created Draft Session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffSession'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                branchId:
+                  type: string
+                  format: uuid
+                serviceId:
+                  type: string
+                  format: uuid
+                trainerResourceId:
+                  type: string
+                  format: uuid
+                roomResourceId:
+                  type: string
+                  format: uuid
+                startAt:
+                  type: string
+                  format: date-time
+                  description: 'Scheduling input: RFC3339 timestamp with explicit numeric offset or Z. Offset MUST
+                    be valid for organization IANA timezone at represented local wall time; invalid/nonexistent
+                    local times are rejected. Persist the resulting instant in UTC.'
+                endAt:
+                  type: string
+                  format: date-time
+                  description: 'Scheduling input: RFC3339 timestamp with explicit numeric offset or Z. Offset MUST
+                    be valid for organization IANA timezone at represented local wall time; invalid/nonexistent
+                    local times are rejected. Persist the resulting instant in UTC.'
+                capacityTotal:
+                  type: integer
+                  minimum: 1
+                  maximum: 1000
+              required:
+              - branchId
+              - serviceId
+              - trainerResourceId
+              - startAt
+              - endAt
+              - capacityTotal
+    get:
+      tags:
+      - Scheduling
+      operationId: getOrganizationsorgidsessions
+      summary: List staff Session calendar, including nonpublic states
+      description: Requires authenticated ACTIVE tenant staff Membership. Owner, Manager and Receptionist may read
+        tenant sessions; Trainer may read only sessions assigned to their active Trainer Resource. No cross-tenant
+        visibility. Returns StaffSession only; customers without staff membership use public routes. Pagination
+        uses (startAt,id); responses may include DRAFT, PUBLISHED, CANCELLED and FINISHED.
+      x-authorized-actors: OWNER|MANAGER|RECEPTIONIST|ASSIGNED_TRAINER
+      x-business-rules: Requires authenticated ACTIVE tenant staff Membership. Owner, Manager and Receptionist may
+        read tenant sessions; Trainer may read only sessions assigned to their active Trainer Resource. No cross-tenant
+        visibility. Returns StaffSession only; customers without staff membership use public routes. Pagination
+        uses (startAt,id); responses may include DRAFT, PUBLISHED, CANCELLED and FINISHED.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/from'
+      - $ref: '#/components/parameters/to'
+      responses:
+        '200':
+          description: Staff-only paginated Session records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffSessionList'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      security:
+      - bearerAuth: []
+  /public/organizations/{orgId}/sessions/{sessionId}:
+    get:
+      tags:
+      - PublicScheduling
+      operationId: getPublicOrganizationSession
+      summary: Read published public Session
+      description: No authentication. Returns only explicitly allowlisted PublicSession fields; never StaffSession.
+        Only PUBLISHED sessions; 404 for unpublished, hidden or invalid tenant/session. No internal resource IDs,
+        committed counts, capacity totals, version, internal status history, or staff notes.
+      x-authorized-actors: PUBLIC_PUBLISHED
+      x-business-rules: No authentication. Returns only explicitly allowlisted PublicSession fields; never StaffSession.
+        Only PUBLISHED sessions; 404 for unpublished, hidden or invalid tenant/session. No internal resource IDs,
+        committed counts, capacity totals, version, internal status history, or staff notes.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/sessionId'
+      responses:
+        '200':
+          description: Public-safe published Session details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicSession'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      security: []
+  /organizations/{orgId}/sessions/{sessionId}:
+    get:
+      tags:
+      - Scheduling
+      operationId: getOrganizationsorgidsessionssessionid
+      summary: Read tenant staff Session details
+      description: Requires authenticated ACTIVE tenant staff Membership. Owner, Manager and Receptionist may read
+        tenant sessions; Trainer may read only sessions assigned to their active Trainer Resource. No cross-tenant
+        visibility. Returns StaffSession only; customers without staff membership use public routes. Session IDs
+        outside scope resolve 404.
+      x-authorized-actors: OWNER|MANAGER|RECEPTIONIST|ASSIGNED_TRAINER
+      x-business-rules: Requires authenticated ACTIVE tenant staff Membership. Owner, Manager and Receptionist may
+        read tenant sessions; Trainer may read only sessions assigned to their active Trainer Resource. No cross-tenant
+        visibility. Returns StaffSession only; customers without staff membership use public routes. Session IDs
+        outside scope resolve 404.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/sessionId'
+      responses:
+        '200':
+          description: Staff-only Session details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffSession'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      security:
+      - bearerAuth: []
+  /organizations/{orgId}/sessions/{sessionId}/publish:
+    post:
+      tags:
+      - Scheduling
+      operationId: postOrganizationsorgidsessionssessionidpublish
+      summary: Publish Draft Session
+      description: Requires future Draft and valid allocations, branch/resources and schedule; no active bookings
+        in Draft.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Requires future Draft and valid allocations, branch/resources and schedule; no active bookings
+        in Draft.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/sessionId'
+      responses:
+        '200':
+          description: Published Session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffSession'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /organizations/{orgId}/sessions/{sessionId}/cancel:
+    post:
+      tags:
+      - Scheduling
+      operationId: postOrganizationsorgidsessionssessionidcancel
+      summary: Cancel entire Session atomically
+      description: Only DRAFT/PUBLISHED before start; 15 confirmed bookings means 15 BookingEvent + 15 outbox and
+        zero seats, all in one TX. No cancellation once started.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Only DRAFT/PUBLISHED before start; 15 confirmed bookings means 15 BookingEvent + 15 outbox
+        and zero seats, all in one TX. No cancellation once started.
+      x-idempotency: required; transactionally persisted final 2xx/4xx, in-flight waits, 5xx never cached
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/sessionId'
+      - $ref: '#/components/parameters/key'
+      responses:
+        '200':
+          description: Cancelled Session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffSession'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                reason:
+                  type: string
+                  minLength: 1
+                  maxLength: 500
+              required:
+              - reason
+  /organizations/{orgId}/sessions/{sessionId}/finish:
+    post:
+      tags:
+      - Scheduling
+      operationId: postOrganizationsorgidsessionssessionidfinish
+      summary: Mark Session finished after end
+      description: Only PUBLISHED and dbNow>=endAt; counter unchanged; does not automatically mark attendance.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Only PUBLISHED and dbNow>=endAt; counter unchanged; does not automatically mark attendance.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/sessionId'
+      responses:
+        '200':
+          description: Finished Session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffSession'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /organizations/{orgId}/sessions/{sessionId}/capacity:
+    patch:
+      tags:
+      - Scheduling
+      operationId: patchOrganizationsorgidsessionssessionidcapacity
+      summary: Adjust Session total capacity
+      description: Only DRAFT/PUBLISHED before start; lock Session; reject newTotal<seatsCommitted (409 CAPACITY_BELOW_COMMITTED).
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Only DRAFT/PUBLISHED before start; lock Session; reject newTotal<seatsCommitted (409 CAPACITY_BELOW_COMMITTED).
+      x-idempotency: required; transactionally persisted final 2xx/4xx, in-flight waits, 5xx never cached
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/sessionId'
+      - $ref: '#/components/parameters/key'
+      responses:
+        '200':
+          description: Capacity updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffSession'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                capacityTotal:
+                  type: integer
+                  minimum: 1
+                  maximum: 1000
+              required:
+              - capacityTotal
+  /organizations/{orgId}/sessions/{sessionId}/bookings:
+    post:
+      tags:
+      - Booking
+      operationId: postOrganizationsorgidsessionssessionidbookings
+      summary: Create one committed booking
+      description: Self booking requires {} and server-derived customerId; staff may specify existing active User
+        customerId; Organization must be ACTIVE; no manager override of capacity, consent required by staff workflow.
+        Confirmed only on DB commit acknowledged.
+      x-authorized-actors: AUTH_SELF|OWNER|MANAGER|RECEPTIONIST
+      x-business-rules: Self booking requires {} and server-derived customerId; staff may specify existing active
+        User customerId; Organization must be ACTIVE; no manager override of capacity, consent required by staff
+        workflow. Confirmed only on DB commit acknowledged.
+      x-idempotency: required; transactionally persisted final 2xx/4xx, in-flight waits, 5xx never cached
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/sessionId'
+      - $ref: '#/components/parameters/key'
+      responses:
+        '201':
+          description: Booking confirmed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                customerId:
+                  type: string
+                  format: uuid
+  /organizations/{orgId}/bookings/me:
+    get:
+      tags:
+      - Booking
+      operationId: getOrganizationsorgidbookingsme
+      summary: List bookings owned by caller
+      description: Never uses Membership as customer authority; always tenant+authenticated customerId. Time filter
+        on booking createdAt, stable cursor sorting createdAt DESC,id.
+      x-authorized-actors: AUTH_SELF
+      x-business-rules: Never uses Membership as customer authority; always tenant+authenticated customerId. Time
+        filter on booking createdAt, stable cursor sorting createdAt DESC,id.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/cursor'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/from'
+      - $ref: '#/components/parameters/to'
+      responses:
+        '200':
+          description: My bookings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingList'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /organizations/{orgId}/bookings/{bookingId}/cancel:
+    post:
+      tags:
+      - Booking
+      operationId: postOrganizationsorgidbookingsbookingidcancel
+      summary: Cancel booked seat
+      description: Customer only own Booking and up to cutoff; staff reason required, before start, may bypass cutoff.
+        Double cancel releases at most once. Final attendance cannot cancel.
+      x-authorized-actors: AUTH_SELF_OWNER|OWNER|MANAGER|RECEPTIONIST
+      x-business-rules: Customer only own Booking and up to cutoff; staff reason required, before start, may bypass
+        cutoff. Double cancel releases at most once. Final attendance cannot cancel.
+      x-idempotency: required; transactionally persisted final 2xx/4xx, in-flight waits, 5xx never cached
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/bookingId'
+      - $ref: '#/components/parameters/key'
+      responses:
+        '200':
+          description: Cancelled or already-cancelled booking
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                reason:
+                  type: string
+                  minLength: 1
+                  maxLength: 500
+  /organizations/{orgId}/bookings/{bookingId}/attendance:
+    post:
+      tags:
+      - Booking
+      operationId: postOrganizationsorgidbookingsbookingidattendance
+      summary: Mark Attendance or No Show
+      description: Session must be FINISHED and dbNow>=endAt; only CONFIRMED transition; assigned trainer owns Trainer
+        resource; Counter unchanged.
+      x-authorized-actors: OWNER|MANAGER|RECEPTIONIST|ASSIGNED_TRAINER
+      x-business-rules: Session must be FINISHED and dbNow>=endAt; only CONFIRMED transition; assigned trainer owns
+        Trainer resource; Counter unchanged.
+      x-idempotency: required; transactionally persisted final 2xx/4xx, in-flight waits, 5xx never cached
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - $ref: '#/components/parameters/bookingId'
+      - $ref: '#/components/parameters/key'
+      responses:
+        '200':
+          description: Attendance marked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '413':
+          $ref: '#/components/responses/Error413'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                status:
+                  type: string
+                  enum:
+                  - ATTENDED
+                  - NO_SHOW
+                reason:
+                  type: string
+                  minLength: 1
+                  maxLength: 500
+              required:
+              - status
+  /organizations/{orgId}/reports/occupancy:
+    get:
+      tags:
+      - Reporting
+      operationId: getOrganizationsorgidreportsoccupancy
+      summary: Tenant occupancy counts for bounded interval
+      description: Required from/to, range max 31 days; counts by booking status and session. Aggregate includes
+        historical attended/no-show.
+      x-authorized-actors: OWNER|MANAGER
+      x-business-rules: Required from/to, range max 31 days; counts by booking status and session. Aggregate includes
+        historical attended/no-show.
+      x-idempotency: not required for this operation
+      parameters:
+      - $ref: '#/components/parameters/orgId'
+      - in: query
+        name: from
+        required: true
+        schema:
+          type: string
+          format: date-time
+        description: Inclusive RFC3339 timestamp; offset required.
+      - in: query
+        name: to
+        required: true
+        schema:
+          type: string
+          format: date-time
+        description: Exclusive RFC3339 timestamp; offset required; max span 31 days by default.
+      responses:
+        '200':
+          description: Occupancy report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occupancy'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '409':
+          $ref: '#/components/responses/Error409'
+        '422':
+          $ref: '#/components/responses/Error422'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '503':
+          $ref: '#/components/responses/Error503'
+  /health/live:
+    get:
+      tags:
+      - Health
+      operationId: getHealthlive
+      summary: Liveness
+      description: Only process life; no secret/internal system information.
+      x-authorized-actors: PUBLIC
+      x-business-rules: Only process life; no secret/internal system information.
+      x-idempotency: not required for this operation
+      parameters: []
+      responses:
+        '200':
+          description: Live
+        '503':
+          $ref: '#/components/responses/Error503'
+      security: []
+  /health/ready:
+    get:
+      tags:
+      - Health
+      operationId: getHealthready
+      summary: Readiness
+      description: Internal-only readiness; require private network/reverse-proxy allowlist AND monitorAuth header.
+        Return generic status only, no DB host or secrets. Missing/invalid monitoring credential receives 401 even
+        if network permitted.
+      x-authorized-actors: INTERNAL_MONITOR
+      x-business-rules: Internal-only readiness; require private network/reverse-proxy allowlist AND monitorAuth
+        header. Return generic status only, no DB host or secrets. Missing/invalid monitoring credential receives
+        401 even if network permitted.
+      x-idempotency: not required for this operation
+      parameters: []
+      responses:
+        '200':
+          description: Ready
+        '503':
+          $ref: '#/components/responses/Error503'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+      security:
+      - monitorAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access JWT with sub/sid; server re-checks active auth session on writes.
+    monitorAuth:
+      type: apiKey
+      in: header
+      name: X-BookCore-Monitor-Key
+      description: Internal monitoring credential provisioned outside repository; also restrict by private network/proxy.
+        Never embed any token value in documents or example payloads.
+  parameters:
+    orgId:
+      in: path
+      name: orgId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    sessionId:
+      in: path
+      name: sessionId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    bookingId:
+      in: path
+      name: bookingId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    userId:
+      in: path
+      name: userId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    hourId:
+      in: path
+      name: hourId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    exceptionId:
+      in: path
+      name: exceptionId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    key:
+      in: header
+      name: Idempotency-Key
+      required: true
+      description: UUIDv4 scoped to tenant + actor + operation; 24-hour suggested retention. Repeat exact request
+        with same key to recover unknown commit outcome.
+      schema:
+        type: string
+        format: uuid
+    cursor:
+      in: query
+      name: cursor
+      required: false
+      schema:
+        type: string
+        maxLength: 512
+    limit:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    from:
+      in: query
+      name: from
+      required: false
+      schema:
+        type: string
+        format: date-time
+      description: 'Inclusive Instant filter input: RFC3339 timestamp with explicit numeric offset or Z; normalize
+        to UTC. NOT validated against organization scheduling timezone.'
+    to:
+      in: query
+      name: to
+      required: false
+      schema:
+        type: string
+        format: date-time
+      description: 'Exclusive Instant filter input: RFC3339 timestamp with explicit numeric offset or Z; normalize
+        to UTC. NOT validated against organization scheduling timezone. Max span 31 days unless restricted by endpoint.'
+  schemas:
+    Problem:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+        status:
+          type: integer
+        code:
+          type: string
+        detail:
+          type: string
+        traceId:
+          type: string
+        retryable:
+          type: boolean
+      required:
+      - type
+      - title
+      - status
+      - code
+      - traceId
+    PageInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        nextCursor:
+          type:
+          - string
+          - 'null'
+        hasMore:
+          type: boolean
+      required:
+      - nextCursor
+      - hasMore
+    User:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - SUSPENDED
+      required:
+      - id
+      - email
+      - status
+    MeResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        memberships:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActiveMembership'
+          description: Active staff memberships only. No customer pseudo-role.
+      required:
+      - user
+      - memberships
+      description: The authenticated global user and their ACTIVE tenant staff memberships, including an empty array
+        if none. Personal booking customers require no staff membership. Never include secrets or revoked membership
+        history.
+    Tokens:
+      type: object
+      additionalProperties: false
+      properties:
+        accessToken:
+          type: string
+          minLength: 1
+          maxLength: 4096
+        refreshToken:
+          type: string
+          minLength: 1
+          maxLength: 4096
+        tokenType:
+          const: Bearer
+        expiresInSeconds:
+          type: integer
+      required:
+      - accessToken
+      - refreshToken
+      - tokenType
+      - expiresInSeconds
+    Membership:
+      type: object
+      additionalProperties: false
+      properties:
+        tenantId:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum:
+          - OWNER
+          - MANAGER
+          - RECEPTIONIST
+          - TRAINER
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - REVOKED
+      required:
+      - tenantId
+      - userId
+      - role
+      - status
+    Organization:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        timezone:
+          type: string
+          minLength: 1
+          maxLength: 64
+        cancellationCutoffMin:
+          type: integer
+          minimum: 0
+          maximum: 10080
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - SUSPENDED
+      required:
+      - id
+      - name
+      - timezone
+      - cancellationCutoffMin
+      - status
+    Branch:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenantId:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        address:
+          type:
+          - string
+          - 'null'
+        active:
+          type: boolean
+      required:
+      - id
+      - tenantId
+      - name
+      - active
+    Resource:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenantId:
+          type: string
+          format: uuid
+        type:
+          enum:
+          - TRAINER
+          - ROOM
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 160
+        branchId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+        trainerUserId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+        active:
+          type: boolean
+        bufferBeforeMin:
+          type: integer
+          minimum: 0
+          maximum: 240
+        bufferAfterMin:
+          type: integer
+          minimum: 0
+          maximum: 240
+      required:
+      - id
+      - tenantId
+      - type
+      - displayName
+      - active
+      - bufferBeforeMin
+      - bufferAfterMin
+      allOf: *id001
+      description: Internal tenant staff resource. TRAINER is tenant-local across branches (trainerUserId present,
+        branchId absent); ROOM is branch-specific (branchId present, trainerUserId absent). Not a public DTO and
+        not returned to Trainer Membership.
+    Service:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenantId:
+          type: string
+          format: uuid
+        title:
+          type: string
+          minLength: 1
+          maxLength: 160
+        durationMin:
+          type: integer
+          minimum: 5
+          maximum: 1440
+        active:
+          type: boolean
+      required:
+      - id
+      - tenantId
+      - title
+      - durationMin
+      - active
+    BusinessHour:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        isoWeekday:
+          type: integer
+          minimum: 1
+          maximum: 7
+        startLocal:
+          type: string
+          pattern: ^([01][0-9]|2[0-3]):[0-5][0-9]$
+        endLocal:
+          type: string
+          pattern: ^([01][0-9]|2[0-3]):[0-5][0-9]$
+        endDayOffset:
+          type: integer
+          enum:
+          - 0
+          - 1
+        branchId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+        resourceId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+        active:
+          type: boolean
+      required:
+      - id
+      - isoWeekday
+      - startLocal
+      - endLocal
+      - endDayOffset
+      - active
+    ScheduleException:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        kind:
+          type: string
+          enum:
+          - CLOSED
+          - OPEN_OVERRIDE
+        startAt:
+          type: string
+          format: date-time
+          description: Persisted UTC instant; response serialized as canonical RFC3339 with trailing Z. Event time
+            is independent of the tenant scheduling timezone.
+          pattern: Z$
+        endAt:
+          type: string
+          format: date-time
+          description: Persisted UTC instant; response serialized as canonical RFC3339 with trailing Z. Event time
+            is independent of the tenant scheduling timezone.
+          pattern: Z$
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 500
+        branchId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+        resourceId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+        active:
+          type: boolean
+      required:
+      - id
+      - kind
+      - startAt
+      - endAt
+      - reason
+      - active
+    Booking:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenantId:
+          type: string
+          format: uuid
+        sessionId:
+          type: string
+          format: uuid
+        customerId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - CONFIRMED
+          - CANCELLED
+          - ATTENDED
+          - NO_SHOW
+        createdAt:
+          type: string
+          format: date-time
+          description: Booking event creation instant stored in UTC and returned with trailing Z; NOT an input schedule
+            timestamp and never subject to tenant IANA-offset matching.
+          pattern: Z$
+        cancelledAt:
+          anyOf:
+          - type: string
+            format: date-time
+            description: Cancellation event instant in UTC, RFC3339 with trailing Z; no scheduling offset validation.
+            pattern: Z$
+          - type: 'null'
+        alreadyCancelled:
+          type: boolean
+      required:
+      - id
+      - tenantId
+      - sessionId
+      - customerId
+      - status
+      - createdAt
+      description: Customer-safe receipt projection shared by booking responses. `createdByActorId` exists in the
+        persisted Booking for audit, but is deliberately not exposed through customer-facing Booking API responses.
+    Occupancy:
+      type: object
+      additionalProperties: false
+      properties:
+        tenantId:
+          type: string
+          format: uuid
+        from:
+          type: string
+          format: date-time
+          description: Persisted UTC instant; response serialized as canonical RFC3339 with trailing Z. Event time
+            is independent of the tenant scheduling timezone.
+          pattern: Z$
+        to:
+          type: string
+          format: date-time
+          description: Persisted UTC instant; response serialized as canonical RFC3339 with trailing Z. Event time
+            is independent of the tenant scheduling timezone.
+          pattern: Z$
+        sessions:
+          type: integer
+        confirmed:
+          type: integer
+        attended:
+          type: integer
+        noShow:
+          type: integer
+        cancelledBookings:
+          type: integer
+      required:
+      - tenantId
+      - from
+      - to
+      - sessions
+      - confirmed
+      - attended
+      - noShow
+      - cancelledBookings
+    UserList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+    OrganizationList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+    MembershipList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Membership'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+    BranchList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Branch'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+    ResourceList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+    ServiceList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+    BookingList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Booking'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+    BusinessHourList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessHour'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+    ScheduleExceptionList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleException'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+    StaffSession:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenantId:
+          type: string
+          format: uuid
+        branchId:
+          type: string
+          format: uuid
+        serviceId:
+          type: string
+          format: uuid
+        trainerResourceId:
+          type: string
+          format: uuid
+        roomResourceId:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          description: Internal room resource identifier or explicit null if no room is assigned; staff only.
+        startAt:
+          type: string
+          format: date-time
+          description: Session occurrence instant, stored in UTC and serialized with trailing Z; timezone is the
+            original IANA scheduling timezone snapshot. Input offset matching applies only when creating the schedule,
+            never to this UTC output.
+          pattern: Z$
+        endAt:
+          type: string
+          format: date-time
+          description: Session occurrence instant, stored in UTC and serialized with trailing Z; timezone is the
+            original IANA scheduling timezone snapshot. Input offset matching applies only when creating the schedule,
+            never to this UTC output.
+          pattern: Z$
+        timezone:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: IANA timezone snapshot used when validating original scheduling inputs; this field does not
+            alter the UTC instants.
+        status:
+          type: string
+          enum:
+          - DRAFT
+          - PUBLISHED
+          - CANCELLED
+          - FINISHED
+        capacityTotal:
+          type: integer
+          minimum: 1
+          maximum: 1000
+        seatsCommitted:
+          type: integer
+          minimum: 0
+        seatsAvailable:
+          type: integer
+          minimum: 0
+          description: Non-guaranteed snapshot = capacityTotal - seatsCommitted.
+        version:
+          type: integer
+          minimum: 0
+      required:
+      - id
+      - tenantId
+      - branchId
+      - serviceId
+      - trainerResourceId
+      - startAt
+      - endAt
+      - status
+      - capacityTotal
+      - seatsCommitted
+      - seatsAvailable
+      - version
+      - timezone
+      - roomResourceId
+      description: Full staff-only Session projection. Never use in unauthenticated response. All timestamps are
+        UTC Z; timezone identifies IANA snapshot for local display.
+    StaffSessionList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StaffSession'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+      description: Staff-only list; items are StaffSession and may contain DRAFT/CANCELLED/FINISHED.
+    ActiveMembership:
+      type: object
+      additionalProperties: false
+      properties:
+        tenantId:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum:
+          - OWNER
+          - MANAGER
+          - RECEPTIONIST
+          - TRAINER
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          description: The /me projection never contains revoked memberships.
+      required:
+      - tenantId
+      - userId
+      - role
+      - status
+      description: Current caller ACTIVE staff memberships only; no REVOKED memberships or credentials.
+    PublicSession:
+      type: object
+      additionalProperties: false
+      description: Strict unauthenticated published-session allowlist; no internal/staff fields and no allOf/oneOf
+        to StaffSession.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Opaque published Session id used for booking.
+        serviceTitle:
+          type: string
+          minLength: 1
+          maxLength: 160
+          description: Public Service title approved for publication.
+        branchName:
+          type: string
+          minLength: 1
+          maxLength: 160
+          description: Public-facing branch name.
+        startAt:
+          type: string
+          format: date-time
+          pattern: Z$
+          description: Published occurrence start UTC instant (canonical RFC3339 Z).
+        endAt:
+          type: string
+          format: date-time
+          pattern: Z$
+          description: Published occurrence end UTC instant (canonical RFC3339 Z).
+        timezone:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: IANA timezone snapshot for local rendering, not authentication or offset validation of UTC
+            output.
+        status:
+          type: string
+          enum:
+          - PUBLISHED
+        seatsAvailable:
+          type: integer
+          minimum: 0
+          description: Snapshot only, not a reservation guarantee; calculated server-side. No committed/total counter
+            disclosed.
+      required:
+      - id
+      - serviceTitle
+      - branchName
+      - startAt
+      - endAt
+      - timezone
+      - status
+      - seatsAvailable
+    PublicSessionList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicSession'
+        page:
+          $ref: '#/components/schemas/PageInfo'
+      required:
+      - items
+      - page
+  responses:
+    Error400:
+      description: Invalid request syntax or query
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Error401:
+      description: Authentication required/invalid
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Error403:
+      description: Function or policy forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Error404:
+      description: Not found or deliberately hidden resource
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Error409:
+      description: State/capacity/resource/idempotency conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Error413:
+      description: Request entity too large
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Error422:
+      description: Valid syntax but business rule violated
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Error429:
+      description: Rate limit exceeded
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Error500:
+      description: Unexpected server error; no success claim
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Error503:
+      description: Temporary dependency/lock/unknown commit outcome; same-key replay advised
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'

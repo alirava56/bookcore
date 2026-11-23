@@ -1,0 +1,25 @@
+name: BookCore Phase13 Source and Runtime Candidate Gates
+on:
+  workflow_dispatch:
+  push:
+    paths: ['apps/**', 'scripts/**', 'infra/**', 'db/**', 'docs/**', 'package*.json', '.github/workflows/backend-phase13.yml']
+jobs:
+  build-and-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Require authentic lockfile before install
+        run: test -s package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run verify:reference
+      - run: npm run verify:static
+      - run: npm run test:phase13:isolated
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run test:unit
+  # No claim of PostgreSQL or restore certification from this workflow.
+  # The dedicated disposable PostgreSQL17/age recovery drill requires explicit approval and secrets.

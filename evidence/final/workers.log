@@ -1,0 +1,36 @@
+bookcore-final-worker-a
+bookcore-final-worker-b
+/bookcore-final-worker-a exit=0
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":70}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":24}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":68}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":25}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":18}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":11}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":8}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":11}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":11}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":14}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":7}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":10}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":9}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":11}
+/bookcore-final-worker-b exit=0
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":55}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":165}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":32}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":16}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":26}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":12}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":14}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":19}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":28}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":9}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":18}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":9}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":9}
+ events | published | receipts | projection
+--------+-----------+----------+------------
+     27 |        27 |       27 |         27
+(1 row)
+

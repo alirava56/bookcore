@@ -1,0 +1,7 @@
+$ npm run test:integration
+
+> bookcore-backend@0.13.0 test:integration
+> node scripts/run-tests.cjs integration
+
+
+FAIL: compiled test directory absent; build first: /mnt/data/BookCore_Phase13_workspace/bookcore/dist/apps/api/test/integration

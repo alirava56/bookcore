@@ -1,0 +1,149 @@
+{
+  "phase": 11,
+  "pure_tests_executed": 76,
+  "pure_tests_passed": 76,
+  "postgresql_tests_executed": 0,
+  "nest_runtime_tests_executed": 0,
+  "operational_security_pg": "NOT VERIFIED",
+  "npm_ci": "FAIL",
+  "typecheck": "FAIL",
+  "build": "FAIL",
+  "lint": "FAIL",
+  "lockfile": "MISSING (authentic npm registry unavailable)",
+  "ci": "NOT VERIFIED",
+  "commands": [
+    {
+      "command": "node scripts/test-availability-pure.cjs",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": 13,
+      "passed": 13
+    },
+    {
+      "command": "node scripts/test-session-domain-pure.cjs",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": 8,
+      "passed": 8
+    },
+    {
+      "command": "node scripts/test-booking-domain-pure.cjs",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": 6,
+      "passed": 6
+    },
+    {
+      "command": "node scripts/test-phase08-pure.cjs",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": 24,
+      "passed": 24
+    },
+    {
+      "command": "node scripts/test-phase09-pure.cjs",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": 6,
+      "passed": 6
+    },
+    {
+      "command": "node scripts/test-phase10-pure.cjs",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": 8,
+      "passed": 8
+    },
+    {
+      "command": "node scripts/test-phase11-pure.cjs",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": 11,
+      "passed": 11
+    },
+    {
+      "command": "npm run verify:reference",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "npm run verify:static",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "python tools/phase09_validate_openapi.py",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "python scripts/phase11-api-inventory.py",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "node tools/phase09_syntax_check.cjs",
+      "exit": 0,
+      "declared_result": "PASS",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "npm ci --offline --ignore-scripts --no-audit --no-fund",
+      "exit": 1,
+      "declared_result": "FAIL",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "npm run typecheck",
+      "exit": 2,
+      "declared_result": "FAIL",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "npm run lint",
+      "exit": 127,
+      "declared_result": "FAIL",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "npm run build",
+      "exit": 1,
+      "declared_result": "FAIL",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "npm run test:unit",
+      "exit": 2,
+      "declared_result": "FAIL",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "npm run test:integration",
+      "exit": 2,
+      "declared_result": "FAIL",
+      "tests": null,
+      "passed": null
+    },
+    {
+      "command": "Actual npm registry",
+      "exit": 1,
+      "declared_result": "FAIL",
+      "tests": null,
+      "passed": null
+    }
+  ]
+}

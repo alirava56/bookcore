@@ -1,0 +1,36 @@
+COMMAND: npm run verify:static
+UTC: 2026-11-23T18:34:52.754062+00:00
+CWD: /mnt/data/bc1516/work
+EXIT: 1
+
+
+> bookcore-backend@0.15.0 verify:static
+> node scripts/static-verify.cjs && node scripts/verify-migration-checksums.cjs && node scripts/phase07-static-verify.cjs && node scripts/phase08-static-check.cjs && node scripts/phase10-static-check.cjs && node scripts/phase11-static-check.cjs && node scripts/phase12-static-check.cjs && node scripts/phase13-static-check.cjs && node scripts/phase14-static-check.cjs
+
+
+--- STDERR ---
+node:internal/assert/utils:281
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(runner.includes('count>=declarations')&&runner.includes('skipped===0')&&runner.includes('compiledCalls<declarations'))
+
+    at Object.<anonymous> (/mnt/data/bc1516/work/scripts/static-verify.cjs:25:8)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}
+
+Node.js v22.16.0

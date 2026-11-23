@@ -1,0 +1,65 @@
+{
+  "phase": "BookCore Phase06",
+  "environment": {
+    "node": "v22.16.0",
+    "npm": "10.9.2",
+    "postgresql_installed": false,
+    "docker_installed": false,
+    "npm_registry": "EAI_AGAIN"
+  },
+  "phase05_files_verified": 232,
+  "previous_migration_hashes_equal": 6,
+  "runtime_test_counts": {
+    "pure_session_domain": {
+      "executed": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0
+    },
+    "pure_availability": {
+      "executed": 13,
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0
+    },
+    "postgresql": {
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "verification": "NOT_VERIFIED"
+    },
+    "nestjs_http": {
+      "executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "verification": "NOT_VERIFIED"
+    }
+  },
+  "static_checks": {
+    "source": "PASS",
+    "migration_checksums": "PASS",
+    "phase05_contract": "PASS",
+    "phase06_contract": "PASS",
+    "ts_ast_syntax": "PASS"
+  },
+  "dependency_installation": "FAIL",
+  "full_typecheck": "NOT_VERIFIED",
+  "lint": "NOT_VERIFIED",
+  "build": "NOT_VERIFIED",
+  "CI": "NOT_VERIFIED",
+  "gates": {
+    "G1": "NOT_VERIFIED",
+    "G2": "NOT_VERIFIED",
+    "G3": "NOT_VERIFIED",
+    "G4": "NOT_VERIFIED",
+    "G5": "NOT_VERIFIED",
+    "G6": "NOT_VERIFIED",
+    "G7": "NOT_VERIFIED",
+    "G8": "NOT_VERIFIED",
+    "G9": "NOT_VERIFIED",
+    "G10": "NOT_VERIFIED",
+    "G11": "FAIL"
+  }
+}

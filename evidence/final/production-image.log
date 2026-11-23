@@ -1,0 +1,13 @@
+ca87dd35a770fc7d602e70ce846023fbddfe56be67a65e25781475022244cdea
+fetch failed
+fetch failed
+fetch failed
+fetch failed
+/health/live 200
+/health/ready 200
+/internal/metrics 200
+/internal/metrics 401
+/me 401
+10001
+bookcore-final-image-check
+image=sha256:46da61a1fc9acfc69f2a752fe522e1a029d5fb6de71a416551965dc8db4cbee7 stop=0

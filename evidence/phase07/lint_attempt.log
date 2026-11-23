@@ -1,0 +1,6 @@
+
+> bookcore-booking-engine@0.7.0 lint
+> eslint 'apps/api/**/*.ts' 'scripts/**/*.ts' --max-warnings=0
+
+sh: 1: eslint: not found
+EXIT=127

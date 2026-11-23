@@ -1,0 +1,13 @@
+COMMAND: node tools/phase09_syntax_check.cjs
+UTC: 2026-11-23T18:37:48.335667+00:00
+CWD: /mnt/data/bc1516/work
+EXIT: 0
+
+{
+  "typescript_sources_checked": 115,
+  "syntax_and_relative_import_issues": [],
+  "scope": "TypeScript parser + local imports only (not real typecheck/build)",
+  "pass": true
+}
+
+--- STDERR ---

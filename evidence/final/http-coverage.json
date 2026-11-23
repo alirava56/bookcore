@@ -1,0 +1,384 @@
+{
+  "designOperationsObserved": 46,
+  "internalMetricsObserved": true,
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "statuses": [
+        200,
+        401
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/logout",
+      "statuses": [
+        204
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "statuses": [
+        200,
+        401
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/register",
+      "statuses": [
+        201,
+        400,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/live",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/ready",
+      "statuses": [
+        200,
+        401,
+        503
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me",
+      "statuses": [
+        200,
+        401
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/staff-invitations/accept",
+      "statuses": [
+        200,
+        401,
+        404,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/staff-invitations/decline",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations",
+      "statuses": [
+        201
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}",
+      "statuses": [
+        200,
+        401,
+        404
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/booking-consents",
+      "statuses": [
+        201
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/booking-consents/{consentId}/revoke",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/booking-consents/me",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/bookings/{bookingId}/attendance",
+      "statuses": [
+        200,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/bookings/{bookingId}/cancel",
+      "statuses": [
+        200,
+        404,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/bookings/me",
+      "statuses": [
+        200,
+        401
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/branches",
+      "statuses": [
+        200,
+        404
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/branches",
+      "statuses": [
+        201,
+        404
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/business-hours",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/business-hours",
+      "statuses": [
+        201,
+        409
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/business-hours/{hourId}",
+      "statuses": [
+        200,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/members",
+      "statuses": [
+        200,
+        403,
+        404
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/members",
+      "statuses": [
+        403,
+        409
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/members/{userId}",
+      "statuses": [
+        200,
+        400,
+        403,
+        404,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/reports/occupancy",
+      "statuses": [
+        200,
+        401,
+        403,
+        404
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/resources",
+      "statuses": [
+        200,
+        403
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/resources",
+      "statuses": [
+        201,
+        404,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/schedule-exceptions",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/schedule-exceptions",
+      "statuses": [
+        201,
+        409,
+        422
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/schedule-exceptions/{exceptionId}",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/services",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/services",
+      "statuses": [
+        201
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/sessions",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions",
+      "statuses": [
+        201,
+        404,
+        409,
+        503
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}",
+      "statuses": [
+        200,
+        404
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/bookings",
+      "statuses": [
+        201,
+        403,
+        404,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/cancel",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/capacity",
+      "statuses": [
+        200,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/finish",
+      "statuses": [
+        200,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/publish",
+      "statuses": [
+        200,
+        403,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/staff-invitations",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/staff-invitations",
+      "statuses": [
+        201,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/staff-invitations/{invitationId}/revoke",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/public/organizations/{orgId}/sessions",
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/public/organizations/{orgId}/sessions/{sessionId}",
+      "statuses": [
+        200,
+        404
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/metrics",
+      "statuses": [
+        200,
+        401
+      ]
+    }
+  ]
+}

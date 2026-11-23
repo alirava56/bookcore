@@ -1,0 +1,20 @@
+$ npm run test:availability:isolated
+
+> bookcore-backend@0.13.0 test:availability:isolated
+> node scripts/test-availability-pure.cjs
+
+PASS business hours permit interval
+PASS not a capacity guarantee
+PASS outside denied
+PASS resource needs its own hours
+PASS resource hours and 120min buffer
+PASS closed wins over override
+PASS overnight Sunday Monday
+PASS Tehran offset valid
+PASS Tehran mismatched offset rejected
+PASS Berlin DST gap rejected
+PASS Berlin DST fold ambiguous rejected
+PASS Berlin fold explicit offsets differ
+PASS invalid duration rejected
+{"executed":13,"passed":13,"failed":0,"scope":"pure TS source only"}
+

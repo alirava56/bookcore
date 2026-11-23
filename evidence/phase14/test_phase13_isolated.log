@@ -1,0 +1,110 @@
+
+> bookcore-backend@0.14.0 test:phase13:isolated
+> node scripts/test-phase13-pure.cjs
+
+TAP version 13
+# Subtest: route labels accept template names only and reject raw UUID routes
+ok 1 - route labels accept template names only and reject raw UUID routes
+  ---
+  duration_ms: 0.873783
+  type: 'test'
+  ...
+# Subtest: status classes are bounded and do not reveal raw response data
+ok 2 - status classes are bounded and do not reveal raw response data
+  ---
+  duration_ms: 0.212028
+  type: 'test'
+  ...
+# Subtest: structured field redaction removes secret keys, untrusted text and PII
+ok 3 - structured field redaction removes secret keys, untrusted text and PII
+  ---
+  duration_ms: 0.311388
+  type: 'test'
+  ...
+# Subtest: request metrics measure actual samples and do not expose full path IDs
+ok 4 - request metrics measure actual samples and do not expose full path IDs
+  ---
+  duration_ms: 7.27
+  type: 'test'
+  ...
+# Subtest: histogram has cumulative buckets, finite sum and correct count
+ok 5 - histogram has cumulative buckets, finite sum and correct count
+  ---
+  duration_ms: 0.514823
+  type: 'test'
+  ...
+# Subtest: metrics operational events are finite and predefined, never a user label
+ok 6 - metrics operational events are finite and predefined, never a user label
+  ---
+  duration_ms: 0.26631
+  type: 'test'
+  ...
+# Subtest: high-cardinality labels are capped and active gauge never underflows
+ok 7 - high-cardinality labels are capped and active gauge never underflows
+  ---
+  duration_ms: 3.523533
+  type: 'test'
+  ...
+# Subtest: restore rejects unapproved operator and isolation before destructive command
+ok 8 - restore rejects unapproved operator and isolation before destructive command
+  ---
+  duration_ms: 1.086462
+  type: 'test'
+  ...
+# Subtest: remote PG transport rejects disable, require and hostaddr bypass
+ok 9 - remote PG transport rejects disable, require and hostaddr bypass
+  ---
+  duration_ms: 0.394923
+  type: 'test'
+  ...
+# Subtest: pg tool versions reject unsupported clients and banner forgery
+ok 10 - pg tool versions reject unsupported clients and banner forgery
+  ---
+  duration_ms: 0.335624
+  type: 'test'
+  ...
+# Subtest: production tools require pinned trusted executable paths
+ok 11 - production tools require pinned trusted executable paths
+  ---
+  duration_ms: 0.238418
+  type: 'test'
+  ...
+# Subtest: encrypted backup producer succeeds without private identity but never claims decrypted validation
+ok 12 - encrypted backup producer succeeds without private identity but never claims decrypted validation
+  ---
+  duration_ms: 22.973681
+  type: 'test'
+  ...
+# Subtest: independent manifest digest detects jointly rewritten archive and manifest
+ok 13 - independent manifest digest detects jointly rewritten archive and manifest
+  ---
+  duration_ms: 15.228103
+  type: 'test'
+  ...
+# Subtest: simulated execute restore preflight attempts verification and never silently reports success
+ok 14 - simulated execute restore preflight attempts verification and never silently reports success
+  ---
+  duration_ms: 25.330581
+  type: 'test'
+  ...
+# Subtest: authenticated session_user mismatch is rejected before restore starts
+ok 15 - authenticated session_user mismatch is rejected before restore starts
+  ---
+  duration_ms: 16.690008
+  type: 'test'
+  ...
+# Subtest: mock execute restores then validates 12 migration checksums and critical ACL; no real PG involved
+ok 16 - mock execute restores then validates 12 migration checksums and critical ACL; no real PG involved
+  ---
+  duration_ms: 34.081589
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 167.390634

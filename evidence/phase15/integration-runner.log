@@ -1,0 +1,8 @@
+COMMAND: node scripts/run-tests.cjs integration
+UTC: 2026-11-23T18:37:59.685542+00:00
+CWD: /mnt/data/bc1516/work
+EXIT: 2
+
+
+--- STDERR ---
+BLOCKED: compiled test directory absent; build first: /mnt/data/bc1516/work/dist/apps/api/test/integration

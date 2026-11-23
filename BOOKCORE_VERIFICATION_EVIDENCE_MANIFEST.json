@@ -1,0 +1,76 @@
+{
+  "formatVersion": 1,
+  "scope": "Executed synthetic verification; no remote CI or production certification",
+  "baseSource": "BookCore-Phase-16-Final-Release-Audit.zip",
+  "baseArchiveSha256": "3bbb7de9e3f921bf02f6c0d2c8e1ec64bd106efd1b08f8663a5fb40502171930",
+  "currentFinalManifest": "MANIFEST.md",
+  "sourceDigest": "3f32614939c867d38c3665029ff83f0ce12b19fb6906316391c146a3582defe5",
+  "suiteResults": [
+    {
+      "suite": "unit",
+      "files": 31,
+      "declarations": 144,
+      "counts": {
+        "discovered": 144,
+        "passed": 144,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "exit": 0,
+      "ok": true
+    },
+    {
+      "suite": "database",
+      "files": 8,
+      "declarations": 36,
+      "counts": {
+        "discovered": 36,
+        "passed": 36,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "exit": 0,
+      "ok": true
+    },
+    {
+      "suite": "concurrency",
+      "files": 3,
+      "declarations": 22,
+      "counts": {
+        "discovered": 22,
+        "passed": 22,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "exit": 0,
+      "ok": true
+    }
+  ],
+  "files": {
+    "evidence/final/actionlint.log": "3c6b2b7cd36ec557b8e92aae0566730df594ae2ababf4c596ac883d53a70ff11",
+    "evidence/final/baseline-diff.json": "1b0e391ddca0de570f9733b6b6bb44be60beabf03c6120deb6cb3876f223545f",
+    "evidence/final/capacity.json": "21225217e2b1e711cf786e79c528e8a2211e79cf3a3c2d09e0ca3a3488de8eab",
+    "evidence/final/checks.log": "30da025f50f3751034dd1457b79b8b2398216dbe51d942823e57ea5c7c8aa82c",
+    "evidence/final/database-acl.log": "e585bda1afef6f6c520eb6149ab901b5f7864d3f2c5803cb2340c5cfacd4cbc7",
+    "evidence/final/final-cert.log": "54791662a28a575cc973327ade3283d20f1a46f04d93f2022acc0d1f3cb3fd67",
+    "evidence/final/http-coverage.json": "edccd76cb88533ca203159d9f84a4ddc050ef4be6ffdf123f07f5add85772013",
+    "evidence/final/image-final.log": "9ad4a65d16af1dc35c3667c8def72acaca66361f74db9deccf9e8bf4a644837b",
+    "evidence/final/initial-findings-fa.md": "9a0b93321604511b44e453d9e9eeeb4d3624c9b2c1772e5e899a16f819343242",
+    "evidence/final/npm-ci-audit.log": "566458806944ff059e7ca4476d30ddf294fb51be17cbb5c44db5c91bd78d92b3",
+    "evidence/final/openapi-reproducibility.log": "4de25965a2261f83fec26d1442f921037ce7c4b4997be1aaf329f51d1262d1f8",
+    "evidence/final/pitr.log": "39b90f8f74334b7017a8f19f734b8d1b9ac07e6f1f7150047a2699345b38362f",
+    "evidence/final/production-image.log": "1d904cd83fa8a2ef61d1f76d0c617e2c632f6a332e3d25922ff09c920c521e2a",
+    "evidence/final/recovery-final.log": "75b1246d448a7b50e0935bb51353456d690fa058f0d66463a9100f4917077f99",
+    "evidence/final/sbom.cdx.json": "6233069586cfd80b0201130cfc866de42bfa54afc7fb644882a76b9827cbd0f7",
+    "evidence/final/secret-adjudication.log": "bbe7e708e7d05133be3115b66c38ded23157c05b68dfb65efdba59cfe12f92e5",
+    "evidence/final/secret-scan.log": "21d12d3d694539fa018ed1e1f35db9a7fb53e324466238cf993a8773baa436d1",
+    "evidence/final/source-files.sha256": "3f32614939c867d38c3665029ff83f0ce12b19fb6906316391c146a3582defe5",
+    "evidence/final/source.sha256": "7b39542aee8064e07b3db35b234a04c975a91a4a9b4cf1fa6537bcdd2390f5d9",
+    "evidence/final/worker-crash.log": "fb29a1e3ecaa949a61a2ec385316b3ac3258da36172de7b5df14221e304faa31",
+    "evidence/final/worker-retry.log": "7e3d27808f59c2ebb7ad630a4beea0d2f8472dc6fe65fad5d533be5880aba074",
+    "evidence/final/workers.log": "d6918183e0131d0bf604acd4a20cf0eb4b8bc692637f7853f9c8c0f386257251"
+  }
+}

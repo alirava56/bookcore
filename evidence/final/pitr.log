@@ -1,0 +1,62 @@
+
+> bookcore-backend@0.16.0 migrate
+> node dist/scripts/migrate.js
+
+applied 001_core.sql d83fdc0165aca2ad451a8aeeabaa13b24419632b1bebd1e84ad8705552c17454
+applied 002_resource_guard.sql ca330e5e009baed904384724304658aeef578bd4d1a04c53067b0a8c7e0fc728
+applied 003_hardening.sql ec225d749b25eb6372e0723318f2553a1774876f4138761353ffec7653835798
+applied 004_history_consistency.sql 4a5bb3c92384d8aa9e71e2822ce74d4bc0c31e12be6fbf04ea4879ddb77b89dd
+Migration failed; see database administrator for SQLSTATE details.
+CREATE ROLE
+CREATE ROLE
+
+> bookcore-backend@0.16.0 migrate
+> node dist/scripts/migrate.js
+
+verified 001_core.sql d83fdc0165aca2ad451a8aeeabaa13b24419632b1bebd1e84ad8705552c17454
+verified 002_resource_guard.sql ca330e5e009baed904384724304658aeef578bd4d1a04c53067b0a8c7e0fc728
+verified 003_hardening.sql ec225d749b25eb6372e0723318f2553a1774876f4138761353ffec7653835798
+verified 004_history_consistency.sql 4a5bb3c92384d8aa9e71e2822ce74d4bc0c31e12be6fbf04ea4879ddb77b89dd
+applied 005_identity_security.sql 16634916fc696eac599a0d459ee35952f8649cf77a1300c58baaea95e73921fd
+applied 006_catalog_availability.sql 9c280855da277cf3ca2fa29bbfdabb3315fbceeb97023a0138ed1bece6876401
+applied 007_session_permissions.sql de792ee71c8ad61ef582f001bd939512caf7fbb2517ccb1c98ecf8efbf4730dc
+applied 008_booking_permissions.sql 88c69218a06a928756887f075228de63b207b3fc2176a23316a26db48dddc1ff
+applied 009_outbox_delivery.sql ab101c771b10c68ee791b8f2bcac1d76198487134308b4d81434f07b4f2116ca
+applied 010_security_governance.sql fa61f2d54a17918e0bf14f99e0afaa3a3eb2cd344bbebda2b30ec55118bffb4e
+applied 011_operational_integrity.sql 799c7eb44fb6a4abe2295bc5c19e57b2ea228f7fc889702f87ee639470a8bfa8
+applied 012_integrity_inspection_paging.sql 83ccfc18cb0d3807d6dea74c1852e3ab06f9b4f7abeb005f0f6afe758c0d2dc2
+applied 013_runtime_read_locks.sql 631642c3a44c795e26b12de42db5473ac98826e95f0afdea7cd20ace10b7b03c
+applied 014_allocation_trigger_permissions.sql eca44194c1bc3028c1c5449e380b79b44de4317a549082085c5aeeba7f9f1cf5
+applied 015_outbox_recovery_operator_lock.sql 1e88d7a5cb2a2745bfa4942bc400e221e732a9f9362bce4f2e9ba5a8dae1617f
+CREATE SCHEMA
+CREATE TABLE
+INSERT 0 1
+waiting for checkpoint
+32802/32802 kB (100%), 0/1 tablespace
+32802/32802 kB (100%), 1/1 tablespace
+backup successfully verified
+INSERT 0 1
+ pg_create_restore_point
+-------------------------
+ 0/40001E8
+(1 row)
+
+INSERT 0 1
+ pg_switch_wal
+---------------
+ 0/40002B8
+(1 row)
+
+000000010000000000000006|7
+f9f5080bfb9711f85bd171f8656fc92485e3551b0b4df3d1167f728e4f7938f0
+PITR_EXPECTED_MARKERS_LEDGER_PROMOTION base,replayed|15|f
+2026-11-23 21:31:36.745 UTC [37] LOG:  restored log file "000000010000000000000003" from archive
+2026-11-23 21:31:36.849 UTC [37] LOG:  restored log file "000000010000000000000004" from archive
+2026-11-23 21:31:36.921 UTC [37] LOG:  restored log file "000000010000000000000005" from archive
+2026-11-23 21:31:37.048 UTC [37] LOG:  restored log file "000000010000000000000006" from archive
+2026-11-23 21:31:37.057 UTC [1] LOG:  database system is ready to accept read-only connections
+2026-11-23 21:31:37.057 UTC [37] LOG:  recovery stopping at restore point "bookcore_verify_target", time 2026-11-23 21:30:53.807941+00
+2026-11-23 21:31:37.120 UTC [37] LOG:  restored log file "000000010000000000000004" from archive
+2026-11-23 21:31:37.133 UTC [37] LOG:  selected new timeline ID: 2
+2026-11-23 21:31:37.209 UTC [37] LOG:  archive recovery complete
+2026-11-23 21:31:37.235 UTC [1] LOG:  database system is ready to accept connections

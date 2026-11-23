@@ -1,0 +1,6 @@
+{
+  "sourceTsFilesParsed": 71,
+  "parseErrorCount": 0,
+  "errors": [],
+  "warning": "parse-only; not typecheck nor runtime"
+}

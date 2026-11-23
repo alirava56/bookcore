@@ -1,0 +1,72 @@
+name: BookCore Phase 02 PostgreSQL verification
+on:
+  push:
+    paths:
+      - 'spike/**'
+      - 'tools/**'
+      - 'infra/**'
+      - '.github/workflows/postgres-spike.yml'
+  workflow_dispatch:
+jobs:
+  postgres-spike:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    services:
+      postgres:
+        image: postgres:17.11-bookworm
+        env:
+          POSTGRES_DB: bookcore_spike
+          POSTGRES_USER: bookcore
+          POSTGRES_PASSWORD: bookcore_ci_only
+        ports:
+          - 55432:5432
+        options: >-
+          --health-cmd "pg_isready -U bookcore -d bookcore_spike"
+          --health-interval 2s --health-timeout 4s --health-retries 30
+    env:
+      DATABASE_URL: postgresql://bookcore:bookcore_ci_only@127.0.0.1:55432/bookcore_spike
+      BOOKCORE_MIN_TESTS: '56'
+      LOCK_TIMEOUT: '30s'
+      STATEMENT_TIMEOUT: '60s'
+    defaults:
+      run:
+        working-directory: spike
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+          cache-dependency-path: spike/package-lock.json
+      - name: Lockfile prerequisite (fail, do not fall back)
+        run: |
+          if [[ ! -f package-lock.json ]]; then
+            echo 'Missing authentic npm lockfile; resolve online and commit before CI' >&2
+            exit 1
+          fi
+      - name: Install verified dependency tree
+        run: npm ci --ignore-scripts
+      - name: Typecheck with real packages
+        run: npm run typecheck
+      - name: Static validation and zero-test regression
+        run: npm run lint
+      - name: Build from clean TS
+        run: npm run build
+      - name: Fresh database migrations
+        run: npm run migrate 2>&1 | tee ../evidence/ci-migrations.log
+      - name: Migration idempotence and checksum drift guard
+        run: npm run migrate
+      - name: Real integration, concurrency, fault tests
+        run: npm test 2>&1 | tee ../evidence/ci-tests.log
+      - name: Reconcile persisted DB state
+        run: npm run reconcile
+      - name: Upload failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bookcore-spike-failure-${{ github.run_id }}
+          path: |
+            spike/dist/
+            spike/package-lock.json
+            evidence/ci-*.log
+          if-no-files-found: ignore

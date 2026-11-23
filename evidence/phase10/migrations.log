@@ -1,0 +1,3 @@
+$ node scripts/verify-migration-checksums.cjs
+exit=0 seconds=0.03
+PASS migration checksum constants equal 11 SQL sources

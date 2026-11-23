@@ -1,0 +1,6 @@
+
+> bookcore-reporting-outbox@0.8.0 lint
+> eslint 'apps/api/**/*.ts' 'scripts/**/*.ts' --max-warnings=0
+
+sh: 1: eslint: not found
+lint_exit=127

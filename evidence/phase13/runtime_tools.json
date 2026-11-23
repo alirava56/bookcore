@@ -1,0 +1,11 @@
+{
+  "node": "/opt/nvm/versions/node/v22.16.0/bin/node",
+  "npm": "/opt/nvm/versions/node/v22.16.0/bin/npm",
+  "tsc": "/opt/nvm/versions/node/v22.16.0/bin/tsc",
+  "docker": null,
+  "psql": null,
+  "pg_dump": null,
+  "pg_restore": null,
+  "age": null,
+  "eslint": null
+}

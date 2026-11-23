@@ -1,0 +1,119 @@
+
+> bookcore-backend@0.16.0 verify:reference
+> node scripts/verify-reference.cjs
+
+PASS authentic Phase02 archive SHA256 3da3f894ff4a55c20ef3ff1ae666169c1461f6fb7f0230dee55be8a22e8efcab
+
+> bookcore-backend@0.16.0 verify:static
+> node scripts/static-verify.cjs && node scripts/verify-migration-checksums.cjs && node scripts/phase07-static-verify.cjs && node scripts/phase08-static-check.cjs && node scripts/phase10-static-check.cjs && node scripts/phase11-static-check.cjs && node scripts/phase12-static-check.cjs && node scripts/phase13-static-check.cjs && node scripts/phase14-static-check.cjs
+
+PASS static source requirements; 23 mandatory paths; 6 preserved + additive phase06 migration
+PASS migration checksum constants equal 15 SQL sources
+PASS Phase07 source presence and safety-oriented static invariants; NOT a DB verification
+PASS Phase08 structural requirements (source-only)
+PASS phase10 source-only structural security checks
+{"staticChecks":"PASS","migrations":12,"apiDesign":46,"sourceRoutes":46,"sourceTypeScript":116,"pgRuntime":"NOT VERIFIED"}
+PASS phase12 static controls; migration count: 15
+PASS Phase13 static contracts; not Runtime/PG evidence
+PASS phase14 source invariants; does not establish PostgreSQL/NestJS correctness
+
+> bookcore-backend@0.16.0 test:phase15:isolated
+> node --test scripts/phase15-regression.test.cjs
+
+TAP version 13
+# Subtest: release manifest matches exact package inventory
+ok 1 - release manifest matches exact package inventory
+  ---
+  duration_ms: 8.26291
+  type: 'test'
+  ...
+# Subtest: release rejects a new lockfile until re-frozen
+ok 2 - release rejects a new lockfile until re-frozen
+  ---
+  duration_ms: 7.048776
+  type: 'test'
+  ...
+# Subtest: release detects file deletion
+ok 3 - release detects file deletion
+  ---
+  duration_ms: 2.780601
+  type: 'test'
+  ...
+# Subtest: workspace detects modification of tracked files
+ok 4 - workspace detects modification of tracked files
+  ---
+  duration_ms: 3.158902
+  type: 'test'
+  ...
+# Subtest: release detects unexpected file addition
+ok 5 - release detects unexpected file addition
+  ---
+  duration_ms: 3.23414
+  type: 'test'
+  ...
+# Subtest: normal integration discovery excludes destructive recovery; recovery has explicit prereqs
+ok 6 - normal integration discovery excludes destructive recovery; recovery has explicit prereqs
+  ---
+  duration_ms: 3.807597
+  type: 'test'
+  ...
+# Subtest: dedicated recovery source is retained without mutation
+ok 7 - dedicated recovery source is retained without mutation
+  ---
+  duration_ms: 2.867603
+  type: 'test'
+  ...
+# Subtest: runner actually excludes recovery from normal integration and rejects zero tests
+ok 8 - runner actually excludes recovery from normal integration and rejects zero tests
+  ---
+  duration_ms: 195.059499
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 303.812226
+
+> bookcore-backend@0.16.0 test:phase16:isolated
+> node scripts/test-phase16-pure.cjs
+
+TAP version 13
+# Subtest: backup rejects untrusted PATH even when fake pg_dump is on PATH
+ok 1 - backup rejects untrusted PATH even when fake pg_dump is on PATH
+  ---
+  duration_ms: 7.315949
+  type: 'test'
+  ...
+# Subtest: backup policy requires pinned psql and pg_dump independently
+ok 2 - backup policy requires pinned psql and pg_dump independently
+  ---
+  duration_ms: 0.437418
+  type: 'test'
+  ...
+# Subtest: pinned producer tool rejects group writable executable and symlink
+ok 3 - pinned producer tool rejects group writable executable and symlink
+  ---
+  duration_ms: 1.894345
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 174.26972
+{
+  "static_yaml": "PASS",
+  "operations": 46,
+  "unique_operation_ids": 46,
+  "internal_refs_resolved": 507,
+  "errors": []
+}

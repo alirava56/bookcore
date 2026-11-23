@@ -1,0 +1,69 @@
+COMMAND: npm run test:session-domain:isolated
+UTC: 2026-11-23T18:41:40.686760+00:00
+CWD: /mnt/data/bc1516/phase16
+EXIT: 0
+
+
+> bookcore-backend@0.16.0 test:session-domain:isolated
+> node scripts/test-session-domain-pure.cjs
+
+TAP version 13
+# Subtest: DRAFT may publish or cancel, not finish
+ok 1 - DRAFT may publish or cancel, not finish
+  ---
+  duration_ms: 0.773142
+  type: 'test'
+  ...
+# Subtest: PUBLISHED may finish or cancel, not republish
+ok 2 - PUBLISHED may finish or cancel, not republish
+  ---
+  duration_ms: 0.103452
+  type: 'test'
+  ...
+# Subtest: terminal Session states forbid every transition
+ok 3 - terminal Session states forbid every transition
+  ---
+  duration_ms: 0.192274
+  type: 'test'
+  ...
+# Subtest: capacity validation rejects below committed, negative and overflow
+ok 4 - capacity validation rejects below committed, negative and overflow
+  ---
+  duration_ms: 0.121299
+  type: 'test'
+  ...
+# Subtest: future half-open intervals require an ordered duration <= 24h
+ok 5 - future half-open intervals require an ordered duration <= 24h
+  ---
+  duration_ms: 0.229789
+  type: 'test'
+  ...
+# Subtest: buffer extension applies to both sides without modifying occurrence
+ok 6 - buffer extension applies to both sides without modifying occurrence
+  ---
+  duration_ms: 0.827302
+  type: 'test'
+  ...
+# Subtest: cursor is strict, stable and roundtrips same-start tie break
+ok 7 - cursor is strict, stable and roundtrips same-start tie break
+  ---
+  duration_ms: 1.50416
+  type: 'test'
+  ...
+# Subtest: pages enforce strict 31-day windows
+ok 8 - pages enforce strict 31-day windows
+  ---
+  duration_ms: 0.149531
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 79.542344
+
+--- STDERR ---

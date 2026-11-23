@@ -1,0 +1,6 @@
+=== phase05 environment ===
+v22.16.0
+10.9.2
+psql-not-found
+docker-not-found
+/opt/nvm/versions/node/v22.16.0/bin/tsc

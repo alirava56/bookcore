@@ -1,0 +1,8 @@
+COMMAND: node scripts/run-tests.cjs recovery
+UTC: 2026-11-23T18:37:59.795510+00:00
+CWD: /mnt/data/bc1516/work
+EXIT: 2
+
+
+--- STDERR ---
+BLOCKED: dedicated authorized disposable RESTORE environment and trusted provenance required

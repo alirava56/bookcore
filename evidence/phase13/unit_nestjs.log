@@ -1,0 +1,7 @@
+$ npm run test:unit
+
+> bookcore-backend@0.13.0 test:unit
+> node scripts/run-tests.cjs unit
+
+
+FAIL: compiled test directory absent; build first: /mnt/data/BookCore_Phase13_workspace/bookcore/dist/apps/api/test/unit

@@ -1,0 +1,81 @@
+COMMAND: npm run test:phase12:isolated
+UTC: 2026-11-23T18:37:54.007248+00:00
+CWD: /mnt/data/bc1516/work
+EXIT: 0
+
+
+> bookcore-backend@0.15.0 test:phase12:isolated
+> node scripts/test-phase12-pure.cjs
+
+TAP version 13
+# Subtest: backup policy: database names and explicit connection are mandatory
+ok 1 - backup policy: database names and explicit connection are mandatory
+  ---
+  duration_ms: 1.057411
+  type: 'test'
+  ...
+# Subtest: retention is bounded and expiration is not deletion permission
+ok 2 - retention is bounded and expiration is not deletion permission
+  ---
+  duration_ms: 0.232543
+  type: 'test'
+  ...
+# Subtest: restore fail-closed: production, remote, mismatched, no approval
+ok 3 - restore fail-closed: production, remote, mismatched, no approval
+  ---
+  duration_ms: 0.194527
+  type: 'test'
+  ...
+# Subtest: backup private directory rejects symlink and group-readable directory
+ok 4 - backup private directory rejects symlink and group-readable directory
+  ---
+  duration_ms: 1.210728
+  type: 'test'
+  ...
+# Subtest: manifest rejects traversal and wrong sha, retention or format
+ok 5 - manifest rejects traversal and wrong sha, retention or format
+  ---
+  duration_ms: 0.375574
+  type: 'test'
+  ...
+# Subtest: backup and checksum test using synthetic command mocks, NOT actual PostgreSQL
+ok 6 - backup and checksum test using synthetic command mocks, NOT actual PostgreSQL
+  ---
+  duration_ms: 27.033369
+  type: 'test'
+  ...
+# Subtest: tool unavailable propagates failure; no output archive finalized
+ok 7 - tool unavailable propagates failure; no output archive finalized
+  ---
+  duration_ms: 1.936288
+  type: 'test'
+  ...
+# Subtest: malformed command-line arguments are rejected, including repeated options
+ok 8 - malformed command-line arguments are rejected, including repeated options
+  ---
+  duration_ms: 0.200166
+  type: 'test'
+  ...
+# Subtest: backup and restore tooling contain no unbounded destructive flags
+ok 9 - backup and restore tooling contain no unbounded destructive flags
+  ---
+  duration_ms: 0.959807
+  type: 'test'
+  ...
+# Subtest: retention preview never deletes archives and bounds workload
+ok 10 - retention preview never deletes archives and bounds workload
+  ---
+  duration_ms: 13.95374
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 96.609493
+
+--- STDERR ---

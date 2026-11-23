@@ -1,0 +1,2 @@
+PASS runner regression: missing, zero, successful, failed cases
+EXIT=0

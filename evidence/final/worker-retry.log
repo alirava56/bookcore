@@ -1,0 +1,6 @@
+b67ae3215e8aeb7a4092d31fb4e83c958c43b8cc47256e5f1c043ea6895e2ff1
+f3b9d4ba664e13b45a2198185458feb29e4d86bb87b61fbc1bfb3d118846292c
+bookcore-final-worker-retry
+{"type":"outbox_tick","claimed":1,"processed":0,"failed":1,"leaseLost":0,"durationMs":10053}
+{"type":"outbox_tick","claimed":1,"processed":1,"failed":0,"leaseLost":0,"durationMs":2350}
+observed retryable failure: True; attempts|published|last_error_code|delayed = 2|t||f

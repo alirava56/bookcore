@@ -1,0 +1,21 @@
+groups:
+  - name: bookcore-phase13-provisional
+    rules:
+      - alert: BookCoreUnknownCommitDetected
+        expr: sum(increase(bookcore_operational_events_total{event="db_unknown_commit"}[5m])) > 0
+        for: 0m
+        labels: {severity: critical}
+        annotations:
+          summary: "Unknown transaction outcome requires same-key recovery"
+      - alert: BookCorePoolWaiting
+        expr: max(bookcore_db_pool_connections{state="waiting"}) > 4
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: "Pool queue is rising; examine long transactions"
+      - alert: BookCoreElevated5xx
+        expr: sum(rate(bookcore_http_requests_total{status_class="5xx"}[10m])) / clamp_min(sum(rate(bookcore_http_requests_total[10m])), 0.01) > 0.05
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "Technical HTTP errors elevated; calibrate thresholds from measured baseline"

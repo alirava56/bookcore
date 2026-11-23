@@ -1,0 +1,8 @@
+COMMAND: python scripts/phase16-api-audit.py
+UTC: 2026-11-23T18:41:37.927744+00:00
+CWD: /mnt/data/bc1516/phase16
+EXIT: 0
+
+{"sourceRoutes": 47, "designOperations": 46, "matched": 46, "missing": [], "extra": [{"method": "GET", "path": "/api/v1/internal/metrics", "privateMonitoring": true}]}
+
+--- STDERR ---

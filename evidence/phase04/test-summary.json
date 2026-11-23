@@ -1,0 +1,87 @@
+{
+  "project": "BookCore",
+  "phase": "04",
+  "as_of": "2026-11-22",
+  "node_version": "v22.16.0",
+  "npm_version": "10.9.2",
+  "postgresql_version": null,
+  "postgresql_tests_executed": 0,
+  "nest_tests_executed": 0,
+  "source_test_files": 12,
+  "source_test_declarations": 39,
+  "unit_http_pg_tests_passed": 0,
+  "unit_http_pg_tests_failed": 0,
+  "unit_http_pg_tests_skipped": 0,
+  "static_checks": {
+    "typescript_ast_syntax": "PASS",
+    "phase04_source_invariants": "PASS",
+    "phase01_contract_strict_yaml_refs": "PASS",
+    "phase03_reference_manifest": "PASS",
+    "zero_test_runner_selftest": "PASS",
+    "prior_migration_sha256": "PASS"
+  },
+  "runtime_checks": {
+    "npm_lockfile": "FAIL: ENOTCACHED",
+    "npm_ci": "FAIL: no package-lock.json",
+    "typecheck": "FAIL: deps/type declarations unavailable",
+    "build": "FAIL: deps/type declarations unavailable",
+    "lint": "FAIL: eslint not installed",
+    "unit_tests": "NOT VERIFIED: no compiled test files",
+    "postgresql_integration": "NOT VERIFIED: no PostgreSQL available",
+    "github_actions": "NOT VERIFIED: workflow created, not run"
+  },
+  "gates": {
+    "G1": {
+      "implementation": "IMPLEMENTED",
+      "verification": "NOT VERIFIED",
+      "evidence": "APP_GUARD + @Public/@MonitoringRoute; AST static PASS; runtime not executed"
+    },
+    "G2": {
+      "implementation": "IMPLEMENTED",
+      "verification": "NOT VERIFIED",
+      "evidence": "Argon2id and normalized email with SQL unique; packages not installed"
+    },
+    "G3": {
+      "implementation": "IMPLEMENTED",
+      "verification": "NOT VERIFIED",
+      "evidence": "HS256 kid/issuer/aud/exp + live auth session guard; JWT tests not executed"
+    },
+    "G4": {
+      "implementation": "PARTIAL",
+      "verification": "NOT VERIFIED",
+      "evidence": "atomic rotation/replay/logout source; unknown COMMIT recovery UX unresolved"
+    },
+    "G5": {
+      "implementation": "IMPLEMENTED",
+      "verification": "NOT VERIFIED",
+      "evidence": "single transaction Organization+Owner+Audit+Outbox; SQL unexecuted"
+    },
+    "G6": {
+      "implementation": "IMPLEMENTED",
+      "verification": "NOT VERIFIED",
+      "evidence": "app policies and last owner trigger; no real concurrency run"
+    },
+    "G7": {
+      "implementation": "PARTIAL",
+      "verification": "NOT VERIFIED",
+      "evidence": "guard and SQL scoped; full penetration/object authorization out of scope"
+    },
+    "G8": {
+      "implementation": "PARTIAL",
+      "verification": "NOT VERIFIED",
+      "evidence": "001-004 byte-identical, 005 source new; PostgreSQL and npm unavailable"
+    },
+    "G9": {
+      "implementation": "PARTIAL",
+      "verification": "NOT VERIFIED",
+      "evidence": "YAML strict PASS; generated Swagger artifacts require NestJS deps"
+    },
+    "G10": {
+      "implementation": "PARTIAL",
+      "verification": "FAIL",
+      "evidence": "Test sources, zero-test runner PASS; clean npm ci/build/test blocked"
+    }
+  },
+  "production_ready": false,
+  "deployment_or_github_push_performed": false
+}

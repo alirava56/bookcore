@@ -1,0 +1,91 @@
+
+> bookcore-backend-foundation@0.3.0 build
+> tsc -p tsconfig.json
+
+apps/api/src/app.module.ts(1,31): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/bootstrap.ts(2,29): error TS2307: Cannot find module '@nestjs/core' or its corresponding type declarations.
+apps/api/src/bootstrap.ts(3,54): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/bootstrap.ts(4,48): error TS2307: Cannot find module '@nestjs/swagger' or its corresponding type declarations.
+apps/api/src/bootstrap.ts(5,33): error TS2307: Cannot find module 'express' or its corresponding type declarations.
+apps/api/src/bootstrap.ts(6,20): error TS2307: Cannot find module 'helmet' or its corresponding type declarations.
+apps/api/src/bootstrap.ts(19,23): error TS2307: Cannot find module 'express' or its corresponding type declarations.
+apps/api/src/bootstrap.ts(19,53): error TS2307: Cannot find module 'express' or its corresponding type declarations.
+apps/api/src/bootstrap.ts(19,85): error TS2307: Cannot find module 'express' or its corresponding type declarations.
+apps/api/src/bootstrap.ts(50,69): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+apps/api/src/common/errors/problem.filter.ts(1,67): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/common/errors/problem.filter.ts(2,31): error TS2307: Cannot find module 'express' or its corresponding type declarations.
+apps/api/src/common/errors/problem.ts(1,43): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/common/errors/problem.ts(30,42): error TS18046: 'ex' is of type 'unknown'.
+apps/api/src/common/logging/json-logger.ts(1,48): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/common/logging/json-logger.ts(14,28): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+apps/api/src/common/logging/json-logger.ts(15,10): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+apps/api/src/common/observability/request-context.ts(1,28): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
+apps/api/src/common/observability/request-context.ts(2,54): error TS2307: Cannot find module 'express' or its corresponding type declarations.
+apps/api/src/common/security/authorization.ts(1,57): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/common/security/monitor.guard.ts(1,44): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
+apps/api/src/common/security/monitor.guard.ts(2,22): error TS2307: Cannot find module 'node:net' or its corresponding type declarations.
+apps/api/src/common/security/monitor.guard.ts(3,64): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/config/app-config.ts(1,32): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/config/app-config.ts(2,22): error TS2307: Cannot find module 'node:net' or its corresponding type declarations.
+apps/api/src/config/app-config.ts(41,34): error TS2503: Cannot find namespace 'NodeJS'.
+apps/api/src/config/app-config.ts(60,64): error TS7006: Parameter 'v' implicitly has an 'any' type.
+apps/api/src/config/app-config.ts(61,54): error TS7006: Parameter 'v' implicitly has an 'any' type.
+apps/api/src/config/app-config.ts(91,71): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+apps/api/src/infrastructure/database/database.module.ts(1,32): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/infrastructure/database/database.service.ts(1,53): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/infrastructure/database/database.service.ts(2,78): error TS2307: Cannot find module 'pg' or its corresponding type declarations.
+apps/api/src/infrastructure/transactions/unit-of-work.ts(1,36): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/infrastructure/transactions/unit-of-work.ts(2,33): error TS2307: Cannot find module 'pg' or its corresponding type declarations.
+apps/api/src/main.ts(5,28): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+apps/api/src/main.ts(13,3): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+apps/api/src/main.ts(14,3): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+apps/api/src/modules/booking/booking-sql.adapter.ts(1,28): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/modules/booking/booking-sql.adapter.ts(2,28): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
+apps/api/src/modules/booking/booking-sql.adapter.ts(3,33): error TS2307: Cannot find module 'pg' or its corresponding type declarations.
+apps/api/src/modules/health/health.controller.ts(1,42): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/src/modules/health/health.controller.ts(2,74): error TS2307: Cannot find module '@nestjs/swagger' or its corresponding type declarations.
+apps/api/src/modules/health/health.module.ts(1,24): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/test/integration/postgres.test.ts(1,18): error TS2307: Cannot find module 'node:test' or its corresponding type declarations.
+apps/api/test/integration/postgres.test.ts(2,20): error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.
+apps/api/test/integration/postgres.test.ts(3,22): error TS2307: Cannot find module 'pg' or its corresponding type declarations.
+apps/api/test/integration/postgres.test.ts(7,12): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+apps/api/test/integration/postgres.test.ts(16,36): error TS7006: Parameter 'r' implicitly has an 'any' type.
+apps/api/test/unit/config.test.ts(1,18): error TS2307: Cannot find module 'node:test' or its corresponding type declarations.
+apps/api/test/unit/config.test.ts(2,20): error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.
+apps/api/test/unit/database-ready.test.ts(1,18): error TS2307: Cannot find module 'node:test' or its corresponding type declarations.
+apps/api/test/unit/database-ready.test.ts(2,20): error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.
+apps/api/test/unit/errors.test.ts(1,18): error TS2307: Cannot find module 'node:test' or its corresponding type declarations.
+apps/api/test/unit/errors.test.ts(2,20): error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.
+apps/api/test/unit/errors.test.ts(3,37): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/test/unit/http.test.ts(1,18): error TS2307: Cannot find module 'node:test' or its corresponding type declarations.
+apps/api/test/unit/http.test.ts(2,20): error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.
+apps/api/test/unit/http.test.ts(3,22): error TS2307: Cannot find module '@nestjs/testing' or its corresponding type declarations.
+apps/api/test/unit/security.test.ts(1,18): error TS2307: Cannot find module 'node:test' or its corresponding type declarations.
+apps/api/test/unit/security.test.ts(2,20): error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.
+apps/api/test/unit/security.test.ts(6,39): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/test/unit/transaction.test.ts(1,18): error TS2307: Cannot find module 'node:test' or its corresponding type declarations.
+apps/api/test/unit/transaction.test.ts(2,20): error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.
+apps/api/test/unit/transaction.test.ts(3,33): error TS2307: Cannot find module 'pg' or its corresponding type declarations.
+apps/api/test/unit/validation.test.ts(1,18): error TS2307: Cannot find module 'node:test' or its corresponding type declarations.
+apps/api/test/unit/validation.test.ts(2,20): error TS2307: Cannot find module 'node:assert/strict' or its corresponding type declarations.
+apps/api/test/unit/validation.test.ts(3,32): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+apps/api/test/unit/validation.test.ts(4,36): error TS2307: Cannot find module 'class-validator' or its corresponding type declarations.
+scripts/generate-openapi.ts(1,31): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+scripts/generate-openapi.ts(2,47): error TS2307: Cannot find module '@nestjs/swagger' or its corresponding type declarations.
+scripts/generate-openapi.ts(12,18): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+scripts/generate-openapi.ts(19,23): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+scripts/generate-openapi.ts(19,88): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+scripts/migrate.ts(1,28): error TS2307: Cannot find module 'node:crypto' or its corresponding type declarations.
+scripts/migrate.ts(2,42): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+scripts/migrate.ts(3,25): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+scripts/migrate.ts(4,22): error TS2307: Cannot find module 'pg' or its corresponding type declarations.
+scripts/migrate.ts(8,22): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+scripts/migrate.ts(14,39): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+scripts/migrate.ts(15,17): error TS7006: Parameter 'name' implicitly has an 'any' type.
+scripts/migrate.ts(18,40): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+scripts/migrate.ts(37,11): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+scripts/migrate.ts(46,4): error TS2580: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+scripts/migrate.ts(46,19): error TS2580: Cannot find name 'module'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+scripts/migrate.ts(47,3): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+scripts/migrate.ts(48,3): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+exit=2

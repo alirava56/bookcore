@@ -1,0 +1,6 @@
+{
+  "typescript_sources_checked": 114,
+  "syntax_and_relative_import_issues": [],
+  "scope": "TypeScript parser + local imports only (not real typecheck/build)",
+  "pass": true
+}

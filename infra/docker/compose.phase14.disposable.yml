@@ -1,0 +1,28 @@
+# DISPOSABLE SYNTHETIC POSTGRESQL ONLY — NOT A PRODUCTION DEPLOYMENT.
+# Start with separate, randomly generated local test credentials:
+# docker compose -f infra/docker/compose.phase14.disposable.yml up -d postgres-test
+name: bookcore-phase14-disposable
+services:
+  postgres-test:
+    image: postgres:17.6-bookworm
+    environment:
+      POSTGRES_USER: bookcore_owner
+      POSTGRES_PASSWORD: ${PHASE14_OWNER_PASSWORD:?unique synthetic test-only password required}
+      POSTGRES_DB: bookcore_phase14_test
+      PG_DEV_APP_PASSWORD: ${PHASE14_APP_PASSWORD:?unique synthetic test-only app password required}
+      PG_DEV_WORKER_PASSWORD: ${PHASE14_WORKER_PASSWORD:?unique synthetic test-only worker password required}
+    ports:
+      - '127.0.0.1:55433:5432'
+    volumes:
+      - phase14-db:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+    healthcheck:
+      test: ['CMD-SHELL','pg_isready -U bookcore_owner -d bookcore_phase14_test']
+      interval: 5s
+      timeout: 5s
+      retries: 15
+    security_opt: ['no-new-privileges:true']
+    cap_drop: [ALL]
+    restart: 'no'
+volumes:
+  phase14-db:

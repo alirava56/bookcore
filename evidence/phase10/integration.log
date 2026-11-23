@@ -1,0 +1,7 @@
+$ npm run test:integration
+exit=2 seconds=0.13
+
+> bookcore-reporting-outbox@0.8.0 test:integration
+> node scripts/run-tests.cjs integration
+
+FAIL: compiled test directory absent; build first: /mnt/data/BookCore_Phase_10_Workspace/bookcore/dist/apps/api/test/integration

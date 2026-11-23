@@ -1,0 +1,12 @@
+COMMAND: npm run verify:reference
+UTC: 2026-11-23T18:41:34.188913+00:00
+CWD: /mnt/data/bc1516/phase16
+EXIT: 0
+
+
+> bookcore-backend@0.16.0 verify:reference
+> node scripts/verify-reference.cjs
+
+PASS authentic Phase02 archive SHA256 3da3f894ff4a55c20ef3ff1ae666169c1461f6fb7f0230dee55be8a22e8efcab
+
+--- STDERR ---

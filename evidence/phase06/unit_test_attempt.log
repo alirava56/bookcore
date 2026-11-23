@@ -1,0 +1,6 @@
+
+> bookcore-session-scheduling@0.6.0 test:unit
+> node scripts/run-tests.cjs unit
+
+FAIL: compiled test directory absent; build first: /mnt/data/BookCore_Phase_06_Work/bookcore/dist/apps/api/test/unit
+EXIT=2

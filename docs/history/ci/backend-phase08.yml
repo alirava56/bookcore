@@ -1,0 +1,68 @@
+name: BookCore Phase 08 Reporting and Outbox (requires authentic npm lock)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  phase08:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    services:
+      postgres:
+        image: postgres:17.6-bookworm
+        env:
+          POSTGRES_USER: bookcore_owner
+          POSTGRES_PASSWORD: phase08_ci_owner_only
+          POSTGRES_DB: bookcore
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U bookcore_owner -d bookcore"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgres://bookcore_app:phase08_ci_runtime_only@127.0.0.1:5432/bookcore
+      MIGRATION_DATABASE_URL: postgres://bookcore_owner:phase08_ci_owner_only@127.0.0.1:5432/bookcore
+      OUTBOX_DATABASE_URL: postgres://bookcore_worker_login:phase08_ci_worker_only@127.0.0.1:5432/bookcore
+      MONITOR_API_KEY: phase08_ci_monitor_only_not_production_32chars
+      MONITOR_ALLOWED_IPS: 127.0.0.1,::1
+      AUTH_JWT_ISSUER: https://bookcore.test
+      AUTH_JWT_AUDIENCE: bookcore-ci
+      AUTH_JWT_ACTIVE_KID: ci-2026-p08
+      AUTH_JWT_KEYS_JSON: '{"ci-2026-p08":"ONLY_FOR_CI_TESTS_32_OR_MORE_RANDOM_LIKE_BYTES_AND_NEVER_PRODUCTION"}'
+      HTTP_HOST: 127.0.0.1
+      CORS_ORIGINS: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+      - name: Clean authentic install (must fail if lockfile absent)
+        run: npm ci --no-audit --no-fund
+      - name: Static verification and preserved source
+        run: npm run verify:reference && npm run verify:static
+      - name: Pure Phase08 domain and inherited tests
+        run: npm run test:phase08:isolated && npm run test:availability:isolated && npm run test:session-domain:isolated
+      - name: Typecheck lint build
+        run: npm run typecheck && npm run lint && npm run build
+      - name: Unit tests (zero discovery fails)
+        run: npm run test:unit
+      - name: Create separate DB principals for local CI
+        run: |
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE ROLE bookcore_app LOGIN PASSWORD 'phase08_ci_runtime_only'"
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE ROLE bookcore_worker_login LOGIN PASSWORD 'phase08_ci_worker_only'"
+      - name: Migrations and checksum repeatability
+        run: npm run migrate && npm run migrate
+      - name: Real PostgreSQL integration including inherited and new tests
+        run: npm run test:integration
+      - name: API implemented-contract snapshot
+        run: npm run openapi:current
+      - name: Archive failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase08-failure-evidence
+          path: |
+            evidence/
+            docs/verification/
+          if-no-files-found: warn

@@ -1,0 +1,52 @@
+$ npm run test:phase09:isolated
+exit=0 seconds=0.54
+
+> bookcore-reporting-outbox@0.8.0 test:phase09:isolated
+> node scripts/test-phase09-pure.cjs
+
+TAP version 13
+# Subtest: OWNER may invite supported roles; MANAGER only junior roles
+ok 1 - OWNER may invite supported roles; MANAGER only junior roles
+  ---
+  duration_ms: 3.702675
+  type: 'test'
+  ...
+# Subtest: RECEPTIONIST, TRAINER and global customer cannot add staff
+ok 2 - RECEPTIONIST, TRAINER and global customer cannot add staff
+  ---
+  duration_ms: 0.204128
+  type: 'test'
+  ...
+# Subtest: on-behalf booking policy excludes TRAINER and customer
+ok 3 - on-behalf booking policy excludes TRAINER and customer
+  ---
+  duration_ms: 0.160962
+  type: 'test'
+  ...
+# Subtest: consent expires at exact deadline; revocation always wins
+ok 4 - consent expires at exact deadline; revocation always wins
+  ---
+  duration_ms: 0.108473
+  type: 'test'
+  ...
+# Subtest: invitation cannot be accepted after decline, revoke, acceptance or expiry
+ok 5 - invitation cannot be accepted after decline, revoke, acceptance or expiry
+  ---
+  duration_ms: 0.166761
+  type: 'test'
+  ...
+# Subtest: unknown refresh COMMIT requires authentication, never bearer-token replay
+ok 6 - unknown refresh COMMIT requires authentication, never bearer-token replay
+  ---
+  duration_ms: 0.087121
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 105.427719

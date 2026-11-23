@@ -1,0 +1,2 @@
+PASS strict YAML, duplicate keys, internal refs, unique operationIds, 9 Phase06 methods, public schema and idem header; total 38 operations
+rc=0

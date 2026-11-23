@@ -1,0 +1,134 @@
+[
+  {
+    "event": "phase13_booking_contention",
+    "capacity": 1,
+    "repetition": 1,
+    "processes": 2,
+    "requestCount": 100,
+    "statusDistribution": {
+      "201": 1,
+      "409": 99
+    },
+    "latencyMs": {
+      "p50": 363.071,
+      "p95": 491.042,
+      "p99": 506.458
+    },
+    "persisted": {
+      "seatsCommitted": 1,
+      "effective": 1,
+      "bookingEvents": 1,
+      "outboxEvents": 1
+    }
+  },
+  {
+    "event": "phase13_booking_contention",
+    "capacity": 1,
+    "repetition": 2,
+    "processes": 2,
+    "requestCount": 100,
+    "statusDistribution": {
+      "201": 1,
+      "409": 99
+    },
+    "latencyMs": {
+      "p50": 397.958,
+      "p95": 622.468,
+      "p99": 635.927
+    },
+    "persisted": {
+      "seatsCommitted": 1,
+      "effective": 1,
+      "bookingEvents": 1,
+      "outboxEvents": 1
+    }
+  },
+  {
+    "event": "phase13_booking_contention",
+    "capacity": 1,
+    "repetition": 3,
+    "processes": 2,
+    "requestCount": 100,
+    "statusDistribution": {
+      "201": 1,
+      "409": 99
+    },
+    "latencyMs": {
+      "p50": 220.923,
+      "p95": 323.929,
+      "p99": 331.69
+    },
+    "persisted": {
+      "seatsCommitted": 1,
+      "effective": 1,
+      "bookingEvents": 1,
+      "outboxEvents": 1
+    }
+  },
+  {
+    "event": "phase13_booking_contention",
+    "capacity": 20,
+    "repetition": 1,
+    "processes": 2,
+    "requestCount": 100,
+    "statusDistribution": {
+      "201": 20,
+      "409": 80
+    },
+    "latencyMs": {
+      "p50": 290.001,
+      "p95": 404.129,
+      "p99": 411.073
+    },
+    "persisted": {
+      "seatsCommitted": 20,
+      "effective": 20,
+      "bookingEvents": 20,
+      "outboxEvents": 20
+    }
+  },
+  {
+    "event": "phase13_booking_contention",
+    "capacity": 20,
+    "repetition": 2,
+    "processes": 2,
+    "requestCount": 100,
+    "statusDistribution": {
+      "201": 20,
+      "409": 80
+    },
+    "latencyMs": {
+      "p50": 269.237,
+      "p95": 377.724,
+      "p99": 384.908
+    },
+    "persisted": {
+      "seatsCommitted": 20,
+      "effective": 20,
+      "bookingEvents": 20,
+      "outboxEvents": 20
+    }
+  },
+  {
+    "event": "phase13_booking_contention",
+    "capacity": 20,
+    "repetition": 3,
+    "processes": 2,
+    "requestCount": 100,
+    "statusDistribution": {
+      "201": 20,
+      "409": 80
+    },
+    "latencyMs": {
+      "p50": 247.587,
+      "p95": 352.439,
+      "p99": 358.6
+    },
+    "persisted": {
+      "seatsCommitted": 20,
+      "effective": 20,
+      "bookingEvents": 20,
+      "outboxEvents": 20
+    }
+  }
+]

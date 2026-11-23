@@ -1,0 +1,86 @@
+
+> bookcore-backend@0.14.0 test:phase14:isolated
+> node scripts/test-phase14-pure.cjs
+
+TAP version 13
+# Subtest: capacity 1 accepts only one confirmed and 99 documented SESSION_FULL
+ok 1 - capacity 1 accepts only one confirmed and 99 documented SESSION_FULL
+  ---
+  duration_ms: 0.99876
+  type: 'test'
+  ...
+# Subtest: capacity 20 requires 20 successes and 80 documented rejections
+ok 2 - capacity 20 requires 20 successes and 80 documented rejections
+  ---
+  duration_ms: 0.215294
+  type: 'test'
+  ...
+# Subtest: technical HTTP 503 is rejected even when status counts look successful
+ok 3 - technical HTTP 503 is rejected even when status counts look successful
+  ---
+  duration_ms: 0.990247
+  type: 'test'
+  ...
+# Subtest: unknown 409 and 429 are not acceptable business rejection
+ok 4 - unknown 409 and 429 are not acceptable business rejection
+  ---
+  duration_ms: 0.267222
+  type: 'test'
+  ...
+# Subtest: missing responses, missing success body and count deviations fail closed
+ok 5 - missing responses, missing success body and count deviations fail closed
+  ---
+  duration_ms: 0.288594
+  type: 'test'
+  ...
+# Subtest: privileged restore cannot resolve its binary from PATH regardless of environment
+ok 6 - privileged restore cannot resolve its binary from PATH regardless of environment
+  ---
+  duration_ms: 1.828216
+  type: 'test'
+  ...
+# Subtest: trusted explicit executable passes, nonexistent and relative paths fail
+ok 7 - trusted explicit executable passes, nonexistent and relative paths fail
+  ---
+  duration_ms: 1.292772
+  type: 'test'
+  ...
+# Subtest: privileged binary symlinks and group-writable binaries cannot be selected
+ok 8 - privileged binary symlinks and group-writable binaries cannot be selected
+  ---
+  duration_ms: 0.668324
+  type: 'test'
+  ...
+# Subtest: privileged executable in writable ancestor directory is denied
+ok 9 - privileged executable in writable ancestor directory is denied
+  ---
+  duration_ms: 0.597588
+  type: 'test'
+  ...
+# Subtest: age private identity must be a private regular non-symlink file
+ok 10 - age private identity must be a private regular non-symlink file
+  ---
+  duration_ms: 0.684338
+  type: 'test'
+  ...
+# Subtest: public CA mode 0644 is accepted but writable or symlinked CA is rejected
+ok 11 - public CA mode 0644 is accepted but writable or symlinked CA is rejected
+  ---
+  duration_ms: 0.587553
+  type: 'test'
+  ...
+# Subtest: remote PostgreSQL verify-full accepts trusted readable CA and rejects writable one
+ok 12 - remote PostgreSQL verify-full accepts trusted readable CA and rejects writable one
+  ---
+  duration_ms: 0.67298
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 58.491028

@@ -1,0 +1,11 @@
+npm run verify:reference|exit=0|log=evidence/phase14/command_npm_run_verify_reference.log
+npm run verify:static|exit=0|log=evidence/phase14/command_npm_run_verify_static.log
+node tools/phase09_syntax_check.cjs|exit=0|log=evidence/phase14/command_node_tools_phase09_syntax_check.cjs.log
+node scripts/verify-migration-checksums.cjs|exit=0|log=evidence/phase14/command_node_scripts_verify_migration_checksums.cjs.log
+python tools/phase09_validate_openapi.py|exit=0|log=evidence/phase14/command_python_tools_phase09_validate_openapi.py.log
+npm ci --offline --ignore-scripts --no-audit --no-fund|exit=1|log=evidence/phase14/command_npm_ci___offline___ignore_scripts___no_audit___no_fund.log
+npm run typecheck|exit=2|log=evidence/phase14/command_npm_run_typecheck.log
+npm run lint|exit=127|log=evidence/phase14/command_npm_run_lint.log
+npm run build|exit=1|log=evidence/phase14/command_npm_run_build.log
+npm run test:unit|exit=2|log=evidence/phase14/command_npm_run_test_unit.log
+pure_typecheck|exit=0

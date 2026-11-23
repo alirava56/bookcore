@@ -1,0 +1,159 @@
+
+> bookcore-reporting-outbox@0.8.0 test:phase08:isolated
+> node scripts/test-phase08-pure.cjs
+
+TAP version 13
+# Subtest: effective statuses and terminal transitions
+ok 1 - effective statuses and terminal transitions
+  ---
+  duration_ms: 2.099725
+  type: 'test'
+  ...
+# Subtest: capacity and published-time cutoff
+ok 2 - capacity and published-time cutoff
+  ---
+  duration_ms: 0.164578
+  type: 'test'
+  ...
+# Subtest: customer deadline, administrative override and terminal status
+ok 3 - customer deadline, administrative override and terminal status
+  ---
+  duration_ms: 0.208595
+  type: 'test'
+  ...
+# Subtest: descending stable cursor with bounded filters
+ok 4 - descending stable cursor with bounded filters
+  ---
+  duration_ms: 1.756548
+  type: 'test'
+  ...
+# Subtest: canonical idempotency payload ignores key order while retaining semantic differences
+ok 5 - canonical idempotency payload ignores key order while retaining semantic differences
+  ---
+  duration_ms: 0.307223
+  type: 'test'
+  ...
+# Subtest: duplicate customer takes precedence over full capacity after locked session read
+ok 6 - duplicate customer takes precedence over full capacity after locked session read
+  ---
+  duration_ms: 0.108834
+  type: 'test'
+  ...
+# Subtest: microseconds are not rounded during cursor encode/decode
+ok 7 - microseconds are not rounded during cursor encode/decode
+  ---
+  duration_ms: 2.712039
+  type: 'test'
+  ...
+# Subtest: same millisecond distinct microseconds are ordered deterministically
+ok 8 - same millisecond distinct microseconds are ordered deterministically
+  ---
+  duration_ms: 1.435824
+  type: 'test'
+  ...
+# Subtest: cursor cannot be tampered with or replayed under another user
+ok 9 - cursor cannot be tampered with or replayed under another user
+  ---
+  duration_ms: 0.92866
+  type: 'test'
+  ...
+# Subtest: only the correct partial unique index means effective duplicate booking
+ok 10 - only the correct partial unique index means effective duplicate booking
+  ---
+  duration_ms: 1.134841
+  type: 'test'
+  ...
+# Subtest: SQLSTATE constraints and concurrency never disclose SQL
+ok 11 - SQLSTATE constraints and concurrency never disclose SQL
+  ---
+  duration_ms: 0.262746
+  type: 'test'
+  ...
+# Subtest: all documented outbox types map to a source aggregate
+ok 12 - all documented outbox types map to a source aggregate
+  ---
+  duration_ms: 1.010944
+  type: 'test'
+  ...
+# Subtest: well-formed versioned Booking event validates
+ok 13 - well-formed versioned Booking event validates
+  ---
+  duration_ms: 0.824663
+  type: 'test'
+  ...
+# Subtest: unsupported event type, tenant mismatch, bad schema and credentials are rejected
+ok 14 - unsupported event type, tenant mismatch, bad schema and credentials are rejected
+  ---
+  duration_ms: 0.531841
+  type: 'test'
+  ...
+# Subtest: retry schedule is bounded and exponential
+ok 15 - retry schedule is bounded and exponential
+  ---
+  duration_ms: 0.294404
+  type: 'test'
+  ...
+# Subtest: sanitized failure classification
+ok 16 - sanitized failure classification
+  ---
+  duration_ms: 0.236446
+  type: 'test'
+  ...
+# Subtest: occupancy 31-day half-open UTC range
+ok 17 - occupancy 31-day half-open UTC range
+  ---
+  duration_ms: 1.233089
+  type: 'test'
+  ...
+# Subtest: occupancy missing dates, reversed intervals, invalid offsets, >31 days denied
+ok 18 - occupancy missing dates, reversed intervals, invalid offsets, >31 days denied
+  ---
+  duration_ms: 0.425271
+  type: 'test'
+  ...
+# Subtest: invalid calendar day and out-of-range timezone offsets are rejected
+ok 19 - invalid calendar day and out-of-range timezone offsets are rejected
+  ---
+  duration_ms: 0.155515
+  type: 'test'
+  ...
+# Subtest: authentic v1 empty source payloads remain supported
+ok 20 - authentic v1 empty source payloads remain supported
+  ---
+  duration_ms: 1.997872
+  type: 'test'
+  ...
+# Subtest: BookingConfirmed requires real booking ID and correct status
+ok 21 - BookingConfirmed requires real booking ID and correct status
+  ---
+  duration_ms: 1.234661
+  type: 'test'
+  ...
+# Subtest: BookingCancelled supports both authentic source producer shapes
+ok 22 - BookingCancelled supports both authentic source producer shapes
+  ---
+  duration_ms: 0.193642
+  type: 'test'
+  ...
+# Subtest: new governance events validate v1 and aggregate identity
+ok 23 - new governance events validate v1 and aggregate identity
+  ---
+  duration_ms: 0.15251
+  type: 'test'
+  ...
+# Subtest: reject excessive nesting, secret-bearing values, unknown schema/version/type
+ok 24 - reject excessive nesting, secret-bearing values, unknown schema/version/type
+  ---
+  duration_ms: 0.38461
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 127.59579
+EXIT_CODE=0

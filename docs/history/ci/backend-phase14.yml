@@ -1,0 +1,95 @@
+name: BookCore Phase14 Runtime Integration — requires authentic lockfile
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ['apps/**', 'db/**', 'infra/**', 'scripts/**', 'package*.json', '.github/workflows/backend-phase14.yml']
+jobs:
+  source-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Require npm-generated lockfile
+        run: test -s package-lock.json || { echo 'BLOCKED — generate authentic npm lockfile'; exit 1; }
+      - run: npm ci --no-audit --no-fund
+      - run: npm run verify:reference && npm run verify:static
+      - run: npm run test:phase14:isolated
+      - run: npm run typecheck && npm run lint && npm run build
+      - run: npm run test:unit
+      - name: Preserve failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase14-source-failure
+          path: evidence/phase14
+          if-no-files-found: warn
+  postgres-disposable:
+    needs: source-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    services:
+      postgres:
+        image: postgres:17.6-bookworm
+        env:
+          POSTGRES_USER: bookcore_owner
+          POSTGRES_PASSWORD: phase14_ci_owner_only_never_production
+          POSTGRES_DB: bookcore
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U bookcore_owner -d bookcore"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      NODE_ENV: test
+      BOOKCORE_TEST_DATABASE_DISPOSABLE: 'yes'
+      DATABASE_URL: postgres://bookcore_app:phase14_ci_runtime_only@127.0.0.1:5432/bookcore
+      MIGRATION_DATABASE_URL: postgres://bookcore_owner:phase14_ci_owner_only_never_production@127.0.0.1:5432/bookcore
+      OUTBOX_DATABASE_URL: postgres://bookcore_worker_login:phase14_ci_worker_only@127.0.0.1:5432/bookcore
+      OUTBOX_OPS_DATABASE_URL: postgres://bookcore_ops_ci:phase14_ci_ops_only@127.0.0.1:5432/bookcore
+      BOOKCORE_INSPECT_DATABASE_URL: postgres://bookcore_inspector_ci:phase14_ci_inspector_only@127.0.0.1:5432/bookcore
+      BOOKCORE_INSPECT_UNBOUND_DATABASE_URL: postgres://bookcore_unbound_ci:phase14_ci_unbound_only@127.0.0.1:5432/bookcore
+      BOOKCORE_MAINTENANCE_DATABASE_URL: postgres://bookcore_maintenance_ci:phase14_ci_maintenance_only@127.0.0.1:5432/bookcore
+      MONITOR_API_KEY: phase14_ci_monitor_key_not_for_production_32_chars
+      MONITOR_ALLOWED_IPS: 127.0.0.1,::1
+      AUTH_JWT_ISSUER: https://bookcore.test
+      AUTH_JWT_AUDIENCE: bookcore-ci
+      AUTH_JWT_ACTIVE_KID: ci2026
+      AUTH_JWT_KEYS_JSON: '{"ci2026":"ONLY_DISPOSABLE_CI_JWT_KEY_32_BYTES_NEVER_PRODUCTION"}'
+      HTTP_HOST: 127.0.0.1
+      CORS_ORIGINS: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Require real lockfile and install
+        run: test -s package-lock.json && npm ci --no-audit --no-fund
+      - name: Compile strict TypeScript
+        run: npm run typecheck && npm run build
+      - name: Create disposable PostgreSQL LOGIN roles (synthetic credentials ONLY)
+        run: |
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+          CREATE ROLE bookcore_app LOGIN PASSWORD 'phase14_ci_runtime_only';
+          CREATE ROLE bookcore_worker_login LOGIN PASSWORD 'phase14_ci_worker_only';
+          CREATE ROLE bookcore_ops_ci LOGIN PASSWORD 'phase14_ci_ops_only';
+          CREATE ROLE bookcore_inspector_ci LOGIN PASSWORD 'phase14_ci_inspector_only';
+          CREATE ROLE bookcore_unbound_ci LOGIN PASSWORD 'phase14_ci_unbound_only';
+          CREATE ROLE bookcore_maintenance_ci LOGIN PASSWORD 'phase14_ci_maintenance_only';
+          SQL
+      - name: Apply original historical migrations twice and check ledger
+        run: npm run migrate && npm run migrate && node scripts/verify-migration-checksums.cjs
+      - name: Grant operational groups only after migrations create NOLOGIN roles
+        run: |
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+          GRANT bookcore_ops TO bookcore_ops_ci;
+          GRANT bookcore_inspector TO bookcore_inspector_ci,bookcore_unbound_ci;
+          GRANT bookcore_maintenance TO bookcore_maintenance_ci;
+          SQL
+      - name: Unit tests — zero discovery is a failure
+        run: npm run test:unit
+      - name: Disposable PostgreSQL/HTTP/concurrency tests — any 503/timeout fails
+        run: npm run test:integration
+      - name: CI outcome (only reached if all previous steps executed successfully)
+        run: echo 'EXECUTED source + PostgreSQL runtime checks (see raw workflow logs)'

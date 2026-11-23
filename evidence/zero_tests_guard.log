@@ -1,0 +1,2 @@
+FAIL: compiled test directory absent; build first: /mnt/data/BookCore_Phase_03/bookcore/dist/apps/api/test/unit
+zero_guard_exit=2

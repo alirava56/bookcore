@@ -1,0 +1,89 @@
+name: bookcore-phase03
+services:
+  postgres:
+    image: postgres:17.6-bookworm
+    environment:
+      POSTGRES_DB: bookcore
+      POSTGRES_USER: bookcore_owner
+      POSTGRES_PASSWORD: ${PG_DEV_OWNER_PASSWORD:?set PG_DEV_OWNER_PASSWORD in local shell}
+      PG_DEV_APP_PASSWORD: ${PG_DEV_APP_PASSWORD:?set PG_DEV_APP_PASSWORD in local shell}
+      PG_DEV_WORKER_PASSWORD: ${PG_DEV_WORKER_PASSWORD:?set PG_DEV_WORKER_PASSWORD in local shell}
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bookcore_owner -d bookcore"]
+      interval: 5s
+      retries: 12
+  migrate:
+    profiles: ["maintenance"]
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+    command: ["node", "dist/scripts/migrate.js"]
+    environment:
+      MIGRATION_DATABASE_URL: postgres://bookcore_owner:${PG_DEV_OWNER_PASSWORD:?set PG_DEV_OWNER_PASSWORD}@postgres:5432/bookcore
+    depends_on:
+      postgres:
+        condition: service_healthy
+  worker:
+    profiles: ["worker"]
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+    command: ["node", "dist/scripts/outbox-worker.js"]
+    environment:
+      OUTBOX_DATABASE_URL: postgres://bookcore_worker_login:${PG_DEV_WORKER_PASSWORD:?set PG_DEV_WORKER_PASSWORD}@postgres:5432/bookcore
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    init: true
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+    environment:
+      NODE_ENV: production
+      HTTP_HOST: 0.0.0.0
+      HTTP_PORT: 3000
+      DATABASE_URL: postgres://bookcore_app:${PG_DEV_APP_PASSWORD:?set PG_DEV_APP_PASSWORD}@postgres:5432/bookcore
+      DB_POOL_MAX: 10
+      MAX_INFLIGHT_REQUESTS: 64
+      DB_CONNECTION_TIMEOUT_MS: 3000
+      TX_LOCK_TIMEOUT_MS: 2000
+      TX_STATEMENT_TIMEOUT_MS: 5000
+      HEALTH_QUERY_TIMEOUT_MS: 1500
+      TRUSTED_PROXY_HOPS: 0
+      MONITOR_ALLOWED_IPS: ${MONITOR_ALLOWED_IPS:-127.0.0.1}
+      MONITOR_API_KEY: ${MONITOR_API_KEY:?set MONITOR_API_KEY in local shell}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      AUTH_JWT_ISSUER: ${AUTH_JWT_ISSUER:?set AUTH_JWT_ISSUER}
+      AUTH_JWT_AUDIENCE: ${AUTH_JWT_AUDIENCE:?set AUTH_JWT_AUDIENCE}
+      AUTH_JWT_ACTIVE_KID: ${AUTH_JWT_ACTIVE_KID:?set AUTH_JWT_ACTIVE_KID}
+      AUTH_JWT_KEYS_JSON: ${AUTH_JWT_KEYS_JSON:?set AUTH_JWT_KEYS_JSON}
+      ENABLE_SWAGGER_UI: 'false'
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    init: true
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:3000/api/v1/health/live').then(x=>process.exit(x.ok?0:1)).catch(()=>process.exit(1))\""]
+      interval: 10s
+      retries: 6
+volumes:
+  pgdata:

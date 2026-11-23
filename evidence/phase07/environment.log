@@ -1,0 +1,9 @@
+node /opt/nvm/versions/node/v22.16.0/bin/node
+npm /opt/nvm/versions/node/v22.16.0/bin/npm
+tsc /opt/nvm/versions/node/v22.16.0/bin/tsc
+postgres NOT INSTALLED
+psql NOT INSTALLED
+docker NOT INSTALLED
+['node', '--version'] v22.16.0
+['npm', '--version'] 10.9.2
+package-lock.json ABSENT

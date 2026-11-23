@@ -1,0 +1,95 @@
+name: BookCore Build and PostgreSQL Verification
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: ['fix/bookcore-*']
+permissions:
+  contents: read
+jobs:
+  source-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.16.0', cache: npm}
+      - name: Require authentic committed lockfile
+        run: |
+          test -s package-lock.json || { echo "BLOCKED: authentic lockfile absent"; exit 1; }
+      - run: npm ci --no-audit --no-fund
+      - run: npm audit --audit-level=high
+      - run: npm run verify:release-manifest && npm run verify:reference && npm run verify:static
+      - run: npm run test:phase15:isolated && npm run test:phase16:isolated
+      - run: npm run typecheck && npm run lint && npm run build
+      - run: npm run test:unit
+  postgres-verification:
+    name: ${{ matrix.suite.name }}
+    needs: source-build
+    strategy:
+      fail-fast: false
+      matrix:
+        suite:
+          - {name: 'PostgreSQL integration', script: 'test:database'}
+          - {name: 'Concurrency and worker', script: 'test:concurrency'}
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    services:
+      postgres:
+        image: postgres:17.6-bookworm
+        env: {POSTGRES_USER: bookcore_owner, POSTGRES_PASSWORD: disposable_ci_only_owner, POSTGRES_DB: bookcore}
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U bookcore_owner -d bookcore"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      NODE_ENV: test
+      BOOKCORE_TEST_DATABASE_DISPOSABLE: 'yes'
+      DATABASE_URL: postgres://bookcore_app:disposable_runtime@127.0.0.1:5432/bookcore
+      MIGRATION_DATABASE_URL: postgres://bookcore_owner:disposable_ci_only_owner@127.0.0.1:5432/bookcore
+      OUTBOX_DATABASE_URL: postgres://bookcore_worker_login:disposable_worker@127.0.0.1:5432/bookcore
+      OUTBOX_OPS_DATABASE_URL: postgres://bookcore_ops_ci:disposable_ops@127.0.0.1:5432/bookcore
+      BOOKCORE_INSPECT_DATABASE_URL: postgres://bookcore_inspector_ci:disposable_inspect@127.0.0.1:5432/bookcore
+      BOOKCORE_INSPECT_UNBOUND_DATABASE_URL: postgres://bookcore_unbound_ci:disposable_unbound@127.0.0.1:5432/bookcore
+      BOOKCORE_MAINTENANCE_DATABASE_URL: postgres://bookcore_maintenance_ci:disposable_maint@127.0.0.1:5432/bookcore
+      MONITOR_API_KEY: disposable_ci_monitor_key_32_chars
+      MONITOR_ALLOWED_IPS: 127.0.0.1,::1
+      AUTH_JWT_ISSUER: https://bookcore.test
+      AUTH_JWT_AUDIENCE: bookcore-ci
+      AUTH_JWT_ACTIVE_KID: ci2026
+      AUTH_JWT_KEYS_JSON: '{"ci2026":"DISPOSABLE_CI_ONLY_JWT_KEY_32_BYTES_NOT_PROD"}'
+      HTTP_HOST: 127.0.0.1
+      CORS_ORIGINS: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.16.0', cache: npm}
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck && npm run build
+      - name: Create synthetic distinct roles
+        run: |
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+          CREATE ROLE bookcore_app LOGIN PASSWORD 'disposable_runtime';
+          CREATE ROLE bookcore_worker_login LOGIN PASSWORD 'disposable_worker';
+          CREATE ROLE bookcore_ops_ci LOGIN PASSWORD 'disposable_ops';
+          CREATE ROLE bookcore_inspector_ci LOGIN PASSWORD 'disposable_inspect';
+          CREATE ROLE bookcore_unbound_ci LOGIN PASSWORD 'disposable_unbound';
+          CREATE ROLE bookcore_maintenance_ci LOGIN PASSWORD 'disposable_maint';
+          SQL
+      - run: npm run migrate && npm run migrate
+      - name: Grant operational groups
+        run: |
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+          GRANT bookcore_ops TO bookcore_ops_ci;
+          GRANT bookcore_inspector TO bookcore_inspector_ci,bookcore_unbound_ci;
+          GRANT bookcore_maintenance TO bookcore_maintenance_ci;
+          SQL
+      - name: Run and retain required PostgreSQL suite evidence
+        run: |
+          set -o pipefail
+          npm run '${{ matrix.suite.script }}' | tee "$RUNNER_TEMP/bookcore-postgres.tap"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.suite.name }}
+          path: ${{ runner.temp }}/bookcore-postgres.tap

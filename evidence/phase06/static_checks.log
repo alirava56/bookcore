@@ -1,0 +1,7 @@
+
+> bookcore-session-scheduling@0.6.0 verify:static
+> node scripts/static-verify.cjs && node scripts/verify-migration-checksums.cjs
+
+PASS static source requirements; 23 mandatory paths; 6 preserved + additive phase06 migration
+PASS migration checksum constants equal 7 SQL sources
+EXIT=0

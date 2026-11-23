@@ -1,0 +1,28 @@
+COMMAND: node scripts/phase14-runtime-preflight.cjs
+UTC: 2026-11-23T18:41:45.946793+00:00
+CWD: /mnt/data/bc1516/phase16
+EXIT: 2
+
+{
+  "phase": "14",
+  "verification": "ENVIRONMENT_PREFLIGHT_ONLY",
+  "checks": {
+    "node": "v22.16.0",
+    "npm": "10.9.2",
+    "packageLock": false,
+    "docker": null,
+    "psql": null,
+    "pgDump": null,
+    "pgRestore": null,
+    "age": null,
+    "disposableDbAcknowledged": false
+  },
+  "blocked": [
+    "AUTHENTIC_NPM_LOCKFILE_MISSING",
+    "POSTGRESQL_CLIENT_NOT_INSTALLED",
+    "DOCKER_UNAVAILABLE",
+    "POSTGRESQL_BACKUP_TOOLS_NOT_INSTALLED"
+  ]
+}
+
+--- STDERR ---

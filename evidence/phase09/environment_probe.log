@@ -1,0 +1,5 @@
+node exit 0 stdout v22.16.0 stderr 
+npm exit 0 stdout 10.9.2 stderr 
+psql TypeError: Cannot read properties of undefined (reading 'trim')
+docker TypeError: Cannot read properties of undefined (reading 'trim')
+pg_ctl TypeError: Cannot read properties of undefined (reading 'trim')

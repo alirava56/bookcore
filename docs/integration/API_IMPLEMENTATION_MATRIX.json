@@ -1,0 +1,1935 @@
+{
+  "scope": "STATIC TYPESCRIPT AST + DESIGN YAML; NOT RUNTIME ROUTE REGISTRATION",
+  "designOperationCount": 46,
+  "sourceControllerRouteCount": 46,
+  "sourceMatched": 46,
+  "designedNotImplemented": [],
+  "unexpectedSourceRoutes": [],
+  "duplicates": [],
+  "implementedSourceRoutes": [
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "controller": "IdentityController",
+      "handler": "login",
+      "source": "apps/api/src/modules/identity/identity.controller.ts",
+      "authentication": "PUBLIC",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "LoginDto",
+      "responseDtoEvidence": [
+        "{status:200,type:TokensResponseDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "INVALID_ACCESS_TOKEN",
+        "INVALID_CREDENTIALS",
+        "INVALID_REFRESH_TOKEN",
+        "REFRESH_OUTCOME_UNKNOWN_REAUTH_REQUIRED",
+        "USER_ALREADY_EXISTS",
+        "WEAK_PASSWORD"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postAuthlogin",
+      "relatedTestFilesCandidates": [
+        "identity-tenant-postgres.test.ts",
+        "http.test.ts",
+        "jwt.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        401
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/logout",
+      "controller": "IdentityController",
+      "handler": "logout",
+      "source": "apps/api/src/modules/identity/identity.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "INVALID_ACCESS_TOKEN",
+        "INVALID_CREDENTIALS",
+        "INVALID_REFRESH_TOKEN",
+        "REFRESH_OUTCOME_UNKNOWN_REAUTH_REQUIRED",
+        "USER_ALREADY_EXISTS",
+        "WEAK_PASSWORD"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postAuthlogout",
+      "relatedTestFilesCandidates": [
+        "identity-tenant-postgres.test.ts",
+        "http.test.ts",
+        "jwt.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        204
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "controller": "IdentityController",
+      "handler": "refresh",
+      "source": "apps/api/src/modules/identity/identity.controller.ts",
+      "authentication": "PUBLIC",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "RefreshDto",
+      "responseDtoEvidence": [
+        "{status:200,type:TokensResponseDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "INVALID_ACCESS_TOKEN",
+        "INVALID_CREDENTIALS",
+        "INVALID_REFRESH_TOKEN",
+        "REFRESH_OUTCOME_UNKNOWN_REAUTH_REQUIRED",
+        "USER_ALREADY_EXISTS",
+        "WEAK_PASSWORD"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postAuthrefresh",
+      "relatedTestFilesCandidates": [
+        "identity-tenant-postgres.test.ts",
+        "http.test.ts",
+        "jwt.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        401
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/register",
+      "controller": "IdentityController",
+      "handler": "register",
+      "source": "apps/api/src/modules/identity/identity.controller.ts",
+      "authentication": "PUBLIC",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "RegisterDto",
+      "responseDtoEvidence": [
+        "{status:201,type:UserResponseDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "INVALID_ACCESS_TOKEN",
+        "INVALID_CREDENTIALS",
+        "INVALID_REFRESH_TOKEN",
+        "REFRESH_OUTCOME_UNKNOWN_REAUTH_REQUIRED",
+        "USER_ALREADY_EXISTS",
+        "WEAK_PASSWORD"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postAuthregister",
+      "relatedTestFilesCandidates": [
+        "identity-tenant-postgres.test.ts",
+        "http.test.ts",
+        "jwt.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201,
+        400,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/live",
+      "controller": "HealthController",
+      "handler": "live",
+      "source": "apps/api/src/modules/health/health.controller.ts",
+      "authentication": "PUBLIC",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:HealthStatus}"
+      ],
+      "errorCodeCandidatesForModule": [],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getHealthlive",
+      "relatedTestFilesCandidates": [
+        "http.test.ts",
+        "database-ready.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/ready",
+      "controller": "HealthController",
+      "handler": "ready",
+      "source": "apps/api/src/modules/health/health.controller.ts",
+      "authentication": "MONITOR",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:HealthStatus}",
+        "{status:401,description:'Missing or invalid monitoring key'}",
+        "{status:403,description:'Monitoring network denied'}",
+        "{status:503,description:'Dependency unavailable'}"
+      ],
+      "errorCodeCandidatesForModule": [],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getHealthready",
+      "relatedTestFilesCandidates": [
+        "http.test.ts",
+        "database-ready.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        401,
+        503
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me",
+      "controller": "IdentityController",
+      "handler": "me",
+      "source": "apps/api/src/modules/identity/identity.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:MeResponseDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "INVALID_ACCESS_TOKEN",
+        "INVALID_CREDENTIALS",
+        "INVALID_REFRESH_TOKEN",
+        "REFRESH_OUTCOME_UNKNOWN_REAUTH_REQUIRED",
+        "USER_ALREADY_EXISTS",
+        "WEAK_PASSWORD"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getMe",
+      "relatedTestFilesCandidates": [
+        "identity-tenant-postgres.test.ts",
+        "http.test.ts",
+        "jwt.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        401
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/staff-invitations/accept",
+      "controller": "GovernanceController",
+      "handler": "accept",
+      "source": "apps/api/src/modules/governance/governance.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "StaffInvitationTokenDto",
+      "responseDtoEvidence": [
+        "{status:200,type:InvitationResponseDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "CONSENT_ALREADY_ACTIVE",
+        "CONSENT_ALREADY_REVOKED",
+        "INVALID_INVITATION_TOKEN",
+        "INVITATION_ALREADY_RESOLVED",
+        "INVITATION_EXPIRED",
+        "INVITATION_NOT_FOUND",
+        "INVITATION_REASON_REQUIRED",
+        "INVITER_AUTHORITY_REVOKED",
+        "MEMBERSHIP_ALREADY_EXISTS",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "acceptStaffInvitation",
+      "relatedTestFilesCandidates": [
+        "phase09-postgres.test.ts",
+        "phase09-governance.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        401,
+        404,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/staff-invitations/decline",
+      "controller": "GovernanceController",
+      "handler": "decline",
+      "source": "apps/api/src/modules/governance/governance.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "StaffInvitationTokenDto",
+      "responseDtoEvidence": [],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "CONSENT_ALREADY_ACTIVE",
+        "CONSENT_ALREADY_REVOKED",
+        "INVALID_INVITATION_TOKEN",
+        "INVITATION_ALREADY_RESOLVED",
+        "INVITATION_EXPIRED",
+        "INVITATION_NOT_FOUND",
+        "INVITATION_REASON_REQUIRED",
+        "INVITER_AUTHORITY_REVOKED",
+        "MEMBERSHIP_ALREADY_EXISTS",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "declineStaffInvitation",
+      "relatedTestFilesCandidates": [
+        "phase09-postgres.test.ts",
+        "phase09-governance.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations",
+      "controller": "OrganizationsController",
+      "handler": "create",
+      "source": "apps/api/src/modules/organizations/organizations.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CreateOrganizationDto",
+      "responseDtoEvidence": [
+        "{status:201,type:OrganizationResponseDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "EMPTY_MEMBERSHIP_PATCH",
+        "INVALID_ORGANIZATION_NAME",
+        "INVALID_TIMEZONE",
+        "LAST_OWNER",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED",
+        "STAFF_INVITATION_REQUIRED",
+        "TENANT_ACCESS_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postOrganizations",
+      "relatedTestFilesCandidates": [
+        "identity-tenant-postgres.test.ts",
+        "phase09-postgres.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}",
+      "controller": "OrganizationsController",
+      "handler": "get",
+      "source": "apps/api/src/modules/organizations/organizations.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:OrganizationResponseDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "EMPTY_MEMBERSHIP_PATCH",
+        "INVALID_ORGANIZATION_NAME",
+        "INVALID_TIMEZONE",
+        "LAST_OWNER",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED",
+        "STAFF_INVITATION_REQUIRED",
+        "TENANT_ACCESS_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgid",
+      "relatedTestFilesCandidates": [
+        "identity-tenant-postgres.test.ts",
+        "phase09-postgres.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        401,
+        404
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/booking-consents",
+      "controller": "GovernanceController",
+      "handler": "grant",
+      "source": "apps/api/src/modules/governance/governance.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "GrantConsentDto",
+      "responseDtoEvidence": [
+        "{status:201,type:ConsentDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "CONSENT_ALREADY_ACTIVE",
+        "CONSENT_ALREADY_REVOKED",
+        "INVALID_INVITATION_TOKEN",
+        "INVITATION_ALREADY_RESOLVED",
+        "INVITATION_EXPIRED",
+        "INVITATION_NOT_FOUND",
+        "INVITATION_REASON_REQUIRED",
+        "INVITER_AUTHORITY_REVOKED",
+        "MEMBERSHIP_ALREADY_EXISTS",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "grantBookingConsent",
+      "relatedTestFilesCandidates": [
+        "phase09-postgres.test.ts",
+        "phase09-governance.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/booking-consents/{consentId}/revoke",
+      "controller": "GovernanceController",
+      "handler": "revokeConsent",
+      "source": "apps/api/src/modules/governance/governance.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:ConsentDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "CONSENT_ALREADY_ACTIVE",
+        "CONSENT_ALREADY_REVOKED",
+        "INVALID_INVITATION_TOKEN",
+        "INVITATION_ALREADY_RESOLVED",
+        "INVITATION_EXPIRED",
+        "INVITATION_NOT_FOUND",
+        "INVITATION_REASON_REQUIRED",
+        "INVITER_AUTHORITY_REVOKED",
+        "MEMBERSHIP_ALREADY_EXISTS",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "revokeBookingConsent",
+      "relatedTestFilesCandidates": [
+        "phase09-postgres.test.ts",
+        "phase09-governance.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/booking-consents/me",
+      "controller": "GovernanceController",
+      "handler": "mine",
+      "source": "apps/api/src/modules/governance/governance.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "CONSENT_ALREADY_ACTIVE",
+        "CONSENT_ALREADY_REVOKED",
+        "INVALID_INVITATION_TOKEN",
+        "INVITATION_ALREADY_RESOLVED",
+        "INVITATION_EXPIRED",
+        "INVITATION_NOT_FOUND",
+        "INVITATION_REASON_REQUIRED",
+        "INVITER_AUTHORITY_REVOKED",
+        "MEMBERSHIP_ALREADY_EXISTS",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "listMyBookingConsents",
+      "relatedTestFilesCandidates": [
+        "phase09-postgres.test.ts",
+        "phase09-governance.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/bookings/{bookingId}/attendance",
+      "controller": "BookingController",
+      "handler": "attendance",
+      "source": "apps/api/src/modules/booking/booking.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "AttendanceBookingDto",
+      "responseDtoEvidence": [
+        "{status:200,type:BookingReceiptDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "BOOKING_CONSENT_REQUIRED",
+        "BOOKING_NOT_CANCELLABLE",
+        "CANCELLATION_REASON_REQUIRED",
+        "CANCELLATION_WINDOW_CLOSED",
+        "DEPENDENCY_UNAVAILABLE",
+        "IDEMPOTENCY_KEY_EXPIRED",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_STATE_TRANSITION",
+        "RESOURCE_NOT_FOUND",
+        "TENANT_ACCESS_DENIED"
+      ],
+      "idempotencyHeaderDeclared": true,
+      "designOperationId": "postOrganizationsorgidbookingsbookingidattendance",
+      "relatedTestFilesCandidates": [
+        "booking-postgres.test.ts",
+        "booking-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/bookings/{bookingId}/cancel",
+      "controller": "BookingController",
+      "handler": "cancel",
+      "source": "apps/api/src/modules/booking/booking.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CancelBookingDto",
+      "responseDtoEvidence": [
+        "{status:200,type:BookingReceiptDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "BOOKING_CONSENT_REQUIRED",
+        "BOOKING_NOT_CANCELLABLE",
+        "CANCELLATION_REASON_REQUIRED",
+        "CANCELLATION_WINDOW_CLOSED",
+        "DEPENDENCY_UNAVAILABLE",
+        "IDEMPOTENCY_KEY_EXPIRED",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_STATE_TRANSITION",
+        "RESOURCE_NOT_FOUND",
+        "TENANT_ACCESS_DENIED"
+      ],
+      "idempotencyHeaderDeclared": true,
+      "designOperationId": "postOrganizationsorgidbookingsbookingidcancel",
+      "relatedTestFilesCandidates": [
+        "booking-postgres.test.ts",
+        "booking-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        404,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/bookings/me",
+      "controller": "BookingController",
+      "handler": "mine",
+      "source": "apps/api/src/modules/booking/booking.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:BookingPageDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "BOOKING_CONSENT_REQUIRED",
+        "BOOKING_NOT_CANCELLABLE",
+        "CANCELLATION_REASON_REQUIRED",
+        "CANCELLATION_WINDOW_CLOSED",
+        "DEPENDENCY_UNAVAILABLE",
+        "IDEMPOTENCY_KEY_EXPIRED",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_STATE_TRANSITION",
+        "RESOURCE_NOT_FOUND",
+        "TENANT_ACCESS_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgidbookingsme",
+      "relatedTestFilesCandidates": [
+        "booking-postgres.test.ts",
+        "booking-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        401
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/branches",
+      "controller": "CatalogController",
+      "handler": "listBranches",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:BranchListDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgidbranches",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        404
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/branches",
+      "controller": "CatalogController",
+      "handler": "createBranch",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CreateBranchDto",
+      "responseDtoEvidence": [
+        "{status:201,type:BranchDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postOrganizationsorgidbranches",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201,
+        404
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/business-hours",
+      "controller": "CatalogController",
+      "handler": "listHours",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:BusinessHourListDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgidbusiness_Hours",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/business-hours",
+      "controller": "CatalogController",
+      "handler": "createHour",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CreateBusinessHourDto",
+      "responseDtoEvidence": [
+        "{status:201,type:BusinessHourDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postOrganizationsorgidbusiness_Hours",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201,
+        409
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/business-hours/{hourId}",
+      "controller": "CatalogController",
+      "handler": "deactivateHour",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "DeactivateRuleDto",
+      "responseDtoEvidence": [
+        "{status:200,type:BusinessHourDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "patchOrganizationsorgidbusiness_Hourshourid",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/members",
+      "controller": "OrganizationsController",
+      "handler": "list",
+      "source": "apps/api/src/modules/organizations/organizations.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:MembershipListResponseDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "EMPTY_MEMBERSHIP_PATCH",
+        "INVALID_ORGANIZATION_NAME",
+        "INVALID_TIMEZONE",
+        "LAST_OWNER",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED",
+        "STAFF_INVITATION_REQUIRED",
+        "TENANT_ACCESS_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgidmembers",
+      "relatedTestFilesCandidates": [
+        "identity-tenant-postgres.test.ts",
+        "phase09-postgres.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        403,
+        404
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/members",
+      "controller": "OrganizationsController",
+      "handler": "add",
+      "source": "apps/api/src/modules/organizations/organizations.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CreateMembershipDto",
+      "responseDtoEvidence": [
+        "{status:201,type:MembershipResponseDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "EMPTY_MEMBERSHIP_PATCH",
+        "INVALID_ORGANIZATION_NAME",
+        "INVALID_TIMEZONE",
+        "LAST_OWNER",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED",
+        "STAFF_INVITATION_REQUIRED",
+        "TENANT_ACCESS_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postOrganizationsorgidmembers",
+      "relatedTestFilesCandidates": [
+        "identity-tenant-postgres.test.ts",
+        "phase09-postgres.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        403,
+        409
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/members/{userId}",
+      "controller": "OrganizationsController",
+      "handler": "patch",
+      "source": "apps/api/src/modules/organizations/organizations.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "PatchMembershipDto",
+      "responseDtoEvidence": [
+        "{status:200,type:MembershipResponseDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "EMPTY_MEMBERSHIP_PATCH",
+        "INVALID_ORGANIZATION_NAME",
+        "INVALID_TIMEZONE",
+        "LAST_OWNER",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED",
+        "STAFF_INVITATION_REQUIRED",
+        "TENANT_ACCESS_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "patchOrganizationsorgidmembersuserid",
+      "relatedTestFilesCandidates": [
+        "identity-tenant-postgres.test.ts",
+        "phase09-postgres.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        400,
+        403,
+        404,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/reports/occupancy",
+      "controller": "ReportingController",
+      "handler": "occupancy",
+      "source": "apps/api/src/modules/reporting/reporting.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:OccupancyDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "INVALID_REPORTING_RANGE",
+        "RESOURCE_NOT_FOUND",
+        "TENANT_ACCESS_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgidreportsoccupancy",
+      "relatedTestFilesCandidates": [
+        "phase08-postgres.test.ts",
+        "phase08-reporting.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        401,
+        403,
+        404
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/resources",
+      "controller": "CatalogController",
+      "handler": "listResources",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:ResourceListDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgidresources",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        403
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/resources",
+      "controller": "CatalogController",
+      "handler": "createResource",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CreateResourceDto",
+      "responseDtoEvidence": [
+        "{status:201,type:ResourceDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postOrganizationsorgidresources",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201,
+        404,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/schedule-exceptions",
+      "controller": "CatalogController",
+      "handler": "listExceptions",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:ScheduleExceptionListDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgidschedule_Exceptions",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/schedule-exceptions",
+      "controller": "CatalogController",
+      "handler": "createException",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CreateScheduleExceptionDto",
+      "responseDtoEvidence": [
+        "{status:201,type:ScheduleExceptionDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postOrganizationsorgidschedule_Exceptions",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201,
+        409,
+        422
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/schedule-exceptions/{exceptionId}",
+      "controller": "CatalogController",
+      "handler": "deactivateException",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "DeactivateRuleDto",
+      "responseDtoEvidence": [
+        "{status:200,type:ScheduleExceptionDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "patchOrganizationsorgidschedule_Exceptionsexceptionid",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/services",
+      "controller": "CatalogController",
+      "handler": "listServices",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:ServiceListDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgidservices",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/services",
+      "controller": "CatalogController",
+      "handler": "createService",
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CreateServiceDto",
+      "responseDtoEvidence": [
+        "{status:201,type:ServiceDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DEACTIVATE_ONLY",
+        "EXACTLY_ONE_SCHEDULE_SCOPE_REQUIRED",
+        "INVALID_EXCEPTION_INTERVAL",
+        "INVALID_RESOURCE_TYPE_FIELDS",
+        "INVALID_SCHEDULE_RULE",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TIME_FILTER",
+        "INVALID_TIME_WINDOW",
+        "INVALID_WEEKLY_INTERVAL",
+        "REQUIRED_TIME_WINDOW",
+        "RESOURCE_NOT_FOUND",
+        "RULE_ALREADY_INACTIVE",
+        "SCHEDULE_EXCEPTION_CONFLICT",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postOrganizationsorgidservices",
+      "relatedTestFilesCandidates": [
+        "catalog-postgres.test.ts",
+        "availability.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/sessions",
+      "controller": "StaffSessionController",
+      "handler": "list",
+      "source": "apps/api/src/modules/scheduling/session.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:StaffSessionListDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DATABASE_INVARIANT_VIOLATION",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_CAPACITY",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_ROOM_RESOURCE",
+        "INVALID_SESSION_INTERVAL",
+        "INVALID_STATE_TRANSITION",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TRAINER_RESOURCE",
+        "RESOURCE_ALLOCATION_MISSING",
+        "RESOURCE_CONFLICT",
+        "RESOURCE_NOT_FOUND",
+        "RESOURCE_UNAVAILABLE",
+        "SESSION_DEPENDENCY_INACTIVE",
+        "SESSION_NOT_BOOKABLE",
+        "SESSION_NOT_FINISHABLE",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRAINER_MEMBERSHIP_INACTIVE",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgidsessions",
+      "relatedTestFilesCandidates": [
+        "sessions-postgres.test.ts",
+        "session-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions",
+      "controller": "StaffSessionController",
+      "handler": "create",
+      "source": "apps/api/src/modules/scheduling/session.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CreateSessionDto",
+      "responseDtoEvidence": [
+        "{status:201,type:StaffSessionDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DATABASE_INVARIANT_VIOLATION",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_CAPACITY",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_ROOM_RESOURCE",
+        "INVALID_SESSION_INTERVAL",
+        "INVALID_STATE_TRANSITION",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TRAINER_RESOURCE",
+        "RESOURCE_ALLOCATION_MISSING",
+        "RESOURCE_CONFLICT",
+        "RESOURCE_NOT_FOUND",
+        "RESOURCE_UNAVAILABLE",
+        "SESSION_DEPENDENCY_INACTIVE",
+        "SESSION_NOT_BOOKABLE",
+        "SESSION_NOT_FINISHABLE",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRAINER_MEMBERSHIP_INACTIVE",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": true,
+      "designOperationId": "postOrganizationsorgidsessions",
+      "relatedTestFilesCandidates": [
+        "sessions-postgres.test.ts",
+        "session-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201,
+        404,
+        409,
+        503
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}",
+      "controller": "StaffSessionController",
+      "handler": "get",
+      "source": "apps/api/src/modules/scheduling/session.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:StaffSessionDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DATABASE_INVARIANT_VIOLATION",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_CAPACITY",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_ROOM_RESOURCE",
+        "INVALID_SESSION_INTERVAL",
+        "INVALID_STATE_TRANSITION",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TRAINER_RESOURCE",
+        "RESOURCE_ALLOCATION_MISSING",
+        "RESOURCE_CONFLICT",
+        "RESOURCE_NOT_FOUND",
+        "RESOURCE_UNAVAILABLE",
+        "SESSION_DEPENDENCY_INACTIVE",
+        "SESSION_NOT_BOOKABLE",
+        "SESSION_NOT_FINISHABLE",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRAINER_MEMBERSHIP_INACTIVE",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getOrganizationsorgidsessionssessionid",
+      "relatedTestFilesCandidates": [
+        "sessions-postgres.test.ts",
+        "session-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        404
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/bookings",
+      "controller": "BookingController",
+      "handler": "create",
+      "source": "apps/api/src/modules/booking/booking.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CreateBookingDto",
+      "responseDtoEvidence": [
+        "{status:201,type:BookingReceiptDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "BOOKING_CONSENT_REQUIRED",
+        "BOOKING_NOT_CANCELLABLE",
+        "CANCELLATION_REASON_REQUIRED",
+        "CANCELLATION_WINDOW_CLOSED",
+        "DEPENDENCY_UNAVAILABLE",
+        "IDEMPOTENCY_KEY_EXPIRED",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_STATE_TRANSITION",
+        "RESOURCE_NOT_FOUND",
+        "TENANT_ACCESS_DENIED"
+      ],
+      "idempotencyHeaderDeclared": true,
+      "designOperationId": "postOrganizationsorgidsessionssessionidbookings",
+      "relatedTestFilesCandidates": [
+        "booking-postgres.test.ts",
+        "booking-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201,
+        403,
+        404,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/cancel",
+      "controller": "StaffSessionController",
+      "handler": "cancel",
+      "source": "apps/api/src/modules/scheduling/session.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CancelSessionDto",
+      "responseDtoEvidence": [
+        "{status:200,type:StaffSessionDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DATABASE_INVARIANT_VIOLATION",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_CAPACITY",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_ROOM_RESOURCE",
+        "INVALID_SESSION_INTERVAL",
+        "INVALID_STATE_TRANSITION",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TRAINER_RESOURCE",
+        "RESOURCE_ALLOCATION_MISSING",
+        "RESOURCE_CONFLICT",
+        "RESOURCE_NOT_FOUND",
+        "RESOURCE_UNAVAILABLE",
+        "SESSION_DEPENDENCY_INACTIVE",
+        "SESSION_NOT_BOOKABLE",
+        "SESSION_NOT_FINISHABLE",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRAINER_MEMBERSHIP_INACTIVE",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": true,
+      "designOperationId": "postOrganizationsorgidsessionssessionidcancel",
+      "relatedTestFilesCandidates": [
+        "sessions-postgres.test.ts",
+        "session-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/capacity",
+      "controller": "StaffSessionController",
+      "handler": "capacity",
+      "source": "apps/api/src/modules/scheduling/session.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CapacitySessionDto",
+      "responseDtoEvidence": [
+        "{status:200,type:StaffSessionDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DATABASE_INVARIANT_VIOLATION",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_CAPACITY",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_ROOM_RESOURCE",
+        "INVALID_SESSION_INTERVAL",
+        "INVALID_STATE_TRANSITION",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TRAINER_RESOURCE",
+        "RESOURCE_ALLOCATION_MISSING",
+        "RESOURCE_CONFLICT",
+        "RESOURCE_NOT_FOUND",
+        "RESOURCE_UNAVAILABLE",
+        "SESSION_DEPENDENCY_INACTIVE",
+        "SESSION_NOT_BOOKABLE",
+        "SESSION_NOT_FINISHABLE",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRAINER_MEMBERSHIP_INACTIVE",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": true,
+      "designOperationId": "patchOrganizationsorgidsessionssessionidcapacity",
+      "relatedTestFilesCandidates": [
+        "sessions-postgres.test.ts",
+        "session-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/finish",
+      "controller": "StaffSessionController",
+      "handler": "finish",
+      "source": "apps/api/src/modules/scheduling/session.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:StaffSessionDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DATABASE_INVARIANT_VIOLATION",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_CAPACITY",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_ROOM_RESOURCE",
+        "INVALID_SESSION_INTERVAL",
+        "INVALID_STATE_TRANSITION",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TRAINER_RESOURCE",
+        "RESOURCE_ALLOCATION_MISSING",
+        "RESOURCE_CONFLICT",
+        "RESOURCE_NOT_FOUND",
+        "RESOURCE_UNAVAILABLE",
+        "SESSION_DEPENDENCY_INACTIVE",
+        "SESSION_NOT_BOOKABLE",
+        "SESSION_NOT_FINISHABLE",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRAINER_MEMBERSHIP_INACTIVE",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postOrganizationsorgidsessionssessionidfinish",
+      "relatedTestFilesCandidates": [
+        "sessions-postgres.test.ts",
+        "session-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/publish",
+      "controller": "StaffSessionController",
+      "handler": "publish",
+      "source": "apps/api/src/modules/scheduling/session.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:StaffSessionDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DATABASE_INVARIANT_VIOLATION",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_CAPACITY",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_ROOM_RESOURCE",
+        "INVALID_SESSION_INTERVAL",
+        "INVALID_STATE_TRANSITION",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TRAINER_RESOURCE",
+        "RESOURCE_ALLOCATION_MISSING",
+        "RESOURCE_CONFLICT",
+        "RESOURCE_NOT_FOUND",
+        "RESOURCE_UNAVAILABLE",
+        "SESSION_DEPENDENCY_INACTIVE",
+        "SESSION_NOT_BOOKABLE",
+        "SESSION_NOT_FINISHABLE",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRAINER_MEMBERSHIP_INACTIVE",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "postOrganizationsorgidsessionssessionidpublish",
+      "relatedTestFilesCandidates": [
+        "sessions-postgres.test.ts",
+        "session-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        403,
+        409
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/staff-invitations",
+      "controller": "GovernanceController",
+      "handler": "listInvites",
+      "source": "apps/api/src/modules/governance/governance.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "CONSENT_ALREADY_ACTIVE",
+        "CONSENT_ALREADY_REVOKED",
+        "INVALID_INVITATION_TOKEN",
+        "INVITATION_ALREADY_RESOLVED",
+        "INVITATION_EXPIRED",
+        "INVITATION_NOT_FOUND",
+        "INVITATION_REASON_REQUIRED",
+        "INVITER_AUTHORITY_REVOKED",
+        "MEMBERSHIP_ALREADY_EXISTS",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "listStaffInvitations",
+      "relatedTestFilesCandidates": [
+        "phase09-postgres.test.ts",
+        "phase09-governance.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/staff-invitations",
+      "controller": "GovernanceController",
+      "handler": "invite",
+      "source": "apps/api/src/modules/governance/governance.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "CreateStaffInvitationDto",
+      "responseDtoEvidence": [
+        "{status:201,type:CreatedInvitationDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "CONSENT_ALREADY_ACTIVE",
+        "CONSENT_ALREADY_REVOKED",
+        "INVALID_INVITATION_TOKEN",
+        "INVITATION_ALREADY_RESOLVED",
+        "INVITATION_EXPIRED",
+        "INVITATION_NOT_FOUND",
+        "INVITATION_REASON_REQUIRED",
+        "INVITER_AUTHORITY_REVOKED",
+        "MEMBERSHIP_ALREADY_EXISTS",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "createStaffInvitation",
+      "relatedTestFilesCandidates": [
+        "phase09-postgres.test.ts",
+        "phase09-governance.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        201,
+        409
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/staff-invitations/{invitationId}/revoke",
+      "controller": "GovernanceController",
+      "handler": "revoke",
+      "source": "apps/api/src/modules/governance/governance.controller.ts",
+      "authentication": "AUTHENTICATED_DEFAULT_DENY",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": "InvitationRevokeDto",
+      "responseDtoEvidence": [],
+      "errorCodeCandidatesForModule": [
+        "AUTH_SESSION_REVOKED",
+        "CONSENT_ALREADY_ACTIVE",
+        "CONSENT_ALREADY_REVOKED",
+        "INVALID_INVITATION_TOKEN",
+        "INVITATION_ALREADY_RESOLVED",
+        "INVITATION_EXPIRED",
+        "INVITATION_NOT_FOUND",
+        "INVITATION_REASON_REQUIRED",
+        "INVITER_AUTHORITY_REVOKED",
+        "MEMBERSHIP_ALREADY_EXISTS",
+        "RESOURCE_NOT_FOUND",
+        "ROLE_ESCALATION_DENIED"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "revokeStaffInvitation",
+      "relatedTestFilesCandidates": [
+        "phase09-postgres.test.ts",
+        "phase09-governance.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/public/organizations/{orgId}/sessions",
+      "controller": "PublicSessionController",
+      "handler": "list",
+      "source": "apps/api/src/modules/scheduling/session.controller.ts",
+      "authentication": "PUBLIC",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:PublicSessionListDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DATABASE_INVARIANT_VIOLATION",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_CAPACITY",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_ROOM_RESOURCE",
+        "INVALID_SESSION_INTERVAL",
+        "INVALID_STATE_TRANSITION",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TRAINER_RESOURCE",
+        "RESOURCE_ALLOCATION_MISSING",
+        "RESOURCE_CONFLICT",
+        "RESOURCE_NOT_FOUND",
+        "RESOURCE_UNAVAILABLE",
+        "SESSION_DEPENDENCY_INACTIVE",
+        "SESSION_NOT_BOOKABLE",
+        "SESSION_NOT_FINISHABLE",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRAINER_MEMBERSHIP_INACTIVE",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "listPublicOrganizationSessions",
+      "relatedTestFilesCandidates": [
+        "sessions-postgres.test.ts",
+        "session-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/public/organizations/{orgId}/sessions/{sessionId}",
+      "controller": "PublicSessionController",
+      "handler": "get",
+      "source": "apps/api/src/modules/scheduling/session.controller.ts",
+      "authentication": "PUBLIC",
+      "authorization": "SERVICE_VERIFICATION_REQUIRED",
+      "requestDto": null,
+      "responseDtoEvidence": [
+        "{status:200,type:PublicSessionDto}"
+      ],
+      "errorCodeCandidatesForModule": [
+        "DATABASE_INVARIANT_VIOLATION",
+        "IDEMPOTENCY_KEY_REUSED",
+        "IDEMPOTENCY_UNAVAILABLE",
+        "INVALID_CAPACITY",
+        "INVALID_IDEMPOTENCY_KEY",
+        "INVALID_ROOM_RESOURCE",
+        "INVALID_SESSION_INTERVAL",
+        "INVALID_STATE_TRANSITION",
+        "INVALID_TIMEZONE_OFFSET",
+        "INVALID_TRAINER_RESOURCE",
+        "RESOURCE_ALLOCATION_MISSING",
+        "RESOURCE_CONFLICT",
+        "RESOURCE_NOT_FOUND",
+        "RESOURCE_UNAVAILABLE",
+        "SESSION_DEPENDENCY_INACTIVE",
+        "SESSION_NOT_BOOKABLE",
+        "SESSION_NOT_FINISHABLE",
+        "TENANT_ACCESS_DENIED",
+        "TENANT_REFERENCE_CONFLICT",
+        "TRAINER_MEMBERSHIP_INACTIVE",
+        "TRANSACTION_RETRY_REQUIRED",
+        "UNIQUE_CONSTRAINT_CONFLICT"
+      ],
+      "idempotencyHeaderDeclared": false,
+      "designOperationId": "getPublicOrganizationSession",
+      "relatedTestFilesCandidates": [
+        "sessions-postgres.test.ts",
+        "session-domain.test.ts"
+      ],
+      "implementation": "SOURCE_CONTROLLER_PRESENT",
+      "runtimeVerification": "NOT VERIFIED",
+      "apiContractMatch": "MATCHED_METHOD_PATH",
+      "runtimeObservedStatuses": [
+        200,
+        404
+      ]
+    }
+  ],
+  "runtimeEvidence": {
+    "file": "evidence/final/http-coverage.json",
+    "observedDesignOperations": 46,
+    "privateMetricsObserved": true
+  }
+}

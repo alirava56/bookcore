@@ -1,0 +1,8 @@
+$ node tools/phase09_syntax_check.cjs
+exit=0 seconds=0.36
+{
+  "typescript_sources_checked": 99,
+  "syntax_and_relative_import_issues": [],
+  "scope": "TypeScript parser + local imports only (not real typecheck/build)",
+  "pass": true
+}

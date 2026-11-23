@@ -1,0 +1,384 @@
+{
+  "stage": "phase16",
+  "node": "v22.16.0",
+  "npm": "10.9.2",
+  "postgres_available": false,
+  "docker_available": false,
+  "results": [
+    {
+      "id": "reference",
+      "command": [
+        "npm",
+        "run",
+        "verify:reference"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/reference.log",
+      "utc": "2026-11-23T18:41:34.188913+00:00",
+      "sha256": "178d84efa56092cea27cb73435026b53401094ba3ec95a219c48dcfb8921ecdf",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "static",
+      "command": [
+        "npm",
+        "run",
+        "verify:static"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/static.log",
+      "utc": "2026-11-23T18:41:34.428558+00:00",
+      "sha256": "1df1a686b3f3732878d28edf6f924b72a06b11cd0cf4f25375ac70a53a597cad",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "openapi",
+      "command": [
+        "python",
+        "tools/phase09_validate_openapi.py"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/openapi.log",
+      "utc": "2026-11-23T18:41:35.379507+00:00",
+      "sha256": "73bb3c976f5e8e0061fefeea02e5d3e3b90f556c05ab632f68dbf82d8a48ab0e",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "syntax",
+      "command": [
+        "node",
+        "tools/phase09_syntax_check.cjs"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/syntax.log",
+      "utc": "2026-11-23T18:41:36.351388+00:00",
+      "sha256": "e89374d998855093ef545722707a8f55e41a759cee2a96f4fbcba9badc6837f9",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "api-inventory",
+      "command": [
+        "python",
+        "scripts/phase11-api-inventory.py"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/api-inventory.log",
+      "utc": "2026-11-23T18:41:36.808485+00:00",
+      "sha256": "7d4c62b08ecc6cfedfa4ecaecb483da00f9b6875657122d5e448526539068af9",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "api-inventory-16",
+      "command": [
+        "python",
+        "scripts/phase16-api-audit.py"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/api-inventory-16.log",
+      "utc": "2026-11-23T18:41:37.927744+00:00",
+      "sha256": "0418841ffa712c891d888787e697639d15bfb0cc0a7a51d35bcff037e7f62f5d",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "security-source-scan",
+      "command": [
+        "python",
+        "scripts/phase16-source-scan.py"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/security-source-scan.log",
+      "utc": "2026-11-23T18:41:39.041972+00:00",
+      "sha256": "663ddbc131a922281a520278bbe267fc9d3f7c456cfd25c8b0123a4ae7beae74",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "pure-availability",
+      "command": [
+        "npm",
+        "run",
+        "test:availability:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/pure-availability.log",
+      "utc": "2026-11-23T18:41:39.934097+00:00",
+      "sha256": "13c21b639fc532c700ed7c394c454bc4d5f5a5b265e86bb67b696dc6f01acbae",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "pure-session-domain",
+      "command": [
+        "npm",
+        "run",
+        "test:session-domain:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/pure-session-domain.log",
+      "utc": "2026-11-23T18:41:40.686760+00:00",
+      "sha256": "21008041dea7aa890994bf70e41dae52ce57f6569b63c459d1aa9d60c0c71641",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "pure-booking",
+      "command": [
+        "npm",
+        "run",
+        "test:booking:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/pure-booking.log",
+      "utc": "2026-11-23T18:41:41.227710+00:00",
+      "sha256": "2fbfa7d530572d553811ff71b576adefd6633bd8e6f0a5555f2700c822320868",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "pure-phase08",
+      "command": [
+        "npm",
+        "run",
+        "test:phase08:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/pure-phase08.log",
+      "utc": "2026-11-23T18:41:41.743285+00:00",
+      "sha256": "6faf2cdab01434e43d15776b6cabea860fe21429bcf8bca459535330ac76e55f",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "pure-phase09",
+      "command": [
+        "npm",
+        "run",
+        "test:phase09:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/pure-phase09.log",
+      "utc": "2026-11-23T18:41:42.428088+00:00",
+      "sha256": "383d31af10fd2a8e8a3688ef95c6cf5ce6a31000c16f2f6ef3f28001a1e48e28",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "pure-phase10",
+      "command": [
+        "npm",
+        "run",
+        "test:phase10:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/pure-phase10.log",
+      "utc": "2026-11-23T18:41:42.920217+00:00",
+      "sha256": "638c98842a7428bd3eb903d56046f40a9f449e3bc2e1380d041b4bd3abda2ac6",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "pure-phase11",
+      "command": [
+        "npm",
+        "run",
+        "test:phase11:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/pure-phase11.log",
+      "utc": "2026-11-23T18:41:43.416947+00:00",
+      "sha256": "04f670be6b1a16733785ad802a74b1d924f5d6beee0123d1153ba2d5adbf0eec",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "pure-phase12",
+      "command": [
+        "npm",
+        "run",
+        "test:phase12:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/pure-phase12.log",
+      "utc": "2026-11-23T18:41:43.937115+00:00",
+      "sha256": "6e8cf2a39c201e344b9617dfacd01b0c4743bc80f20c5782dd4290a057cbb97c",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "pure-phase13",
+      "command": [
+        "npm",
+        "run",
+        "test:phase13:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/pure-phase13.log",
+      "utc": "2026-11-23T18:41:44.235871+00:00",
+      "sha256": "22553ac45a661698af159a649ca55ab3b10a73acf506dfd0519a5d6c048dfd36",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "pure-phase14",
+      "command": [
+        "npm",
+        "run",
+        "test:phase14:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/pure-phase14.log",
+      "utc": "2026-11-23T18:41:44.868533+00:00",
+      "sha256": "53eea18c24acf0184d777c08647b32a1e891fe942d8e2cb2034c6cfe8df0c82d",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "phase16-pure",
+      "command": [
+        "npm",
+        "run",
+        "test:phase16:isolated"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/phase16-pure.log",
+      "utc": "2026-11-23T18:41:45.350096+00:00",
+      "sha256": "762aade5cd33026e832b403338a863a25919ea70398a52b4ec238da0321e3133",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "phase15-regression",
+      "command": [
+        "node",
+        "--test",
+        "scripts/phase15-regression.test.cjs"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "evidence/phase16/phase15-regression.log",
+      "utc": "2026-11-23T18:41:45.628970+00:00",
+      "sha256": "83d8794952d181d86ffbf094678e09143e7011f8350c98f69a3a894d04d36d3d",
+      "limits": "Pure and static checks only; no SQL execution evidence"
+    },
+    {
+      "id": "preflight",
+      "command": [
+        "node",
+        "scripts/phase14-runtime-preflight.cjs"
+      ],
+      "exit_code": 2,
+      "status": "BLOCKED",
+      "log": "evidence/phase16/preflight.log",
+      "utc": "2026-11-23T18:41:45.946793+00:00",
+      "sha256": "ffa1d350d093282ec08800af7640a2bd88cff80f4fa142ea33198da37648085e",
+      "limits": "See actual sanitized log"
+    },
+    {
+      "id": "npm-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--offline",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit_code": 1,
+      "status": "BLOCKED",
+      "log": "evidence/phase16/npm-ci.log",
+      "utc": "2026-11-23T18:41:46.114720+00:00",
+      "sha256": "3e19908166787485a6673f66dc40cbce59717afc0b9768eb4a24bd17538f92f6",
+      "limits": "See actual sanitized log"
+    },
+    {
+      "id": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 2,
+      "status": "BLOCKED",
+      "log": "evidence/phase16/typecheck.log",
+      "utc": "2026-11-23T18:41:46.399572+00:00",
+      "sha256": "e9f49ca44cd6c22207e62819fc7b86f69a8715884e84337c79a1a876634fe5e0",
+      "limits": "See actual sanitized log"
+    },
+    {
+      "id": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 127,
+      "status": "BLOCKED",
+      "log": "evidence/phase16/lint.log",
+      "utc": "2026-11-23T18:41:47.739394+00:00",
+      "sha256": "9aa4c5f04d3a49e4cda72eb56595f9f28cb308f5a3bd5c246d1b65678789c08f",
+      "limits": "See actual sanitized log"
+    },
+    {
+      "id": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 1,
+      "status": "BLOCKED",
+      "log": "evidence/phase16/build.log",
+      "utc": "2026-11-23T18:41:47.905571+00:00",
+      "sha256": "a1725769aa19c9c72d20d5a75fc4910f1c9d007eb1d68fd3635a02d0ff27f9a1",
+      "limits": "See actual sanitized log"
+    },
+    {
+      "id": "unit-runner",
+      "command": [
+        "node",
+        "scripts/run-tests.cjs",
+        "unit"
+      ],
+      "exit_code": 2,
+      "status": "BLOCKED",
+      "log": "evidence/phase16/unit-runner.log",
+      "utc": "2026-11-23T18:41:49.464971+00:00",
+      "sha256": "c6869b6d6040116188fa71dfb91a7539aa453439acd2c349019b06e86cb45230",
+      "limits": "See actual sanitized log"
+    },
+    {
+      "id": "integration-runner",
+      "command": [
+        "node",
+        "scripts/run-tests.cjs",
+        "integration"
+      ],
+      "exit_code": 2,
+      "status": "BLOCKED",
+      "log": "evidence/phase16/integration-runner.log",
+      "utc": "2026-11-23T18:41:49.578592+00:00",
+      "sha256": "04598d3cfbed0fe29b7f1b4d7b2e2c13db31d0b1629b1ac91fef263379446332",
+      "limits": "See actual sanitized log"
+    },
+    {
+      "id": "recovery-runner",
+      "command": [
+        "node",
+        "scripts/run-tests.cjs",
+        "recovery"
+      ],
+      "exit_code": 2,
+      "status": "BLOCKED",
+      "log": "evidence/phase16/recovery-runner.log",
+      "utc": "2026-11-23T18:41:49.678436+00:00",
+      "sha256": "6b612e7fa707c634f0b8aec223865bbb8e31b4cc6f8d02b96cd7a6e5fe2cc862",
+      "limits": "See actual sanitized log"
+    }
+  ]
+}

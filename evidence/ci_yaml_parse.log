@@ -1,0 +1,2 @@
+PASS YAML syntactic parse: .github/workflows/backend-phase03.yml keys= ['name', True, 'jobs']
+PASS YAML syntactic parse: infra/docker/compose.yml keys= ['name', 'services', 'volumes']

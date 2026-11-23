@@ -1,0 +1,11 @@
+$ npm run verify:static
+exit=0 seconds=0.27
+
+> bookcore-reporting-outbox@0.8.0 verify:static
+> node scripts/static-verify.cjs && node scripts/verify-migration-checksums.cjs && node scripts/phase07-static-verify.cjs && node scripts/phase08-static-check.cjs && node scripts/phase10-static-check.cjs
+
+PASS static source requirements; 23 mandatory paths; 6 preserved + additive phase06 migration
+PASS migration checksum constants equal 11 SQL sources
+PASS Phase07 source presence and safety-oriented static invariants; NOT a DB verification
+PASS Phase08 structural requirements (source-only)
+PASS phase10 source-only structural security checks

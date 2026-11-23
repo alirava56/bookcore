@@ -1,0 +1,5 @@
+
+> bookcore-backend@0.14.0 lint
+> eslint 'apps/api/**/*.ts' 'scripts/**/*.ts' --max-warnings=0
+
+sh: 1: eslint: not found

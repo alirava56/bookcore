@@ -1,0 +1,573 @@
+--- node scripts/verify-reference.cjs
+PASS authentic Phase02 archive SHA256 3da3f894ff4a55c20ef3ff1ae666169c1461f6fb7f0230dee55be8a22e8efcab
+EXIT 0 node scripts/verify-reference.cjs
+--- node scripts/verify-migration-checksums.cjs
+PASS migration checksum constants equal 12 SQL sources
+EXIT 0 node scripts/verify-migration-checksums.cjs
+--- node scripts/phase11-static-check.cjs
+{"staticChecks":"PASS","migrations":12,"apiDesign":46,"sourceRoutes":46,"sourceTypeScript":105,"pgRuntime":"NOT VERIFIED"}
+EXIT 0 node scripts/phase11-static-check.cjs
+--- node scripts/phase12-static-check.cjs
+PASS phase12 static controls; migration count: 12
+EXIT 0 node scripts/phase12-static-check.cjs
+--- python tools/phase09_validate_openapi.py
+{
+  "static_yaml": "PASS",
+  "operations": 46,
+  "unique_operation_ids": 46,
+  "internal_refs_resolved": 507,
+  "errors": []
+}
+EXIT 0 python tools/phase09_validate_openapi.py
+--- node tools/phase09_syntax_check.cjs
+{
+  "typescript_sources_checked": 105,
+  "syntax_and_relative_import_issues": [],
+  "scope": "TypeScript parser + local imports only (not real typecheck/build)",
+  "pass": true
+}
+EXIT 0 node tools/phase09_syntax_check.cjs
+--- node scripts/test-availability-pure.cjs
+PASS business hours permit interval
+PASS not a capacity guarantee
+PASS outside denied
+PASS resource needs its own hours
+PASS resource hours and 120min buffer
+PASS closed wins over override
+PASS overnight Sunday Monday
+PASS Tehran offset valid
+PASS Tehran mismatched offset rejected
+PASS Berlin DST gap rejected
+PASS Berlin DST fold ambiguous rejected
+PASS Berlin fold explicit offsets differ
+PASS invalid duration rejected
+{"executed":13,"passed":13,"failed":0,"scope":"pure TS source only"}
+EXIT 0 node scripts/test-availability-pure.cjs
+--- node scripts/test-session-domain-pure.cjs
+TAP version 13
+# Subtest: DRAFT may publish or cancel, not finish
+ok 1 - DRAFT may publish or cancel, not finish
+  ---
+  duration_ms: 0.77878
+  type: 'test'
+  ...
+# Subtest: PUBLISHED may finish or cancel, not republish
+ok 2 - PUBLISHED may finish or cancel, not republish
+  ---
+  duration_ms: 0.10146
+  type: 'test'
+  ...
+# Subtest: terminal Session states forbid every transition
+ok 3 - terminal Session states forbid every transition
+  ---
+  duration_ms: 0.187026
+  type: 'test'
+  ...
+# Subtest: capacity validation rejects below committed, negative and overflow
+ok 4 - capacity validation rejects below committed, negative and overflow
+  ---
+  duration_ms: 0.122611
+  type: 'test'
+  ...
+# Subtest: future half-open intervals require an ordered duration <= 24h
+ok 5 - future half-open intervals require an ordered duration <= 24h
+  ---
+  duration_ms: 0.199635
+  type: 'test'
+  ...
+# Subtest: buffer extension applies to both sides without modifying occurrence
+ok 6 - buffer extension applies to both sides without modifying occurrence
+  ---
+  duration_ms: 0.559726
+  type: 'test'
+  ...
+# Subtest: cursor is strict, stable and roundtrips same-start tie break
+ok 7 - cursor is strict, stable and roundtrips same-start tie break
+  ---
+  duration_ms: 1.510641
+  type: 'test'
+  ...
+# Subtest: pages enforce strict 31-day windows
+ok 8 - pages enforce strict 31-day windows
+  ---
+  duration_ms: 0.154368
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 64.377062
+EXIT 0 node scripts/test-session-domain-pure.cjs
+--- node scripts/test-booking-domain-pure.cjs
+TAP version 13
+# Subtest: effective statuses and terminal transitions
+ok 1 - effective statuses and terminal transitions
+  ---
+  duration_ms: 2.047563
+  type: 'test'
+  ...
+# Subtest: capacity and published-time cutoff
+ok 2 - capacity and published-time cutoff
+  ---
+  duration_ms: 0.190512
+  type: 'test'
+  ...
+# Subtest: customer deadline, administrative override and terminal status
+ok 3 - customer deadline, administrative override and terminal status
+  ---
+  duration_ms: 0.183991
+  type: 'test'
+  ...
+# Subtest: descending stable cursor with bounded filters
+ok 4 - descending stable cursor with bounded filters
+  ---
+  duration_ms: 2.196274
+  type: 'test'
+  ...
+# Subtest: canonical idempotency payload ignores key order while retaining semantic differences
+ok 5 - canonical idempotency payload ignores key order while retaining semantic differences
+  ---
+  duration_ms: 0.344108
+  type: 'test'
+  ...
+# Subtest: duplicate customer takes precedence over full capacity after locked session read
+ok 6 - duplicate customer takes precedence over full capacity after locked session read
+  ---
+  duration_ms: 0.289107
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 70.472429
+EXIT 0 node scripts/test-booking-domain-pure.cjs
+--- node scripts/test-phase08-pure.cjs
+TAP version 13
+# Subtest: effective statuses and terminal transitions
+ok 1 - effective statuses and terminal transitions
+  ---
+  duration_ms: 1.9301
+  type: 'test'
+  ...
+# Subtest: capacity and published-time cutoff
+ok 2 - capacity and published-time cutoff
+  ---
+  duration_ms: 0.355445
+  type: 'test'
+  ...
+# Subtest: customer deadline, administrative override and terminal status
+ok 3 - customer deadline, administrative override and terminal status
+  ---
+  duration_ms: 0.226054
+  type: 'test'
+  ...
+# Subtest: descending stable cursor with bounded filters
+ok 4 - descending stable cursor with bounded filters
+  ---
+  duration_ms: 3.943604
+  type: 'test'
+  ...
+# Subtest: canonical idempotency payload ignores key order while retaining semantic differences
+ok 5 - canonical idempotency payload ignores key order while retaining semantic differences
+  ---
+  duration_ms: 0.348004
+  type: 'test'
+  ...
+# Subtest: duplicate customer takes precedence over full capacity after locked session read
+ok 6 - duplicate customer takes precedence over full capacity after locked session read
+  ---
+  duration_ms: 0.113077
+  type: 'test'
+  ...
+# Subtest: microseconds are not rounded during cursor encode/decode
+ok 7 - microseconds are not rounded during cursor encode/decode
+  ---
+  duration_ms: 3.578995
+  type: 'test'
+  ...
+# Subtest: same millisecond distinct microseconds are ordered deterministically
+ok 8 - same millisecond distinct microseconds are ordered deterministically
+  ---
+  duration_ms: 1.878634
+  type: 'test'
+  ...
+# Subtest: cursor cannot be tampered with or replayed under another user
+ok 9 - cursor cannot be tampered with or replayed under another user
+  ---
+  duration_ms: 1.681473
+  type: 'test'
+  ...
+# Subtest: only the correct partial unique index means effective duplicate booking
+ok 10 - only the correct partial unique index means effective duplicate booking
+  ---
+  duration_ms: 2.147591
+  type: 'test'
+  ...
+# Subtest: SQLSTATE constraints and concurrency never disclose SQL
+ok 11 - SQLSTATE constraints and concurrency never disclose SQL
+  ---
+  duration_ms: 0.488221
+  type: 'test'
+  ...
+# Subtest: all documented outbox types map to a source aggregate
+ok 12 - all documented outbox types map to a source aggregate
+  ---
+  duration_ms: 0.834873
+  type: 'test'
+  ...
+# Subtest: well-formed versioned Booking event validates
+ok 13 - well-formed versioned Booking event validates
+  ---
+  duration_ms: 1.153884
+  type: 'test'
+  ...
+# Subtest: unsupported event type, tenant mismatch, bad schema and credentials are rejected
+ok 14 - unsupported event type, tenant mismatch, bad schema and credentials are rejected
+  ---
+  duration_ms: 1.208324
+  type: 'test'
+  ...
+# Subtest: retry schedule is bounded and exponential
+ok 15 - retry schedule is bounded and exponential
+  ---
+  duration_ms: 0.490063
+  type: 'test'
+  ...
+# Subtest: sanitized failure classification
+ok 16 - sanitized failure classification
+  ---
+  duration_ms: 0.177522
+  type: 'test'
+  ...
+# Subtest: occupancy 31-day half-open UTC range
+ok 17 - occupancy 31-day half-open UTC range
+  ---
+  duration_ms: 1.906455
+  type: 'test'
+  ...
+# Subtest: occupancy missing dates, reversed intervals, invalid offsets, >31 days denied
+ok 18 - occupancy missing dates, reversed intervals, invalid offsets, >31 days denied
+  ---
+  duration_ms: 0.579646
+  type: 'test'
+  ...
+# Subtest: invalid calendar day and out-of-range timezone offsets are rejected
+ok 19 - invalid calendar day and out-of-range timezone offsets are rejected
+  ---
+  duration_ms: 0.246334
+  type: 'test'
+  ...
+# Subtest: authentic v1 empty source payloads remain supported
+ok 20 - authentic v1 empty source payloads remain supported
+  ---
+  duration_ms: 2.203584
+  type: 'test'
+  ...
+# Subtest: BookingConfirmed requires real booking ID and correct status
+ok 21 - BookingConfirmed requires real booking ID and correct status
+  ---
+  duration_ms: 1.766478
+  type: 'test'
+  ...
+# Subtest: BookingCancelled supports both authentic source producer shapes
+ok 22 - BookingCancelled supports both authentic source producer shapes
+  ---
+  duration_ms: 0.46076
+  type: 'test'
+  ...
+# Subtest: new governance events validate v1 and aggregate identity
+ok 23 - new governance events validate v1 and aggregate identity
+  ---
+  duration_ms: 0.424436
+  type: 'test'
+  ...
+# Subtest: reject excessive nesting, secret-bearing values, unknown schema/version/type
+ok 24 - reject excessive nesting, secret-bearing values, unknown schema/version/type
+  ---
+  duration_ms: 0.65046
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 176.955516
+EXIT 0 node scripts/test-phase08-pure.cjs
+--- node scripts/test-phase09-pure.cjs
+TAP version 13
+# Subtest: OWNER may invite supported roles; MANAGER only junior roles
+ok 1 - OWNER may invite supported roles; MANAGER only junior roles
+  ---
+  duration_ms: 1.078723
+  type: 'test'
+  ...
+# Subtest: RECEPTIONIST, TRAINER and global customer cannot add staff
+ok 2 - RECEPTIONIST, TRAINER and global customer cannot add staff
+  ---
+  duration_ms: 0.376886
+  type: 'test'
+  ...
+# Subtest: on-behalf booking policy excludes TRAINER and customer
+ok 3 - on-behalf booking policy excludes TRAINER and customer
+  ---
+  duration_ms: 0.212564
+  type: 'test'
+  ...
+# Subtest: consent expires at exact deadline; revocation always wins
+ok 4 - consent expires at exact deadline; revocation always wins
+  ---
+  duration_ms: 0.177833
+  type: 'test'
+  ...
+# Subtest: invitation cannot be accepted after decline, revoke, acceptance or expiry
+ok 5 - invitation cannot be accepted after decline, revoke, acceptance or expiry
+  ---
+  duration_ms: 0.253104
+  type: 'test'
+  ...
+# Subtest: unknown refresh COMMIT requires authentication, never bearer-token replay
+ok 6 - unknown refresh COMMIT requires authentication, never bearer-token replay
+  ---
+  duration_ms: 0.144383
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 60.722041
+EXIT 0 node scripts/test-phase09-pure.cjs
+--- node scripts/test-phase10-pure.cjs
+TAP version 13
+# Subtest: inspection requires tenant UUID and bounded page
+ok 1 - inspection requires tenant UUID and bounded page
+  ---
+  duration_ms: 1.103119
+  type: 'test'
+  ...
+# Subtest: counter drift classified as manual repair only
+ok 2 - counter drift classified as manual repair only
+  ---
+  duration_ms: 0.213576
+  type: 'test'
+  ...
+# Subtest: out-of-bound count is separately detected
+ok 3 - out-of-bound count is separately detected
+  ---
+  duration_ms: 0.560418
+  type: 'test'
+  ...
+# Subtest: minimum retention and bounded maintenance are required
+ok 4 - minimum retention and bounded maintenance are required
+  ---
+  duration_ms: 0.231522
+  type: 'test'
+  ...
+# Subtest: idempotency history deletion is disabled
+ok 5 - idempotency history deletion is disabled
+  ---
+  duration_ms: 0.092707
+  type: 'test'
+  ...
+# Subtest: maintenance reason is trimmed and validated
+ok 6 - maintenance reason is trimmed and validated
+  ---
+  duration_ms: 1.133574
+  type: 'test'
+  ...
+# Subtest: only invitation pending uniqueness is translated to business conflict
+ok 7 - only invitation pending uniqueness is translated to business conflict
+  ---
+  duration_ms: 0.315075
+  type: 'test'
+  ...
+# Subtest: consent/invitation expiry is fail closed on exact boundary
+ok 8 - consent/invitation expiry is fail closed on exact boundary
+  ---
+  duration_ms: 0.146216
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 62.695434
+EXIT 0 node scripts/test-phase10-pure.cjs
+--- node scripts/test-phase11-pure.cjs
+TAP version 13
+# Subtest: inspection signed cursor roundtrip preserves six digit timestamp
+ok 1 - inspection signed cursor roundtrip preserves six digit timestamp
+  ---
+  duration_ms: 2.651666
+  type: 'test'
+  ...
+# Subtest: cursor tampering, different tenant and different kind are rejected
+ok 2 - cursor tampering, different tenant and different kind are rejected
+  ---
+  duration_ms: 0.65017
+  type: 'test'
+  ...
+# Subtest: cursor key must have >= 256 bits entropy
+ok 3 - cursor key must have >= 256 bits entropy
+  ---
+  duration_ms: 0.228036
+  type: 'test'
+  ...
+# Subtest: bounded inspection rejects oversized batch, pages, and total work
+ok 4 - bounded inspection rejects oversized batch, pages, and total work
+  ---
+  duration_ms: 0.199335
+  type: 'test'
+  ...
+# Subtest: inspection response cannot claim completed scan with pending cursor
+ok 5 - inspection response cannot claim completed scan with pending cursor
+  ---
+  duration_ms: 0.214877
+  type: 'test'
+  ...
+# Subtest: inspection kinds cover session booking outbox and governance
+ok 6 - inspection kinds cover session booking outbox and governance
+  ---
+  duration_ms: 0.102181
+  type: 'test'
+  ...
+# Subtest: event-order beats equal wall clock timestamps and reverse UUID sort order
+ok 7 - event-order beats equal wall clock timestamps and reverse UUID sort order
+  ---
+  duration_ms: 0.2303
+  type: 'test'
+  ...
+# Subtest: attendance and no-show are both valid terminal states
+ok 8 - attendance and no-show are both valid terminal states
+  ---
+  duration_ms: 0.149541
+  type: 'test'
+  ...
+# Subtest: missing or duplicate initial event is detected
+ok 9 - missing or duplicate initial event is detected
+  ---
+  duration_ms: 0.410276
+  type: 'test'
+  ...
+# Subtest: terminal transition cannot be reversed or chained
+ok 10 - terminal transition cannot be reversed or chained
+  ---
+  duration_ms: 0.414522
+  type: 'test'
+  ...
+# Subtest: booking status must match last logical event not last UUID
+ok 11 - booking status must match last logical event not last UUID
+  ---
+  duration_ms: 0.188549
+  type: 'test'
+  ...
+# Subtest: Phase12 CLI: one-kind completed/partial, six-kind completed/partial and findings
+ok 12 - Phase12 CLI: one-kind completed/partial, six-kind completed/partial and findings
+  ---
+  duration_ms: 0.137524
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 75.240032
+EXIT 0 node scripts/test-phase11-pure.cjs
+--- node scripts/test-phase12-pure.cjs
+TAP version 13
+# Subtest: backup policy: database names and explicit connection are mandatory
+ok 1 - backup policy: database names and explicit connection are mandatory
+  ---
+  duration_ms: 1.213873
+  type: 'test'
+  ...
+# Subtest: retention is bounded and expiration is not deletion permission
+ok 2 - retention is bounded and expiration is not deletion permission
+  ---
+  duration_ms: 0.249338
+  type: 'test'
+  ...
+# Subtest: restore fail-closed: production, remote, mismatched, no approval
+ok 3 - restore fail-closed: production, remote, mismatched, no approval
+  ---
+  duration_ms: 0.180466
+  type: 'test'
+  ...
+# Subtest: backup private directory rejects symlink and group-readable directory
+ok 4 - backup private directory rejects symlink and group-readable directory
+  ---
+  duration_ms: 1.394038
+  type: 'test'
+  ...
+# Subtest: manifest rejects traversal and wrong sha, retention or format
+ok 5 - manifest rejects traversal and wrong sha, retention or format
+  ---
+  duration_ms: 0.583142
+  type: 'test'
+  ...
+# Subtest: backup and checksum test using synthetic command mocks, NOT actual PostgreSQL
+ok 6 - backup and checksum test using synthetic command mocks, NOT actual PostgreSQL
+  ---
+  duration_ms: 30.927726
+  type: 'test'
+  ...
+# Subtest: tool unavailable propagates failure; no output archive finalized
+ok 7 - tool unavailable propagates failure; no output archive finalized
+  ---
+  duration_ms: 1.783304
+  type: 'test'
+  ...
+# Subtest: malformed command-line arguments are rejected, including repeated options
+ok 8 - malformed command-line arguments are rejected, including repeated options
+  ---
+  duration_ms: 0.259934
+  type: 'test'
+  ...
+# Subtest: backup and restore tooling contain no unbounded destructive flags
+ok 9 - backup and restore tooling contain no unbounded destructive flags
+  ---
+  duration_ms: 0.417817
+  type: 'test'
+  ...
+# Subtest: retention preview never deletes archives and bounds workload
+ok 10 - retention preview never deletes archives and bounds workload
+  ---
+  duration_ms: 13.325649
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 113.856308
+EXIT 0 node scripts/test-phase12-pure.cjs

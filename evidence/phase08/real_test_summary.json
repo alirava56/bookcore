@@ -1,0 +1,14 @@
+{
+  "phase": 8,
+  "as_of": "2026-11-22",
+  "environment": {"node": "v22.16.0", "npm": "10.9.2", "postgresql": null, "docker": null},
+  "pure_tests": {"discovered": 19, "executed": 19, "passed": 19, "failed": 0, "skipped": 0},
+  "postgresql_tests": {"executed": 0, "passed": 0, "status": "NOT VERIFIED"},
+  "nest_http_tests": {"executed": 0, "passed": 0, "status": "NOT VERIFIED"},
+  "npm_ci": "FAIL: no authentic lockfile",
+  "typecheck": "FAIL: missing installed dependencies",
+  "lint": "FAIL: eslint unavailable",
+  "build": "FAIL: missing installed dependencies",
+  "ci": "NOT VERIFIED",
+  "note": "These are observed local outcomes, not end-to-end database evidence. The pure count is from scripts/test-phase08-pure.cjs, which includes inherited booking domain tests."
+}

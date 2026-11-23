@@ -1,0 +1,712 @@
+{
+  "scope": "ALL controllers incl. common/observability, AST static only, not Nest runtime proof",
+  "sourceRoutes": 47,
+  "designOperations": 46,
+  "matched": 46,
+  "missing": [],
+  "extra": [
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/metrics",
+      "privateMonitoring": true
+    }
+  ],
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "controller": "IdentityController",
+      "handler": "login",
+      "requestDto": "LoginDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:TokensResponseDto}"
+      ],
+      "authentication": "EXPLICIT_PUBLIC",
+      "designOperationId": "postAuthlogin",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/identity/identity.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/logout",
+      "controller": "IdentityController",
+      "handler": "logout",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postAuthlogout",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/identity/identity.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "controller": "IdentityController",
+      "handler": "refresh",
+      "requestDto": "RefreshDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:TokensResponseDto}"
+      ],
+      "authentication": "EXPLICIT_PUBLIC",
+      "designOperationId": "postAuthrefresh",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/identity/identity.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/register",
+      "controller": "IdentityController",
+      "handler": "register",
+      "requestDto": "RegisterDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:UserResponseDto}"
+      ],
+      "authentication": "EXPLICIT_PUBLIC",
+      "designOperationId": "postAuthregister",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/identity/identity.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/live",
+      "controller": "HealthController",
+      "handler": "live",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:HealthStatus}"
+      ],
+      "authentication": "EXPLICIT_PUBLIC",
+      "designOperationId": "getHealthlive",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/health/health.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health/ready",
+      "controller": "HealthController",
+      "handler": "ready",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:HealthStatus}",
+        "{status:401,description:'Missing or invalid monitoring key'}",
+        "{status:403,description:'Monitoring network denied'}",
+        "{status:503,description:'Dependency unavailable'}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getHealthready",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/health/health.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/internal/metrics",
+      "controller": "MetricsController",
+      "handler": "metrics",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [],
+      "authentication": "MONITORING_GUARD",
+      "designOperationId": null,
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/common/observability/metrics.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me",
+      "controller": "IdentityController",
+      "handler": "me",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:MeResponseDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getMe",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/identity/identity.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/staff-invitations/accept",
+      "controller": "GovernanceController",
+      "handler": "accept",
+      "requestDto": "StaffInvitationTokenDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:InvitationResponseDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "acceptStaffInvitation",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/governance/governance.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/staff-invitations/decline",
+      "controller": "GovernanceController",
+      "handler": "decline",
+      "requestDto": "StaffInvitationTokenDto",
+      "apiResponseDecoratorEvidence": [],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "declineStaffInvitation",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/governance/governance.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations",
+      "controller": "OrganizationsController",
+      "handler": "create",
+      "requestDto": "CreateOrganizationDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:OrganizationResponseDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizations",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/organizations/organizations.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}",
+      "controller": "OrganizationsController",
+      "handler": "get",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:OrganizationResponseDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgid",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/organizations/organizations.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/booking-consents",
+      "controller": "GovernanceController",
+      "handler": "grant",
+      "requestDto": "GrantConsentDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:ConsentDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "grantBookingConsent",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/governance/governance.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/booking-consents/{consentId}/revoke",
+      "controller": "GovernanceController",
+      "handler": "revokeConsent",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:ConsentDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "revokeBookingConsent",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/governance/governance.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/booking-consents/me",
+      "controller": "GovernanceController",
+      "handler": "mine",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "listMyBookingConsents",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/governance/governance.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/bookings/{bookingId}/attendance",
+      "controller": "BookingController",
+      "handler": "attendance",
+      "requestDto": "AttendanceBookingDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:BookingReceiptDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidbookingsbookingidattendance",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/booking/booking.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/bookings/{bookingId}/cancel",
+      "controller": "BookingController",
+      "handler": "cancel",
+      "requestDto": "CancelBookingDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:BookingReceiptDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidbookingsbookingidcancel",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/booking/booking.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/bookings/me",
+      "controller": "BookingController",
+      "handler": "mine",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:BookingPageDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgidbookingsme",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/booking/booking.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/branches",
+      "controller": "CatalogController",
+      "handler": "listBranches",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:BranchListDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgidbranches",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/branches",
+      "controller": "CatalogController",
+      "handler": "createBranch",
+      "requestDto": "CreateBranchDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:BranchDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidbranches",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/business-hours",
+      "controller": "CatalogController",
+      "handler": "listHours",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:BusinessHourListDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgidbusiness_Hours",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/business-hours",
+      "controller": "CatalogController",
+      "handler": "createHour",
+      "requestDto": "CreateBusinessHourDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:BusinessHourDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidbusiness_Hours",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/business-hours/{hourId}",
+      "controller": "CatalogController",
+      "handler": "deactivateHour",
+      "requestDto": "DeactivateRuleDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:BusinessHourDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "patchOrganizationsorgidbusiness_Hourshourid",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/members",
+      "controller": "OrganizationsController",
+      "handler": "list",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:MembershipListResponseDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgidmembers",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/organizations/organizations.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/members",
+      "controller": "OrganizationsController",
+      "handler": "add",
+      "requestDto": "CreateMembershipDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:MembershipResponseDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidmembers",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/organizations/organizations.controller.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/members/{userId}",
+      "controller": "OrganizationsController",
+      "handler": "patch",
+      "requestDto": "PatchMembershipDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:MembershipResponseDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "patchOrganizationsorgidmembersuserid",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/organizations/organizations.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/reports/occupancy",
+      "controller": "ReportingController",
+      "handler": "occupancy",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:OccupancyDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgidreportsoccupancy",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/reporting/reporting.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/resources",
+      "controller": "CatalogController",
+      "handler": "listResources",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:ResourceListDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgidresources",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/resources",
+      "controller": "CatalogController",
+      "handler": "createResource",
+      "requestDto": "CreateResourceDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:ResourceDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidresources",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/schedule-exceptions",
+      "controller": "CatalogController",
+      "handler": "listExceptions",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:ScheduleExceptionListDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgidschedule_Exceptions",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/schedule-exceptions",
+      "controller": "CatalogController",
+      "handler": "createException",
+      "requestDto": "CreateScheduleExceptionDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:ScheduleExceptionDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidschedule_Exceptions",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/schedule-exceptions/{exceptionId}",
+      "controller": "CatalogController",
+      "handler": "deactivateException",
+      "requestDto": "DeactivateRuleDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:ScheduleExceptionDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "patchOrganizationsorgidschedule_Exceptionsexceptionid",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/services",
+      "controller": "CatalogController",
+      "handler": "listServices",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:ServiceListDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgidservices",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/services",
+      "controller": "CatalogController",
+      "handler": "createService",
+      "requestDto": "CreateServiceDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:ServiceDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidservices",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/catalog/catalog.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/sessions",
+      "controller": "StaffSessionController",
+      "handler": "list",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:StaffSessionListDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgidsessions",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/scheduling/session.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions",
+      "controller": "StaffSessionController",
+      "handler": "create",
+      "requestDto": "CreateSessionDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:StaffSessionDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidsessions",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/scheduling/session.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}",
+      "controller": "StaffSessionController",
+      "handler": "get",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:StaffSessionDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "getOrganizationsorgidsessionssessionid",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/scheduling/session.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/bookings",
+      "controller": "BookingController",
+      "handler": "create",
+      "requestDto": "CreateBookingDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:BookingReceiptDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidsessionssessionidbookings",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/booking/booking.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/cancel",
+      "controller": "StaffSessionController",
+      "handler": "cancel",
+      "requestDto": "CancelSessionDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:StaffSessionDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidsessionssessionidcancel",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/scheduling/session.controller.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/capacity",
+      "controller": "StaffSessionController",
+      "handler": "capacity",
+      "requestDto": "CapacitySessionDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:StaffSessionDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "patchOrganizationsorgidsessionssessionidcapacity",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/scheduling/session.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/finish",
+      "controller": "StaffSessionController",
+      "handler": "finish",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:StaffSessionDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidsessionssessionidfinish",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/scheduling/session.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/sessions/{sessionId}/publish",
+      "controller": "StaffSessionController",
+      "handler": "publish",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:StaffSessionDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "postOrganizationsorgidsessionssessionidpublish",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/scheduling/session.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/organizations/{orgId}/staff-invitations",
+      "controller": "GovernanceController",
+      "handler": "listInvites",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "listStaffInvitations",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/governance/governance.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/staff-invitations",
+      "controller": "GovernanceController",
+      "handler": "invite",
+      "requestDto": "CreateStaffInvitationDto",
+      "apiResponseDecoratorEvidence": [
+        "{status:201,type:CreatedInvitationDto}"
+      ],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "createStaffInvitation",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/governance/governance.controller.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/organizations/{orgId}/staff-invitations/{invitationId}/revoke",
+      "controller": "GovernanceController",
+      "handler": "revoke",
+      "requestDto": "InvitationRevokeDto",
+      "apiResponseDecoratorEvidence": [],
+      "authentication": "DEFAULT_DENY",
+      "designOperationId": "revokeStaffInvitation",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/governance/governance.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/public/organizations/{orgId}/sessions",
+      "controller": "PublicSessionController",
+      "handler": "list",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:PublicSessionListDto}"
+      ],
+      "authentication": "EXPLICIT_PUBLIC",
+      "designOperationId": "listPublicOrganizationSessions",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/scheduling/session.controller.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/public/organizations/{orgId}/sessions/{sessionId}",
+      "controller": "PublicSessionController",
+      "handler": "get",
+      "requestDto": null,
+      "apiResponseDecoratorEvidence": [
+        "{status:200,type:PublicSessionDto}"
+      ],
+      "authentication": "EXPLICIT_PUBLIC",
+      "designOperationId": "getPublicOrganizationSession",
+      "implementedInSource": true,
+      "runtimeVerified": false,
+      "source": "apps/api/src/modules/scheduling/session.controller.ts"
+    }
+  ]
+}

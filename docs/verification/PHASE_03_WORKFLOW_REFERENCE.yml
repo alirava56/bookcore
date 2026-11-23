@@ -1,0 +1,63 @@
+name: BookCore Phase 03 foundation (requires authentic package-lock)
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:17.6-bookworm
+        env:
+          POSTGRES_USER: bookcore_owner
+          POSTGRES_PASSWORD: ci_dev_only_owner
+          POSTGRES_DB: bookcore
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U bookcore_owner -d bookcore"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgres://bookcore_app:ci_dev_only_app@127.0.0.1:5432/bookcore
+      MIGRATION_DATABASE_URL: postgres://bookcore_owner:ci_dev_only_owner@127.0.0.1:5432/bookcore
+      MONITOR_API_KEY: ci_not_a_real_secret_32_chars_only_for_tests
+      MONITOR_ALLOWED_IPS: 127.0.0.1,::1
+      HTTP_HOST: 127.0.0.1
+      CORS_ORIGINS: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+      - name: Authentic npm lockfile and install required
+        run: npm ci --no-audit --no-fund
+      - name: Verify reference and source
+        run: npm run verify:reference && npm run verify:static
+      - name: Typecheck, lint and build
+        run: npm run typecheck && npm run lint && npm run build
+      - name: Unit and HTTP tests - zero tests fail
+        run: npm run test:unit
+      - name: Create least-privileged app role for integration tests only
+        run: |
+          psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE ROLE bookcore_app LOGIN PASSWORD 'ci_dev_only_app'"
+      - name: Migrate and verify checksums twice
+        run: npm run migrate && npm run migrate
+      - name: Grant scoped migration-ledger visibility to application role
+        run: psql "$MIGRATION_DATABASE_URL" -v ON_ERROR_STOP=1 -c 'GRANT SELECT ON public.bookcore_migrations TO bookcore_app'
+      - name: PostgreSQL 17 integration tests - zero tests fail
+        run: npm run test:integration
+      - name: Generate implemented OpenAPI contract
+        run: npm run openapi:current
+      - name: Evidence on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase03-failure-evidence
+          path: |
+            evidence/
+            docs/verification/
+          if-no-files-found: warn

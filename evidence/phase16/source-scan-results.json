@@ -1,0 +1,6 @@
+{
+  "scope": "regex scan over source; no dependency CVE check or dynamic secret investigation",
+  "files_checked": 412,
+  "potential_pattern_hits": [],
+  "runtime_security_verified": false
+}

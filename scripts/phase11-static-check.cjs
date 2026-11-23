@@ -1,0 +1,28 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),cp=require('node:child_process');
+const sql=fs.readFileSync('db/migrations/012_integrity_inspection_paging.sql','utf8');
+assert.match(sql,/ORDER BY e\.event_order ASC/);
+assert.doesNotMatch(sql,/ORDER BY e\.at DESC,e\.id DESC/);
+assert.match(sql,/p_kind='SESSION'/);assert.match(sql,/p_kind='BOOKING'/);
+assert.match(sql,/p_kind='OUTBOX'/);assert.match(sql,/p_kind='COUNTER'/);
+assert.match(sql,/p_kind='INVITATION'/);assert.match(sql,/p_kind='CONSENT'/);
+assert.match(sql,/ORDER BY s\.id LIMIT p_limit\+1/);
+assert.match(sql,/ORDER BY b\.id LIMIT p_limit\+1/);
+assert.match(sql,/session_user/);assert.match(sql,/SECURITY DEFINER/);
+assert.match(sql,/REVOKE ALL ON FUNCTION public\.bookcore_inspect_tenant_page/);
+assert.match(sql,/consistentSnapshot',false/);
+assert.match(sql,/legacySampleOnly',true/);
+const tool=fs.readFileSync('scripts/operational-inspection-v2.ts','utf8');
+assert.match(tool,/BEGIN READ ONLY/);assert.match(tool,/statement_timeout/);
+assert.match(tool,/sealInspectionCursor/);assert.match(tool,/certifiedIntegrity:false/);
+const pkg=require('../package.json');
+assert.ok(pkg.scripts['test:phase11:isolated']);assert.ok(pkg.scripts['ops:inspect:paged']);
+const api=JSON.parse(fs.readFileSync('docs/integration/API_IMPLEMENTATION_MATRIX.json','utf8'));
+assert.equal(api.designOperationCount,46);
+assert.equal(api.sourceMatched,46);
+assert.equal(api.duplicates.length,0);
+assert.equal(api.unexpectedSourceRoutes.length,0);
+const syntax=cp.spawnSync('node',['tools/phase09_syntax_check.cjs'],{encoding:'utf8'});
+assert.equal(syntax.status,0,'TypeScript parse and local imports must resolve');
+console.log(JSON.stringify({staticChecks:'PASS',migrations:12,apiDesign:46,sourceRoutes:46,
+ sourceTypeScript:JSON.parse(syntax.stdout).typescript_sources_checked,pgRuntime:'NOT VERIFIED'}));
