@@ -365,7 +365,7 @@
 | `evidence/final/recovery-final.log` | `75b1246d448a7b50e0935bb51353456d690fa058f0d66463a9100f4917077f99` | 3220 |
 | `evidence/final/sbom.cdx.json` | `6233069586cfd80b0201130cfc866de42bfa54afc7fb644882a76b9827cbd0f7` | 49154 |
 | `evidence/final/secret-adjudication.log` | `bbe7e708e7d05133be3115b66c38ded23157c05b68dfb65efdba59cfe12f92e5` | 365 |
-| `evidence/final/secret-exception-files.sha256` | `ff0eab7563ce6113dd3f7589d63b6f478939062302f23ab086fab8c221888359` | 1056 |
+| `evidence/final/secret-exception-files.sha256` | `ed404c2e7cb415f4bf608d849f1aa4d9044b7fa398b676a0fa79a233956d3f1e` | 1047 |
 | `evidence/final/secret-scan.log` | `21d12d3d694539fa018ed1e1f35db9a7fb53e324466238cf993a8773baa436d1` | 117 |
 | `evidence/final/source-files.sha256` | `3f32614939c867d38c3665029ff83f0ce12b19fb6906316391c146a3582defe5` | 23104 |
 | `evidence/final/source.sha256` | `7b39542aee8064e07b3db35b234a04c975a91a4a9b4cf1fa6537bcdd2390f5d9` | 86 |
