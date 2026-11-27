@@ -1,0 +1,160 @@
+{
+  "environment": {
+    "lighthouse": "13.6.0",
+    "chrome": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+    "throttling": "simulate"
+  },
+  "service": "local production build",
+  "runs": [
+    {
+      "slug": "gyms",
+      "device": "mobile",
+      "run": 1,
+      "scores": {
+        "performance": 92,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 2833,
+      "tbtMs": 223,
+      "cls": 0,
+      "lcpPriority": true
+    },
+    {
+      "slug": "gyms",
+      "device": "mobile",
+      "run": 2,
+      "scores": {
+        "performance": 92,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 2714,
+      "tbtMs": 234,
+      "cls": 0,
+      "lcpPriority": true
+    },
+    {
+      "slug": "gyms",
+      "device": "mobile",
+      "run": 3,
+      "scores": {
+        "performance": 97,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 2653,
+      "tbtMs": 51,
+      "cls": 0,
+      "lcpPriority": true
+    },
+    {
+      "slug": "gyms",
+      "device": "desktop",
+      "run": 1,
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 604,
+      "tbtMs": 2,
+      "cls": 0,
+      "lcpPriority": true
+    },
+    {
+      "slug": "yoga-pilates",
+      "device": "mobile",
+      "run": 1,
+      "scores": {
+        "performance": 97,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 2655,
+      "tbtMs": 53,
+      "cls": 0,
+      "lcpPriority": true
+    },
+    {
+      "slug": "yoga-pilates",
+      "device": "desktop",
+      "run": 1,
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 587,
+      "tbtMs": 0,
+      "cls": 0,
+      "lcpPriority": true
+    },
+    {
+      "slug": "academies",
+      "device": "mobile",
+      "run": 1,
+      "scores": {
+        "performance": 96,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 2682,
+      "tbtMs": 67,
+      "cls": 0,
+      "lcpPriority": true
+    },
+    {
+      "slug": "academies",
+      "device": "desktop",
+      "run": 1,
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 608,
+      "tbtMs": 3,
+      "cls": 0,
+      "lcpPriority": true
+    },
+    {
+      "slug": "pools",
+      "device": "mobile",
+      "run": 1,
+      "scores": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 2844,
+      "tbtMs": 70,
+      "cls": 0,
+      "lcpPriority": true
+    },
+    {
+      "slug": "pools",
+      "device": "desktop",
+      "run": 1,
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 629,
+      "tbtMs": 0,
+      "cls": 0,
+      "lcpPriority": true
+    }
+  ]
+}

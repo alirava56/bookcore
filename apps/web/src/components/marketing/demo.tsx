@@ -6,25 +6,24 @@ import { Button } from "../ui/buttons";
 import { EmptyState } from "../ui/feedback";
 import { Dialog, showDialog } from "../ui/overlay";
 import { CapacityBadge } from "./previews";
-import { faNumber, sampleDays, type SampleSession } from "./sample-data";
+import { faNumber, sampleDays, type DemoDays, type SampleSession } from "./sample-data";
 
 const demoId = "vaghtimo-product-demo";
 const DemoContext = createContext<(trigger: HTMLButtonElement) => void>(() => undefined);
 
-function DemoSchedule() {
-  const [dayId, setDayId] = useState<(typeof sampleDays)[number]["id"]>(sampleDays[0].id);
+function DemoSchedule({ days }: { days: DemoDays }) {
+  const [day, setDay] = useState(days[0]);
   const [selected, setSelected] = useState<SampleSession>();
-  const day = sampleDays.find((entry) => entry.id === dayId) ?? sampleDays[0];
 
   return (
     <div className="demo-schedule">
       <p className="demo-intro">با دادهٔ نمایشی، یک جلسه و وضعیت ظرفیتش را ببینید. این دمو رزروی ثبت نمی‌کند.</p>
       <div className="demo-days" role="group" aria-label="روز برنامهٔ نمونه">
-        {sampleDays.map(({ id, title }) => (
-          <Button key={id} variant="secondary" aria-pressed={id === dayId} onClick={() => {
-            setDayId(id);
+        {days.map((entry) => (
+          <Button key={entry.id} variant="secondary" aria-pressed={entry.id === day.id} onClick={() => {
+            setDay(entry);
             setSelected(undefined);
-          }}>{title}</Button>
+          }}>{entry.title}</Button>
         ))}
       </div>
       <ul className="demo-sessions" aria-label={`جلسات ${day.title}`}>
@@ -34,7 +33,7 @@ function DemoSchedule() {
             <li key={session.id}>
               <Button variant="secondary" aria-pressed={selected?.id === session.id} disabled={available === 0}
                 onClick={() => setSelected(session)}>
-                <bdi>{session.time}</bdi>
+                <bdi dir="ltr">{session.time}{session.end && ` – ${session.end}`}</bdi>
                 <strong>{session.title}</strong>
                 <CapacityBadge session={session} />
               </Button>
@@ -57,7 +56,7 @@ function DemoSchedule() {
   );
 }
 
-export function DemoProvider({ children }: { children: ReactNode }) {
+export function DemoProvider({ children, days = sampleDays }: { children: ReactNode; days?: DemoDays }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
@@ -73,7 +72,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         setOpen(false);
         trigger.current?.focus({ preventScroll: true });
       }}>
-        {open && <DemoSchedule />}
+        {open && <DemoSchedule days={days} />}
       </Dialog>
     </DemoContext.Provider>
   );

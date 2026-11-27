@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { indexableSite, siteOrigin } from "./site-metadata";
 
 const vazirmatn = localFont({
   src: "../../node_modules/@fontsource-variable/vazirmatn/files/vazirmatn-arabic-wght-normal.woff2",
@@ -14,13 +15,13 @@ const vazirmatn = localFont({
 
 const title = "وقتیمو | مدیریت و رزرو نوبت";
 const description = "رزرو جلسات، برنامه‌ریزی و مدیریت مجموعه‌های ورزشی در یک محیط یکپارچه.";
-const siteUrl = process.env.VAGHTIMO_SITE_URL;
-const metadataBase = siteUrl ? new URL(siteUrl) : undefined;
+const metadataBase = siteOrigin;
 
 export const metadata: Metadata = {
   metadataBase,
   title,
   description,
+  robots: { index: indexableSite, follow: true },
   applicationName: "وقتیمو",
   icons: { icon: "/assets/vaghtimo-mark.webp" },
   alternates: metadataBase ? { canonical: "/" } : undefined,

@@ -9,6 +9,10 @@ export const navLinks = [
   { href: "#support", label: "پشتیبانی" },
 ] as const;
 
+export function marketingHref(href: string, onSolution: boolean) {
+  return onSolution && href !== "#pricing" && href !== "#support" ? `/${href}` : href;
+}
+
 export const values = [
   { icon: CalendarDays, title: "رزرو آنلاین جلسات", description: "ثبت و مدیریت رزرو در یک مسیر ساده" },
   { icon: CalendarCheck2, title: "برنامه‌ریزی یکپارچه", description: "جلسات و زمان‌بندی در یک محیط منظم" },
@@ -24,10 +28,10 @@ export const features = [
 ] as const;
 
 export const solutions = [
-  { image: "strength", title: "باشگاه‌های ورزشی", subtitle: "مدیریت کلاس‌ها، مربیان و رزرو اعضا" },
-  { image: "academy", title: "آکادمی‌های ورزشی", subtitle: "برنامه‌ریزی دوره‌ها و جلسات آموزشی", description: "جلسات آموزشی را با برنامهٔ مربیان هماهنگ کنید." },
-  { image: "pilates", title: "یوگا و پیلاتس", subtitle: "رزرو کلاس‌ها با ظرفیت مشخص", description: "زمان برگزاری و ظرفیت کلاس‌ها را مشخص کنید." },
-  { image: "swimming", title: "استخر و مجموعه‌های آبی", subtitle: "مدیریت سانس و ظرفیت پذیرش", description: "سانس‌ها و ظرفیت پذیرش مجموعه را تنظیم کنید." },
+  { slug: "gyms", image: "strength", title: "باشگاه‌های ورزشی", subtitle: "مدیریت کلاس‌ها، مربیان و رزرو اعضا" },
+  { slug: "academies", image: "academy", title: "آکادمی‌های ورزشی", subtitle: "برنامه‌ریزی دوره‌ها و جلسات آموزشی" },
+  { slug: "yoga-pilates", image: "pilates", title: "یوگا و پیلاتس", subtitle: "رزرو کلاس‌ها با ظرفیت مشخص" },
+  { slug: "pools", image: "swimming", title: "استخر و مجموعه‌های آبی", subtitle: "مدیریت سانس و ظرفیت پذیرش" },
 ] as const;
 
 export const steps = [

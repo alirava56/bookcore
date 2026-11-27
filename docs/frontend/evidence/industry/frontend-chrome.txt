@@ -1,0 +1,83 @@
+
+> @vaghtimo/web@0.1.0 test
+> npm run build && playwright test
+
+
+> @vaghtimo/web@0.1.0 build
+> next build
+
+▲ Next.js 16.4.6 (Turbopack)
+✓ Running next.config.ts took 58ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1457ms
+  Running TypeScript ...
+  Finished TypeScript in 3.3s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/9) ...
+  Generating static pages using 7 workers (2/9)
+  Generating static pages using 7 workers (4/9)
+  Generating static pages using 7 workers (6/9)
+✓ Generating static pages using 7 workers (9/9) in 1367ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /robots.txt
+├ ○ /sitemap.xml
+└   /solutions/[slug]
+  ├ ● /solutions/gyms
+  ├ ● /solutions/yoga-pilates
+  ├ ● /solutions/academies
+  └ ● /solutions/pools
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+[WebServer] (node:13248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 32 tests using 3 workers
+
+(node:21624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 tests\homepage.spec.ts:11:3 › homepage fits at 320px with readable controls and no browser errors (2.9s)
+  ok  3 tests\homepage.spec.ts:11:3 › homepage fits at 360px with readable controls and no browser errors (3.3s)
+  ok  2 tests\homepage.spec.ts:11:3 › homepage fits at 375px with readable controls and no browser errors (3.4s)
+  ok  4 tests\homepage.spec.ts:11:3 › homepage fits at 390px with readable controls and no browser errors (2.2s)
+  ok  5 tests\homepage.spec.ts:11:3 › homepage fits at 430px with readable controls and no browser errors (2.1s)
+  ok  6 tests\homepage.spec.ts:11:3 › homepage fits at 768px with readable controls and no browser errors (2.2s)
+  ok  7 tests\homepage.spec.ts:11:3 › homepage fits at 1024px with readable controls and no browser errors (2.0s)
+  ok  8 tests\homepage.spec.ts:11:3 › homepage fits at 1280px with readable controls and no browser errors (1.8s)
+  ok  9 tests\homepage.spec.ts:11:3 › homepage fits at 1366px with readable controls and no browser errors (2.0s)
+  ok 10 tests\homepage.spec.ts:11:3 › homepage fits at 1440px with readable controls and no browser errors (1.9s)
+  ok 11 tests\homepage.spec.ts:11:3 › homepage fits at 1920px with readable controls and no browser errors (2.0s)
+  ok 14 tests\homepage.spec.ts:74:1 › keyboard skip and desktop navigation reach live sections and status (1.5s)
+  ok 12 tests\homepage.spec.ts:61:3 › full-page evidence and axe at 390px (4.4s)
+  ok 15 tests\homepage.spec.ts:96:1 › mobile drawer supports focus, backdrop, escape, and anchor selection (3.1s)
+  ok 13 tests\homepage.spec.ts:61:3 › full-page evidence and axe at 1440px (5.5s)
+  ok 17 tests\homepage.spec.ts:161:1 › the interactive preview fits a 320px viewport (1.5s)
+  ok 18 tests\homepage.spec.ts:178:1 › sports cards navigate and common questions expand by keyboard (1.9s)
+  ok 20 tests\homepage.spec.ts:225:1 › the product preview changes view and footer links target the selected feature (1.8s)
+  ok 16 tests\homepage.spec.ts:128:1 › demo CTAs open the same sample and allow a preview without sending data (7.0s)
+  ok 19 tests\homepage.spec.ts:190:1 › gym solution leads on desktop and mobile and its CTA reaches the product (3.7s)
+  ok 22 tests\homepage.spec.ts:283:1 › footer support opens its notice and back to top returns to the start (1.2s)
+  ok 21 tests\homepage.spec.ts:252:1 › the glass tint stays inside the frame and the booking steps show a consistent sample (2.3s)
+  ok 23 tests\industry.spec.ts:16:3 › gyms links, keyboard, and industry demo (1.9s)
+  ok 25 tests\industry.spec.ts:16:3 › yoga-pilates links, keyboard, and industry demo (1.8s)
+  ok 27 tests\industry.spec.ts:16:3 › academies links, keyboard, and industry demo (1.8s)
+  ok 24 tests\industry.spec.ts:58:3 › gyms responsive layout, screenshots, and axe (8.2s)
+  ok 26 tests\industry.spec.ts:58:3 › yoga-pilates responsive layout, screenshots, and axe (8.2s)
+  ok 28 tests\industry.spec.ts:58:3 › academies responsive layout, screenshots, and axe (9.3s)
+  ok 29 tests\industry.spec.ts:16:3 › pools links, keyboard, and industry demo (7.2s)
+  ok 31 tests\industry.spec.ts:79:1 › solution content is in the initial HTML and metadata matches the indexing environment (4.9s)
+  ok 30 tests\industry.spec.ts:58:3 › pools responsive layout, screenshots, and axe (12.5s)
+  ok 32 tests\primitives.spec.ts:5:1 › form primitives retain native semantics, loading, errors and tooltip behavior (9.8s)
+
+  32 passed (50.1s)

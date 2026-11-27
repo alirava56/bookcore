@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowLeft, CalendarDays, ChevronLeft } from "lucide-react";
 import { ButtonLink } from "../ui/buttons";
 import { Container, Section, SectionHeading } from "../ui/layout";
@@ -60,17 +61,17 @@ export function SolutionsSection() {
                 <p className="solution-featured-tag">برای باشگاه شما</p>
                 <h3 id="gym-solution-title">{gym.title}</h3>
                 <p className="solution-featured-description">{gym.subtitle}</p>
-                <ButtonLink href="#features" className="solution-featured-action">
+                <ButtonLink href={`/solutions/${gym.slug}`} className="solution-featured-action">
                   مشاهده راهکار باشگاه‌ها
                   <ArrowLeft size={24} aria-hidden="true" />
                 </ButtonLink>
               </div>
             </article>
           </li>
-          {otherSolutions.map(({ image, title, subtitle, description }) => (
+          {otherSolutions.map(({ slug, image, title, subtitle }) => (
             <li key={image}>
-              <details id={`sport-${image}`} tabIndex={-1} className="solution-tile">
-                <summary>
+              <div id={`sport-${image}`} className="solution-tile">
+                <Link href={`/solutions/${slug}`} prefetch={false} className="solution-tile-link">
                   <Image
                     className="solution-art"
                     src={`/assets/solution-${image}-v2.webp`}
@@ -84,9 +85,8 @@ export function SolutionsSection() {
                     <span className="solution-subtitle">{subtitle}</span>
                   </span>
                   <ChevronLeft className="solution-chevron" size={21} aria-hidden="true" />
-                </summary>
-                <p className="solution-detail">{description}</p>
-              </details>
+                </Link>
+              </div>
             </li>
           ))}
         </ul>

@@ -1,0 +1,16 @@
+[WebServer] (node:4240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 2 workers
+
+(node:27120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\industry.spec.ts:16:3 › gyms links, keyboard, and industry demo (2.1s)
+  ok 2 tests\industry.spec.ts:16:3 › yoga-pilates links, keyboard, and industry demo (2.4s)
+  ok 3 tests\industry.spec.ts:16:3 › academies links, keyboard, and industry demo (1.9s)
+  ok 5 tests\industry.spec.ts:79:1 › solution content is in the initial HTML and metadata matches the indexing environment (195ms)
+  ok 4 tests\industry.spec.ts:16:3 › pools links, keyboard, and industry demo (1.9s)
+
+  5 passed (8.4s)

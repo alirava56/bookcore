@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: effective statuses and terminal transitions
+ok 1 - effective statuses and terminal transitions
+  ---
+  duration_ms: 2.1148
+  ...
+# Subtest: capacity and published-time cutoff
+ok 2 - capacity and published-time cutoff
+  ---
+  duration_ms: 0.2312
+  ...
+# Subtest: customer deadline, administrative override and terminal status
+ok 3 - customer deadline, administrative override and terminal status
+  ---
+  duration_ms: 0.1551
+  ...
+# Subtest: descending stable cursor with bounded filters
+ok 4 - descending stable cursor with bounded filters
+  ---
+  duration_ms: 10.3845
+  ...
+# Subtest: canonical idempotency payload ignores key order while retaining semantic differences
+ok 5 - canonical idempotency payload ignores key order while retaining semantic differences
+  ---
+  duration_ms: 0.4454
+  ...
+# Subtest: duplicate customer takes precedence over full capacity after locked session read
+ok 6 - duplicate customer takes precedence over full capacity after locked session read
+  ---
+  duration_ms: 0.1167
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 124.8895

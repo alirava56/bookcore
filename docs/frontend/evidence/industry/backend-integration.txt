@@ -1,0 +1,6 @@
+
+> bookcore-backend@0.16.0 test:integration
+> node scripts/run-tests.cjs integration
+
+RECOVERY ISOLATED: separate authorized test:recovery suite; status NOT RUN by this command
+FAIL: compiled test calls fewer than source declarations

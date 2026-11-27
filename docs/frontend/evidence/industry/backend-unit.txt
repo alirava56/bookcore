@@ -1,0 +1,1256 @@
+
+> bookcore-backend@0.16.0 test:unit
+> node scripts/run-tests.cjs unit
+
+TAP version 13
+# Subtest: backup policy: database names and explicit connection are mandatory
+ok 1 - backup policy: database names and explicit connection are mandatory
+  ---
+  duration_ms: 3.1676
+  type: 'test'
+  ...
+# Subtest: retention is bounded and expiration is not deletion permission
+ok 2 - retention is bounded and expiration is not deletion permission
+  ---
+  duration_ms: 0.8179
+  type: 'test'
+  ...
+# Subtest: restore fail-closed: production, remote, mismatched, no approval
+ok 3 - restore fail-closed: production, remote, mismatched, no approval
+  ---
+  duration_ms: 0.7901
+  type: 'test'
+  ...
+# Subtest: backup private directory rejects symlink and group-readable directory
+not ok 4 - backup private directory rejects symlink and group-readable directory
+  ---
+  duration_ms: 8.1466
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase12-recovery.test.cjs:35:1'
+  failureType: 'testCodeFailure'
+  error: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  code: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    Object.privateDirectory (scripts\recovery\policy.cjs:77:27)
+    TestContext.<anonymous> (apps\api\test\unit\phase12-recovery.test.cjs:38:8)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: manifest rejects traversal and wrong sha, retention or format
+ok 5 - manifest rejects traversal and wrong sha, retention or format
+  ---
+  duration_ms: 1.1335
+  type: 'test'
+  ...
+# Subtest: backup and checksum test using synthetic command mocks, NOT actual PostgreSQL
+not ok 6 - backup and checksum test using synthetic command mocks, NOT actual PostgreSQL
+  ---
+  duration_ms: 11.1812
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase12-recovery.test.cjs:49:1'
+  failureType: 'testCodeFailure'
+  error: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  code: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    privateDirectory (scripts\recovery\policy.cjs:77:27)
+    backup (scripts\recovery\backup.cjs:6:36)
+    TestContext.<anonymous> (apps\api\test\unit\phase12-recovery.test.cjs:53:23)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: tool unavailable propagates failure; no output archive finalized
+ok 7 - tool unavailable propagates failure; no output archive finalized
+  ---
+  duration_ms: 3.1556
+  type: 'test'
+  ...
+# Subtest: malformed command-line arguments are rejected, including repeated options
+ok 8 - malformed command-line arguments are rejected, including repeated options
+  ---
+  duration_ms: 0.6457
+  type: 'test'
+  ...
+# Subtest: backup and restore tooling contain no unbounded destructive flags
+ok 9 - backup and restore tooling contain no unbounded destructive flags
+  ---
+  duration_ms: 15.9199
+  type: 'test'
+  ...
+# Subtest: retention preview never deletes archives and bounds workload
+not ok 10 - retention preview never deletes archives and bounds workload
+  ---
+  duration_ms: 7.2116
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase12-recovery.test.cjs:78:1'
+  failureType: 'testCodeFailure'
+  error: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  code: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    privateDirectory (scripts\recovery\policy.cjs:77:27)
+    backup (scripts\recovery\backup.cjs:6:36)
+    TestContext.<anonymous> (apps\api\test\unit\phase12-recovery.test.cjs:81:23)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: restore rejects unapproved operator and isolation before destructive command
+ok 11 - restore rejects unapproved operator and isolation before destructive command
+  ---
+  duration_ms: 3.649
+  type: 'test'
+  ...
+# Subtest: remote PG transport rejects disable, require and hostaddr bypass
+ok 12 - remote PG transport rejects disable, require and hostaddr bypass
+  ---
+  duration_ms: 1.1794
+  type: 'test'
+  ...
+# Subtest: pg tool versions reject unsupported clients and banner forgery
+ok 13 - pg tool versions reject unsupported clients and banner forgery
+  ---
+  duration_ms: 1.0003
+  type: 'test'
+  ...
+# Subtest: production tools require pinned trusted executable paths
+ok 14 - production tools require pinned trusted executable paths
+  ---
+  duration_ms: 0.3798
+  type: 'test'
+  ...
+# Subtest: encrypted backup producer succeeds without private identity but never claims decrypted validation
+not ok 15 - encrypted backup producer succeeds without private identity but never claims decrypted validation
+  ---
+  duration_ms: 5.6169
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase13-recovery.test.cjs:38:1'
+  failureType: 'testCodeFailure'
+  error: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  code: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    privateDirectory (scripts\recovery\policy.cjs:77:27)
+    backup (scripts\recovery\backup.cjs:6:36)
+    TestContext.<anonymous> (apps\api\test\unit\phase13-recovery.test.cjs:40:25)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: independent manifest digest detects jointly rewritten archive and manifest
+not ok 16 - independent manifest digest detects jointly rewritten archive and manifest
+  ---
+  duration_ms: 6.579
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase13-recovery.test.cjs:48:1'
+  failureType: 'testCodeFailure'
+  error: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  code: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    privateDirectory (scripts\recovery\policy.cjs:77:27)
+    backup (scripts\recovery\backup.cjs:6:36)
+    TestContext.<anonymous> (apps\api\test\unit\phase13-recovery.test.cjs:50:26)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: simulated execute restore preflight attempts verification and never silently reports success
+not ok 17 - simulated execute restore preflight attempts verification and never silently reports success
+  ---
+  duration_ms: 11.7354
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase13-recovery.test.cjs:59:1'
+  failureType: 'testCodeFailure'
+  error: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  code: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    privateDirectory (scripts\recovery\policy.cjs:77:27)
+    backup (scripts\recovery\backup.cjs:6:36)
+    TestContext.<anonymous> (apps\api\test\unit\phase13-recovery.test.cjs:61:178)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: authenticated session_user mismatch is rejected before restore starts
+not ok 18 - authenticated session_user mismatch is rejected before restore starts
+  ---
+  duration_ms: 10.8604
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase13-recovery.test.cjs:68:1'
+  failureType: 'testCodeFailure'
+  error: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  code: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    privateDirectory (scripts\recovery\policy.cjs:77:27)
+    backup (scripts\recovery\backup.cjs:6:36)
+    TestContext.<anonymous> (apps\api\test\unit\phase13-recovery.test.cjs:70:177)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: mock execute restores then validates the full migration ledger and critical ACL; no real PG involved
+not ok 19 - mock execute restores then validates the full migration ledger and critical ACL; no real PG involved
+  ---
+  duration_ms: 40.4197
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase13-recovery.test.cjs:76:1'
+  failureType: 'testCodeFailure'
+  error: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  code: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    privateDirectory (scripts\recovery\policy.cjs:77:27)
+    backup (scripts\recovery\backup.cjs:6:36)
+    TestContext.<anonymous> (apps\api\test\unit\phase13-recovery.test.cjs:84:17)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: privileged restore cannot resolve its binary from PATH regardless of environment
+ok 20 - privileged restore cannot resolve its binary from PATH regardless of environment
+  ---
+  duration_ms: 2.6941
+  type: 'test'
+  ...
+# Subtest: trusted explicit executable passes, nonexistent and relative paths fail
+not ok 21 - trusted explicit executable passes, nonexistent and relative paths fail
+  ---
+  duration_ms: 8.3983
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase14-recovery.test.cjs:16:1'
+  failureType: 'testCodeFailure'
+  error: 'UNTRUSTED_TOOL_PATH'
+  code: 'UNTRUSTED_TOOL_PATH'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    Object.tool (scripts\recovery\policy.cjs:54:46)
+    TestContext.<anonymous> (apps\api\test\unit\phase14-recovery.test.cjs:18:18)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Subtest: privileged binary symlinks and group-writable binaries cannot be selected
+ok 22 - privileged binary symlinks and group-writable binaries cannot be selected
+  ---
+  duration_ms: 10.8221
+  type: 'test'
+  ...
+# Subtest: privileged executable in writable ancestor directory is denied
+not ok 23 - privileged executable in writable ancestor directory is denied
+  ---
+  duration_ms: 5.4831
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase14-recovery.test.cjs:31:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /TOOL_DIRECTORY_WRITABLE/. Input:
+
+    'Error: UNTRUSTED_TOOL_PATH'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'UNTRUSTED_TOOL_PATH'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    Object.tool (scripts\recovery\policy.cjs:54:46)
+    apps\api\test\unit\phase14-recovery.test.cjs:33:23
+    getActual (node:assert:611:5)
+    strict.throws (node:assert:759:24)
+    TestContext.<anonymous> (apps\api\test\unit\phase14-recovery.test.cjs:33:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (apps\api\test\unit\phase14-recovery.test.cjs:33:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: age private identity must be a private regular non-symlink file
+not ok 24 - age private identity must be a private regular non-symlink file
+  ---
+  duration_ms: 3.7371
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase14-recovery.test.cjs:36:1'
+  failureType: 'testCodeFailure'
+  error: 'PRIVATE_FILE_PERMISSIONS_REQUIRED'
+  code: 'PRIVATE_FILE_PERMISSIONS_REQUIRED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    safeFile (scripts\recovery\policy.cjs:86:27)
+    Object.recoveryIdentityFile (scripts\recovery\policy.cjs:69:11)
+    TestContext.<anonymous> (apps\api\test\unit\phase14-recovery.test.cjs:38:18)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: public CA mode 0644 is accepted but writable or symlinked CA is rejected
+not ok 25 - public CA mode 0644 is accepted but writable or symlinked CA is rejected
+  ---
+  duration_ms: 3.4601
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase14-recovery.test.cjs:46:1'
+  failureType: 'testCodeFailure'
+  error: 'PUBLIC_CA_FILE_UNTRUSTED'
+  code: 'PUBLIC_CA_FILE_UNTRUSTED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    Object.trustedPublicFile (scripts\recovery\policy.cjs:64:26)
+    TestContext.<anonymous> (apps\api\test\unit\phase14-recovery.test.cjs:48:18)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: remote PostgreSQL verify-full accepts trusted readable CA and rejects writable one
+not ok 26 - remote PostgreSQL verify-full accepts trusted readable CA and rejects writable one
+  ---
+  duration_ms: 5.497
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase14-recovery.test.cjs:55:1'
+  failureType: 'testCodeFailure'
+  error: 'PUBLIC_CA_FILE_UNTRUSTED'
+  code: 'PUBLIC_CA_FILE_UNTRUSTED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    trustedPublicFile (scripts\recovery\policy.cjs:64:26)
+    Object.checkPgEnvironment (scripts\recovery\policy.cjs:20:3)
+    TestContext.<anonymous> (apps\api\test\unit\phase14-recovery.test.cjs:58:18)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: backup rejects untrusted PATH even when fake pg_dump is on PATH
+not ok 27 - backup rejects untrusted PATH even when fake pg_dump is on PATH
+  ---
+  duration_ms: 23.4669
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase16-recovery-policy.test.cjs:7:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /TRUSTED_TOOL_PATH_REQUIRED/. Input:
+
+    'Error: PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'PRIVATE_DIRECTORY_PERMISSIONS_REQUIRED'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    privateDirectory (scripts\recovery\policy.cjs:77:27)
+    backup (scripts\recovery\backup.cjs:6:36)
+    apps\api\test\unit\phase16-recovery-policy.test.cjs:10:28
+    waitForActual (node:assert:632:21)
+    strict.rejects (node:assert:769:31)
+    TestContext.<anonymous> (apps\api\test\unit\phase16-recovery-policy.test.cjs:10:16)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.start (node:internal/test_runner/test:1191:17)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (apps\api\test\unit\phase16-recovery-policy.test.cjs:10:3)
+    async Test.run (node:internal/test_runner/test:1332:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Subtest: backup policy requires pinned psql and pg_dump independently
+ok 28 - backup policy requires pinned psql and pg_dump independently
+  ---
+  duration_ms: 2.0191
+  type: 'test'
+  ...
+# Subtest: pinned producer tool rejects group writable executable and symlink
+not ok 29 - pinned producer tool rejects group writable executable and symlink
+  ---
+  duration_ms: 7.0605
+  type: 'test'
+  location: 'C:\\Users\\shado\\Desktop\\bookcore\\apps\\api\\test\\unit\\phase16-recovery-policy.test.cjs:18:1'
+  failureType: 'testCodeFailure'
+  error: 'UNTRUSTED_TOOL_PATH'
+  code: 'UNTRUSTED_TOOL_PATH'
+  stack: |-
+    fail (scripts\recovery\policy.cjs:7:41)
+    tool (scripts\recovery\policy.cjs:54:46)
+    TestContext.<anonymous> (apps\api\test\unit\phase16-recovery-policy.test.cjs:21:16)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+  ...
+# Subtest: Monday business hours permit a covered half-open interval but not outside hours
+ok 30 - Monday business hours permit a covered half-open interval but not outside hours
+  ---
+  duration_ms: 135.203
+  type: 'test'
+  ...
+# Subtest: Closed restrictions override an OPEN_OVERRIDE at a different scope
+ok 31 - Closed restrictions override an OPEN_OVERRIDE at a different scope
+  ---
+  duration_ms: 1.8985
+  type: 'test'
+  ...
+# Subtest: resource requires its own hours and checks buffers, no accidental availability
+ok 32 - resource requires its own hours and checks buffers, no accidental availability
+  ---
+  duration_ms: 1.8737
+  type: 'test'
+  ...
+# Subtest: overnight rules correctly cross midnight, including Sunday to Monday
+ok 33 - overnight rules correctly cross midnight, including Sunday to Monday
+  ---
+  duration_ms: 1.5316
+  type: 'test'
+  ...
+# Subtest: strict scheduling offset in Tehran and Berlin, reject nonexistent DST time
+ok 34 - strict scheduling offset in Tehran and Berlin, reject nonexistent DST time
+  ---
+  duration_ms: 2.9969
+  type: 'test'
+  ...
+# Subtest: DST ambiguity at weekly boundary is fail closed
+ok 35 - DST ambiguity at weekly boundary is fail closed
+  ---
+  duration_ms: 1.1038
+  type: 'test'
+  ...
+# Subtest: effective statuses and terminal transitions
+ok 36 - effective statuses and terminal transitions
+  ---
+  duration_ms: 1.1326
+  type: 'test'
+  ...
+# Subtest: capacity and published-time cutoff
+ok 37 - capacity and published-time cutoff
+  ---
+  duration_ms: 0.2543
+  type: 'test'
+  ...
+# Subtest: customer deadline, administrative override and terminal status
+ok 38 - customer deadline, administrative override and terminal status
+  ---
+  duration_ms: 0.1752
+  type: 'test'
+  ...
+# Subtest: descending stable cursor with bounded filters
+ok 39 - descending stable cursor with bounded filters
+  ---
+  duration_ms: 4.1773
+  type: 'test'
+  ...
+# Subtest: canonical idempotency payload ignores key order while retaining semantic differences
+ok 40 - canonical idempotency payload ignores key order while retaining semantic differences
+  ---
+  duration_ms: 0.8422
+  type: 'test'
+  ...
+# Subtest: duplicate customer takes precedence over full capacity after locked session read
+ok 41 - duplicate customer takes precedence over full capacity after locked session read
+  ---
+  duration_ms: 0.3476
+  type: 'test'
+  ...
+# Subtest: Phase05 optional ids do not silently allow explicit null (contract forbids null)
+ok 42 - Phase05 optional ids do not silently allow explicit null (contract forbids null)
+  ---
+  duration_ms: 10.5756
+  type: 'test'
+  ...
+# Subtest: Phase05 branch address null is rejected instead of causing server error
+ok 43 - Phase05 branch address null is rejected instead of causing server error
+  ---
+  duration_ms: 1.0306
+  type: 'test'
+  ...
+# Subtest: config accepts well-formed explicit environment
+ok 44 - config accepts well-formed explicit environment
+  ---
+  duration_ms: 14.1609
+  type: 'test'
+  ...
+# Subtest: missing database URL fails before binding
+ok 45 - missing database URL fails before binding
+  ---
+  duration_ms: 1.0512
+  type: 'test'
+  ...
+# Subtest: production rejects placeholder monitor key and weak database password
+ok 46 - production rejects placeholder monitor key and weak database password
+  ---
+  duration_ms: 0.6396
+  type: 'test'
+  ...
+# Subtest: CORS wildcard, Swagger in production and invalid IP fail closed
+ok 47 - CORS wildcard, Swagger in production and invalid IP fail closed
+  ---
+  duration_ms: 4.6335
+  type: 'test'
+  ...
+# Subtest: invalid port and body limit rejected
+ok 48 - invalid port and body limit rejected
+  ---
+  duration_ms: 0.8423
+  type: 'test'
+  ...
+# Subtest: readiness returns false if PostgreSQL query fails (unit, not DB proof)
+ok 49 - readiness returns false if PostgreSQL query fails (unit, not DB proof)
+  ---
+  duration_ms: 4.8309
+  type: 'test'
+  ...
+# Subtest: readiness requires all six migrations plus identity and scheduling tables (unit)
+ok 50 - readiness requires all six migrations plus identity and scheduling tables (unit)
+  ---
+  duration_ms: 0.6809
+  type: 'test'
+  ...
+# Subtest: unexpected errors map to generic HTTP 500 with no SQL or secret
+ok 51 - unexpected errors map to generic HTTP 500 with no SQL or secret
+  ---
+  duration_ms: 2.7923
+  type: 'test'
+  ...
+# Subtest: validation exception never exposes provided request body
+ok 52 - validation exception never exposes provided request body
+  ---
+  duration_ms: 1.1127
+  type: 'test'
+  ...
+# Subtest: ProblemException preserves stable domain error code
+ok 53 - ProblemException preserves stable domain error code
+  ---
+  duration_ms: 0.434
+  type: 'test'
+  ...
+# Subtest: global guard rejects undecorated anonymous route without @UseGuards
+ok 54 - global guard rejects undecorated anonymous route without @UseGuards
+  ---
+  duration_ms: 1.977
+  type: 'test'
+  ...
+# Subtest: method-scoped public routes work; class metadata alone must not grant access
+ok 55 - method-scoped public routes work; class metadata alone must not grant access
+  ---
+  duration_ms: 0.8311
+  type: 'test'
+  ...
+# Subtest: monitor bypass is narrowly scoped to annotated method (second guard still required)
+ok 56 - monitor bypass is narrowly scoped to annotated method (second guard still required)
+  ---
+  duration_ms: 0.2383
+  type: 'test'
+  ...
+# Subtest: invalid bearer token denied before DB lookup
+ok 57 - invalid bearer token denied before DB lookup
+  ---
+  duration_ms: 0.5337
+  type: 'test'
+  ...
+# {"at":"2026-11-27T00:26:25.049Z","level":"info","context":"RoutesResolver","message":"MetricsController {/api/v1/internal/metrics}:"}
+# {"at":"2026-11-27T00:26:25.053Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/internal/metrics, GET} route"}
+# {"at":"2026-11-27T00:26:25.053Z","level":"info","context":"RoutesResolver","message":"IdentityController {/api/v1}:"}
+# {"at":"2026-11-27T00:26:25.054Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/register, POST} route"}
+# {"at":"2026-11-27T00:26:25.054Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/login, POST} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/refresh, POST} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/logout, POST} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/me, GET} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RoutesResolver","message":"OrganizationsController {/api/v1/organizations}:"}
+# {"at":"2026-11-27T00:26:25.056Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations, POST} route"}
+# {"at":"2026-11-27T00:26:25.056Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId, GET} route"}
+# {"at":"2026-11-27T00:26:25.057Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/members, GET} route"}
+# {"at":"2026-11-27T00:26:25.057Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/members, POST} route"}
+# {"at":"2026-11-27T00:26:25.057Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/members/:userId, PATCH} route"}
+# {"at":"2026-11-27T00:26:25.057Z","level":"info","context":"RoutesResolver","message":"GovernanceController {/api/v1}:"}
+# {"at":"2026-11-27T00:26:25.058Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/staff-invitations, POST} route"}
+# {"at":"2026-11-27T00:26:25.058Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/staff-invitations, GET} route"}
+# {"at":"2026-11-27T00:26:25.058Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/staff-invitations/:invitationId/revoke, POST} route"}
+# {"at":"2026-11-27T00:26:25.059Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/me/staff-invitations/accept, POST} route"}
+# {"at":"2026-11-27T00:26:25.059Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/me/staff-invitations/decline, POST} route"}
+# {"at":"2026-11-27T00:26:25.059Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/booking-consents, POST} route"}
+# {"at":"2026-11-27T00:26:25.060Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/booking-consents/me, GET} route"}
+# {"at":"2026-11-27T00:26:25.060Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/booking-consents/:consentId/revoke, POST} route"}
+# {"at":"2026-11-27T00:26:25.060Z","level":"info","context":"RoutesResolver","message":"CatalogController {/api/v1/organizations/:orgId}:"}
+# {"at":"2026-11-27T00:26:25.060Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/branches, POST} route"}
+# {"at":"2026-11-27T00:26:25.060Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/branches, GET} route"}
+# {"at":"2026-11-27T00:26:25.060Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/services, POST} route"}
+# {"at":"2026-11-27T00:26:25.060Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/services, GET} route"}
+# {"at":"2026-11-27T00:26:25.060Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/resources, POST} route"}
+# {"at":"2026-11-27T00:26:25.061Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/resources, GET} route"}
+# {"at":"2026-11-27T00:26:25.061Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/business-hours, POST} route"}
+# {"at":"2026-11-27T00:26:25.061Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/business-hours, GET} route"}
+# {"at":"2026-11-27T00:26:25.061Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/business-hours/:hourId, PATCH} route"}
+# {"at":"2026-11-27T00:26:25.061Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/schedule-exceptions, POST} route"}
+# {"at":"2026-11-27T00:26:25.061Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/schedule-exceptions, GET} route"}
+# {"at":"2026-11-27T00:26:25.061Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/schedule-exceptions/:exceptionId, PATCH} route"}
+# {"at":"2026-11-27T00:26:25.061Z","level":"info","context":"RoutesResolver","message":"StaffSessionController {/api/v1/organizations/:orgId/sessions}:"}
+# {"at":"2026-11-27T00:26:25.062Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions, POST} route"}
+# {"at":"2026-11-27T00:26:25.062Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions, GET} route"}
+# {"at":"2026-11-27T00:26:25.062Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId, GET} route"}
+# {"at":"2026-11-27T00:26:25.062Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/publish, POST} route"}
+# {"at":"2026-11-27T00:26:25.062Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/cancel, POST} route"}
+# {"at":"2026-11-27T00:26:25.062Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/finish, POST} route"}
+# {"at":"2026-11-27T00:26:25.062Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/capacity, PATCH} route"}
+# {"at":"2026-11-27T00:26:25.062Z","level":"info","context":"RoutesResolver","message":"PublicSessionController {/api/v1/public/organizations/:orgId/sessions}:"}
+# {"at":"2026-11-27T00:26:25.063Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/public/organizations/:orgId/sessions, GET} route"}
+# {"at":"2026-11-27T00:26:25.063Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/public/organizations/:orgId/sessions/:sessionId, GET} route"}
+# {"at":"2026-11-27T00:26:25.063Z","level":"info","context":"RoutesResolver","message":"BookingController {/api/v1/organizations/:orgId}:"}
+# {"at":"2026-11-27T00:26:25.063Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/bookings, POST} route"}
+# {"at":"2026-11-27T00:26:25.063Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/bookings/me, GET} route"}
+# {"at":"2026-11-27T00:26:25.063Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/bookings/:bookingId/cancel, POST} route"}
+# {"at":"2026-11-27T00:26:25.063Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/bookings/:bookingId/attendance, POST} route"}
+# {"at":"2026-11-27T00:26:25.063Z","level":"info","context":"RoutesResolver","message":"ReportingController {/api/v1/organizations/:orgId/reports}:"}
+# {"at":"2026-11-27T00:26:25.064Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/reports/occupancy, GET} route"}
+# {"at":"2026-11-27T00:26:25.064Z","level":"info","context":"RoutesResolver","message":"HealthController {/api/v1/health}:"}
+# {"at":"2026-11-27T00:26:25.064Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/health/live, GET} route"}
+# {"at":"2026-11-27T00:26:25.064Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/health/ready, GET} route"}
+# {"at":"2026-11-27T00:26:25.067Z","level":"info","context":"NestApplication","message":"Nest application successfully started"}
+# {"at":"2026-11-27T00:26:25.117Z","level":"info","event":"http_response","requestId":"5e6337a5-1619-4460-b167-0d0b12df4028","method":"GET","route":"/api/v1/health/live","status":200,"durationMs":8.33}
+# {"at":"2026-11-27T00:26:25.135Z","level":"info","event":"http_response","requestId":"bf93dfb7-2305-46d8-b50f-f14a3577d57e","method":"GET","route":"/api/v1/me","status":401,"durationMs":2.09}
+# {"at":"2026-11-27T00:26:25.148Z","level":"info","event":"http_response","requestId":"581e7038-7f4e-4771-860e-db0b5a482048","method":"GET","route":"/api/v1/health/ready","status":401,"durationMs":1.92}
+# {"at":"2026-11-27T00:26:25.163Z","level":"error","event":"http_failure","requestId":"a0c418dd-45ed-4ce9-a9ad-27d26ce02a7f","status":503,"code":"DEPENDENCY_UNAVAILABLE"}
+# {"at":"2026-11-27T00:26:25.164Z","level":"info","event":"http_response","requestId":"a0c418dd-45ed-4ce9-a9ad-27d26ce02a7f","method":"GET","route":"/api/v1/health/ready","status":503,"durationMs":1.51}
+# {"at":"2026-11-27T00:26:25.178Z","level":"info","event":"http_response","requestId":"20d3dc70-9d59-4e37-976f-76dffb0c8c76","method":"GET","route":"/api/v1/health/ready","status":200,"durationMs":1.13}
+# Subtest: HTTP /live public; /ready guarded, dependent on DB, and correlation header present
+ok 58 - HTTP /live public; /ready guarded, dependent on DB, and correlation header present
+  ---
+  duration_ms: 1044.6697
+  type: 'test'
+  ...
+# Subtest: access token includes UUID subject, sid, type and verifies with pinned HS256 key
+ok 59 - access token includes UUID subject, sid, type and verifies with pinned HS256 key
+  ---
+  duration_ms: 11.9148
+  type: 'test'
+  ...
+# Subtest: incorrect issuer, audience and signature are rejected
+ok 60 - incorrect issuer, audience and signature are rejected
+  ---
+  duration_ms: 4.5155
+  type: 'test'
+  ...
+# Subtest: expired, missing type and attacker-selected algorithm are rejected
+ok 61 - expired, missing type and attacker-selected algorithm are rejected
+  ---
+  duration_ms: 3.5462
+  type: 'test'
+  ...
+# Subtest: production validates signing key configuration
+ok 62 - production validates signing key configuration
+  ---
+  duration_ms: 0.7328
+  type: 'test'
+  ...
+# Subtest: tenant read denies principal without verified active membership
+ok 63 - tenant read denies principal without verified active membership
+  ---
+  duration_ms: 2.1193
+  type: 'test'
+  ...
+# Subtest: receptionist cannot manage membership (403)
+ok 64 - receptionist cannot manage membership (403)
+  ---
+  duration_ms: 0.3735
+  type: 'test'
+  ...
+# Subtest: manager cannot create OWNER even if DB would accept insert
+ok 65 - manager cannot create OWNER even if DB would accept insert
+  ---
+  duration_ms: 0.5315
+  type: 'test'
+  ...
+# Subtest: empty membership patch cannot silently pass
+ok 66 - empty membership patch cannot silently pass
+  ---
+  duration_ms: 0.3329
+  type: 'test'
+  ...
+# Subtest: public session limits are bound to stable route identity, not arbitrary UUID URLs
+ok 67 - public session limits are bound to stable route identity, not arbitrary UUID URLs
+  ---
+  duration_ms: 3.7115
+  type: 'test'
+  ...
+# Subtest: Phase07 inherited null optional room UUID is rejected, omitted is allowed
+ok 68 - Phase07 inherited null optional room UUID is rejected, omitted is allowed
+  ---
+  duration_ms: 5.0785
+  type: 'test'
+  ...
+# Subtest: Phase07 customerId must be a UUID if supplied; explicit null not treated as omission
+ok 69 - Phase07 customerId must be a UUID if supplied; explicit null not treated as omission
+  ---
+  duration_ms: 0.6612
+  type: 'test'
+  ...
+# Subtest: microseconds are not rounded during cursor encode/decode
+ok 70 - microseconds are not rounded during cursor encode/decode
+  ---
+  duration_ms: 5.4338
+  type: 'test'
+  ...
+# Subtest: same millisecond distinct microseconds are ordered deterministically
+ok 71 - same millisecond distinct microseconds are ordered deterministically
+  ---
+  duration_ms: 1.4287
+  type: 'test'
+  ...
+# Subtest: cursor cannot be tampered with or replayed under another user
+ok 72 - cursor cannot be tampered with or replayed under another user
+  ---
+  duration_ms: 2.7312
+  type: 'test'
+  ...
+# Subtest: only the correct partial unique index means effective duplicate booking
+ok 73 - only the correct partial unique index means effective duplicate booking
+  ---
+  duration_ms: 2.1744
+  type: 'test'
+  ...
+# Subtest: SQLSTATE constraints and concurrency never disclose SQL
+ok 74 - SQLSTATE constraints and concurrency never disclose SQL
+  ---
+  duration_ms: 0.4587
+  type: 'test'
+  ...
+# Subtest: all documented outbox types map to a source aggregate
+ok 75 - all documented outbox types map to a source aggregate
+  ---
+  duration_ms: 1.1665
+  type: 'test'
+  ...
+# Subtest: well-formed versioned Booking event validates
+ok 76 - well-formed versioned Booking event validates
+  ---
+  duration_ms: 0.9297
+  type: 'test'
+  ...
+# Subtest: unsupported event type, tenant mismatch, bad schema and credentials are rejected
+ok 77 - unsupported event type, tenant mismatch, bad schema and credentials are rejected
+  ---
+  duration_ms: 0.6148
+  type: 'test'
+  ...
+# Subtest: retry schedule is bounded and exponential
+ok 78 - retry schedule is bounded and exponential
+  ---
+  duration_ms: 0.2377
+  type: 'test'
+  ...
+# Subtest: sanitized failure classification
+ok 79 - sanitized failure classification
+  ---
+  duration_ms: 0.1953
+  type: 'test'
+  ...
+# Subtest: occupancy 31-day half-open UTC range
+ok 80 - occupancy 31-day half-open UTC range
+  ---
+  duration_ms: 4.7104
+  type: 'test'
+  ...
+# Subtest: occupancy missing dates, reversed intervals, invalid offsets, >31 days denied
+ok 81 - occupancy missing dates, reversed intervals, invalid offsets, >31 days denied
+  ---
+  duration_ms: 0.9339
+  type: 'test'
+  ...
+# Subtest: invalid calendar day and out-of-range timezone offsets are rejected
+ok 82 - invalid calendar day and out-of-range timezone offsets are rejected
+  ---
+  duration_ms: 0.2963
+  type: 'test'
+  ...
+# Subtest: OWNER may invite supported roles; MANAGER only junior roles
+ok 83 - OWNER may invite supported roles; MANAGER only junior roles
+  ---
+  duration_ms: 1.4983
+  type: 'test'
+  ...
+# Subtest: RECEPTIONIST, TRAINER and global customer cannot add staff
+ok 84 - RECEPTIONIST, TRAINER and global customer cannot add staff
+  ---
+  duration_ms: 0.2187
+  type: 'test'
+  ...
+# Subtest: on-behalf booking policy excludes TRAINER and customer
+ok 85 - on-behalf booking policy excludes TRAINER and customer
+  ---
+  duration_ms: 0.2046
+  type: 'test'
+  ...
+# Subtest: consent expires at exact deadline; revocation always wins
+ok 86 - consent expires at exact deadline; revocation always wins
+  ---
+  duration_ms: 0.1801
+  type: 'test'
+  ...
+# Subtest: invitation cannot be accepted after decline, revoke, acceptance or expiry
+ok 87 - invitation cannot be accepted after decline, revoke, acceptance or expiry
+  ---
+  duration_ms: 0.2195
+  type: 'test'
+  ...
+# Subtest: unknown refresh COMMIT requires authentication, never bearer-token replay
+ok 88 - unknown refresh COMMIT requires authentication, never bearer-token replay
+  ---
+  duration_ms: 0.1279
+  type: 'test'
+  ...
+# Subtest: authentic v1 empty source payloads remain supported
+ok 89 - authentic v1 empty source payloads remain supported
+  ---
+  duration_ms: 6.7146
+  type: 'test'
+  ...
+# Subtest: BookingConfirmed requires real booking ID and correct status
+ok 90 - BookingConfirmed requires real booking ID and correct status
+  ---
+  duration_ms: 3.6441
+  type: 'test'
+  ...
+# Subtest: BookingCancelled supports both authentic source producer shapes
+ok 91 - BookingCancelled supports both authentic source producer shapes
+  ---
+  duration_ms: 4.8237
+  type: 'test'
+  ...
+# Subtest: new governance events validate v1 and aggregate identity
+ok 92 - new governance events validate v1 and aggregate identity
+  ---
+  duration_ms: 2.0079
+  type: 'test'
+  ...
+# Subtest: reject excessive nesting, secret-bearing values, unknown schema/version/type
+ok 93 - reject excessive nesting, secret-bearing values, unknown schema/version/type
+  ---
+  duration_ms: 1.1628
+  type: 'test'
+  ...
+# Subtest: inspection requires tenant UUID and bounded page
+ok 94 - inspection requires tenant UUID and bounded page
+  ---
+  duration_ms: 1.3184
+  type: 'test'
+  ...
+# Subtest: counter drift classified as manual repair only
+ok 95 - counter drift classified as manual repair only
+  ---
+  duration_ms: 0.2646
+  type: 'test'
+  ...
+# Subtest: out-of-bound count is separately detected
+ok 96 - out-of-bound count is separately detected
+  ---
+  duration_ms: 0.928
+  type: 'test'
+  ...
+# Subtest: minimum retention and bounded maintenance are required
+ok 97 - minimum retention and bounded maintenance are required
+  ---
+  duration_ms: 1.7179
+  type: 'test'
+  ...
+# Subtest: idempotency history deletion is disabled
+ok 98 - idempotency history deletion is disabled
+  ---
+  duration_ms: 0.3534
+  type: 'test'
+  ...
+# Subtest: maintenance reason is trimmed and validated
+ok 99 - maintenance reason is trimmed and validated
+  ---
+  duration_ms: 0.4016
+  type: 'test'
+  ...
+# Subtest: only invitation pending uniqueness is translated to business conflict
+ok 100 - only invitation pending uniqueness is translated to business conflict
+  ---
+  duration_ms: 0.2094
+  type: 'test'
+  ...
+# Subtest: consent/invitation expiry is fail closed on exact boundary
+ok 101 - consent/invitation expiry is fail closed on exact boundary
+  ---
+  duration_ms: 0.1697
+  type: 'test'
+  ...
+# Subtest: inspection signed cursor roundtrip preserves six digit timestamp
+ok 102 - inspection signed cursor roundtrip preserves six digit timestamp
+  ---
+  duration_ms: 9.4169
+  type: 'test'
+  ...
+# Subtest: cursor tampering, different tenant and different kind are rejected
+ok 103 - cursor tampering, different tenant and different kind are rejected
+  ---
+  duration_ms: 1.5525
+  type: 'test'
+  ...
+# Subtest: cursor key must have >= 256 bits entropy
+ok 104 - cursor key must have >= 256 bits entropy
+  ---
+  duration_ms: 0.4458
+  type: 'test'
+  ...
+# Subtest: bounded inspection rejects oversized batch, pages, and total work
+ok 105 - bounded inspection rejects oversized batch, pages, and total work
+  ---
+  duration_ms: 1.6806
+  type: 'test'
+  ...
+# Subtest: inspection response cannot claim completed scan with pending cursor
+ok 106 - inspection response cannot claim completed scan with pending cursor
+  ---
+  duration_ms: 1.5555
+  type: 'test'
+  ...
+# Subtest: inspection kinds cover session booking outbox and governance
+ok 107 - inspection kinds cover session booking outbox and governance
+  ---
+  duration_ms: 0.5046
+  type: 'test'
+  ...
+# Subtest: event-order beats equal wall clock timestamps and reverse UUID sort order
+ok 108 - event-order beats equal wall clock timestamps and reverse UUID sort order
+  ---
+  duration_ms: 0.8344
+  type: 'test'
+  ...
+# Subtest: attendance and no-show are both valid terminal states
+ok 109 - attendance and no-show are both valid terminal states
+  ---
+  duration_ms: 3.5373
+  type: 'test'
+  ...
+# Subtest: missing or duplicate initial event is detected
+ok 110 - missing or duplicate initial event is detected
+  ---
+  duration_ms: 2.9664
+  type: 'test'
+  ...
+# Subtest: terminal transition cannot be reversed or chained
+ok 111 - terminal transition cannot be reversed or chained
+  ---
+  duration_ms: 0.6689
+  type: 'test'
+  ...
+# Subtest: booking status must match last logical event not last UUID
+ok 112 - booking status must match last logical event not last UUID
+  ---
+  duration_ms: 0.3392
+  type: 'test'
+  ...
+# Subtest: Phase12 CLI: one-kind completed/partial, six-kind completed/partial and findings
+ok 113 - Phase12 CLI: one-kind completed/partial, six-kind completed/partial and findings
+  ---
+  duration_ms: 0.3788
+  type: 'test'
+  ...
+# {"at":"2026-11-27T00:26:25.041Z","level":"info","context":"RoutesResolver","message":"MetricsController {/api/v1/internal/metrics}:"}
+# {"at":"2026-11-27T00:26:25.046Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/internal/metrics, GET} route"}
+# {"at":"2026-11-27T00:26:25.046Z","level":"info","context":"RoutesResolver","message":"IdentityController {/api/v1}:"}
+# {"at":"2026-11-27T00:26:25.047Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/register, POST} route"}
+# {"at":"2026-11-27T00:26:25.047Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/login, POST} route"}
+# {"at":"2026-11-27T00:26:25.048Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/refresh, POST} route"}
+# {"at":"2026-11-27T00:26:25.048Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/auth/logout, POST} route"}
+# {"at":"2026-11-27T00:26:25.048Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/me, GET} route"}
+# {"at":"2026-11-27T00:26:25.048Z","level":"info","context":"RoutesResolver","message":"OrganizationsController {/api/v1/organizations}:"}
+# {"at":"2026-11-27T00:26:25.049Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations, POST} route"}
+# {"at":"2026-11-27T00:26:25.049Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId, GET} route"}
+# {"at":"2026-11-27T00:26:25.050Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/members, GET} route"}
+# {"at":"2026-11-27T00:26:25.050Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/members, POST} route"}
+# {"at":"2026-11-27T00:26:25.050Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/members/:userId, PATCH} route"}
+# {"at":"2026-11-27T00:26:25.050Z","level":"info","context":"RoutesResolver","message":"GovernanceController {/api/v1}:"}
+# {"at":"2026-11-27T00:26:25.051Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/staff-invitations, POST} route"}
+# {"at":"2026-11-27T00:26:25.051Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/staff-invitations, GET} route"}
+# {"at":"2026-11-27T00:26:25.051Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/staff-invitations/:invitationId/revoke, POST} route"}
+# {"at":"2026-11-27T00:26:25.051Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/me/staff-invitations/accept, POST} route"}
+# {"at":"2026-11-27T00:26:25.052Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/me/staff-invitations/decline, POST} route"}
+# {"at":"2026-11-27T00:26:25.052Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/booking-consents, POST} route"}
+# {"at":"2026-11-27T00:26:25.053Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/booking-consents/me, GET} route"}
+# {"at":"2026-11-27T00:26:25.053Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/booking-consents/:consentId/revoke, POST} route"}
+# {"at":"2026-11-27T00:26:25.053Z","level":"info","context":"RoutesResolver","message":"CatalogController {/api/v1/organizations/:orgId}:"}
+# {"at":"2026-11-27T00:26:25.053Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/branches, POST} route"}
+# {"at":"2026-11-27T00:26:25.053Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/branches, GET} route"}
+# {"at":"2026-11-27T00:26:25.053Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/services, POST} route"}
+# {"at":"2026-11-27T00:26:25.054Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/services, GET} route"}
+# {"at":"2026-11-27T00:26:25.054Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/resources, POST} route"}
+# {"at":"2026-11-27T00:26:25.054Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/resources, GET} route"}
+# {"at":"2026-11-27T00:26:25.054Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/business-hours, POST} route"}
+# {"at":"2026-11-27T00:26:25.054Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/business-hours, GET} route"}
+# {"at":"2026-11-27T00:26:25.054Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/business-hours/:hourId, PATCH} route"}
+# {"at":"2026-11-27T00:26:25.054Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/schedule-exceptions, POST} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/schedule-exceptions, GET} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/schedule-exceptions/:exceptionId, PATCH} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RoutesResolver","message":"StaffSessionController {/api/v1/organizations/:orgId/sessions}:"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions, POST} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions, GET} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId, GET} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/publish, POST} route"}
+# {"at":"2026-11-27T00:26:25.055Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/cancel, POST} route"}
+# {"at":"2026-11-27T00:26:25.056Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/finish, POST} route"}
+# {"at":"2026-11-27T00:26:25.056Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/capacity, PATCH} route"}
+# {"at":"2026-11-27T00:26:25.056Z","level":"info","context":"RoutesResolver","message":"PublicSessionController {/api/v1/public/organizations/:orgId/sessions}:"}
+# {"at":"2026-11-27T00:26:25.056Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/public/organizations/:orgId/sessions, GET} route"}
+# {"at":"2026-11-27T00:26:25.056Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/public/organizations/:orgId/sessions/:sessionId, GET} route"}
+# {"at":"2026-11-27T00:26:25.056Z","level":"info","context":"RoutesResolver","message":"BookingController {/api/v1/organizations/:orgId}:"}
+# {"at":"2026-11-27T00:26:25.056Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/sessions/:sessionId/bookings, POST} route"}
+# {"at":"2026-11-27T00:26:25.057Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/bookings/me, GET} route"}
+# {"at":"2026-11-27T00:26:25.057Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/bookings/:bookingId/cancel, POST} route"}
+# {"at":"2026-11-27T00:26:25.057Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/bookings/:bookingId/attendance, POST} route"}
+# {"at":"2026-11-27T00:26:25.058Z","level":"info","context":"RoutesResolver","message":"ReportingController {/api/v1/organizations/:orgId/reports}:"}
+# {"at":"2026-11-27T00:26:25.058Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/organizations/:orgId/reports/occupancy, GET} route"}
+# {"at":"2026-11-27T00:26:25.058Z","level":"info","context":"RoutesResolver","message":"HealthController {/api/v1/health}:"}
+# {"at":"2026-11-27T00:26:25.058Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/health/live, GET} route"}
+# {"at":"2026-11-27T00:26:25.058Z","level":"info","context":"RouterExplorer","message":"Mapped {/api/v1/health/ready, GET} route"}
+# {"at":"2026-11-27T00:26:25.061Z","level":"info","context":"NestApplication","message":"Nest application successfully started"}
+# {"at":"2026-11-27T00:26:25.108Z","level":"info","event":"http_response","requestId":"c18fcbea-591b-458b-8491-dc002fad9622","method":"GET","route":"/api/v1/internal/metrics","status":401,"durationMs":8.12}
+# {"at":"2026-11-27T00:26:25.123Z","level":"info","event":"http_response","requestId":"39f3041b-4da0-4d68-be5a-4da1a340bc0b","method":"GET","route":"/api/v1/internal/metrics","status":401,"durationMs":1.28}
+# {"at":"2026-11-27T00:26:25.129Z","level":"info","event":"http_response","requestId":"67d9599a-9b43-4887-bdb5-efa85ce472bb","method":"GET","route":"/api/v1/internal/metrics","status":200,"durationMs":3.43}
+# {"at":"2026-11-27T00:26:25.148Z","level":"info","event":"http_response","requestId":"c5fdaff2-af1d-4a6f-8745-3ecd932fcfc5","method":"GET","route":"/api/v1/health/live","status":200,"durationMs":2.15}
+# Subtest: private monitoring is fail-closed, cardinality safe, and health honors draining (Nest HTTP)
+ok 114 - private monitoring is fail-closed, cardinality safe, and health honors draining (Nest HTTP)
+  ---
+  duration_ms: 1024.3435
+  type: 'test'
+  ...
+# Subtest: route labels accept template names only and reject raw UUID routes
+ok 115 - route labels accept template names only and reject raw UUID routes
+  ---
+  duration_ms: 2.7455
+  type: 'test'
+  ...
+# Subtest: status classes are bounded and do not reveal raw response data
+ok 116 - status classes are bounded and do not reveal raw response data
+  ---
+  duration_ms: 0.4253
+  type: 'test'
+  ...
+# Subtest: structured field redaction removes secret keys, untrusted text and PII
+ok 117 - structured field redaction removes secret keys, untrusted text and PII
+  ---
+  duration_ms: 1.1405
+  type: 'test'
+  ...
+# Subtest: request metrics measure actual samples and do not expose full path IDs
+ok 118 - request metrics measure actual samples and do not expose full path IDs
+  ---
+  duration_ms: 25.1011
+  type: 'test'
+  ...
+# Subtest: histogram has cumulative buckets, finite sum and correct count
+ok 119 - histogram has cumulative buckets, finite sum and correct count
+  ---
+  duration_ms: 2.0664
+  type: 'test'
+  ...
+# Subtest: metrics operational events are finite and predefined, never a user label
+ok 120 - metrics operational events are finite and predefined, never a user label
+  ---
+  duration_ms: 0.6333
+  type: 'test'
+  ...
+# Subtest: high-cardinality labels are capped and active gauge never underflows
+ok 121 - high-cardinality labels are capped and active gauge never underflows
+  ---
+  duration_ms: 6.7398
+  type: 'test'
+  ...
+# Subtest: capacity 1 accepts only one confirmed and 99 documented SESSION_FULL
+ok 122 - capacity 1 accepts only one confirmed and 99 documented SESSION_FULL
+  ---
+  duration_ms: 3.1464
+  type: 'test'
+  ...
+# Subtest: capacity 20 requires 20 successes and 80 documented rejections
+ok 123 - capacity 20 requires 20 successes and 80 documented rejections
+  ---
+  duration_ms: 0.9076
+  type: 'test'
+  ...
+# Subtest: technical HTTP 503 is rejected even when status counts look successful
+ok 124 - technical HTTP 503 is rejected even when status counts look successful
+  ---
+  duration_ms: 2.7245
+  type: 'test'
+  ...
+# Subtest: unknown 409 and 429 are not acceptable business rejection
+ok 125 - unknown 409 and 429 are not acceptable business rejection
+  ---
+  duration_ms: 1.095
+  type: 'test'
+  ...
+# Subtest: missing responses, missing success body and count deviations fail closed
+ok 126 - missing responses, missing success body and count deviations fail closed
+  ---
+  duration_ms: 0.7675
+  type: 'test'
+  ...
+# Subtest: monitor network allowlist ignores forwarded header and IPv4-mapped IPv6 works
+ok 127 - monitor network allowlist ignores forwarded header and IPv4-mapped IPv6 works
+  ---
+  duration_ms: 3.5336
+  type: 'test'
+  ...
+# Subtest: monitor key requires exact secret with constant length digest comparison
+ok 128 - monitor key requires exact secret with constant length digest comparison
+  ---
+  duration_ms: 1.8698
+  type: 'test'
+  ...
+# Subtest: DRAFT may publish or cancel, not finish
+ok 129 - DRAFT may publish or cancel, not finish
+  ---
+  duration_ms: 1.5481
+  type: 'test'
+  ...
+# Subtest: PUBLISHED may finish or cancel, not republish
+ok 130 - PUBLISHED may finish or cancel, not republish
+  ---
+  duration_ms: 0.4901
+  type: 'test'
+  ...
+# Subtest: terminal Session states forbid every transition
+ok 131 - terminal Session states forbid every transition
+  ---
+  duration_ms: 0.353
+  type: 'test'
+  ...
+# Subtest: capacity validation rejects below committed, negative and overflow
+ok 132 - capacity validation rejects below committed, negative and overflow
+  ---
+  duration_ms: 0.3888
+  type: 'test'
+  ...
+# Subtest: future half-open intervals require an ordered duration <= 24h
+ok 133 - future half-open intervals require an ordered duration <= 24h
+  ---
+  duration_ms: 0.498
+  type: 'test'
+  ...
+# Subtest: buffer extension applies to both sides without modifying occurrence
+ok 134 - buffer extension applies to both sides without modifying occurrence
+  ---
+  duration_ms: 4.2195
+  type: 'test'
+  ...
+# Subtest: cursor is strict, stable and roundtrips same-start tie break
+ok 135 - cursor is strict, stable and roundtrips same-start tie break
+  ---
+  duration_ms: 0.992
+  type: 'test'
+  ...
+# Subtest: pages enforce strict 31-day windows
+ok 136 - pages enforce strict 31-day windows
+  ---
+  duration_ms: 0.2202
+  type: 'test'
+  ...
+# Subtest: transaction uses one connection BEGIN/config/COMMIT and releases it
+ok 137 - transaction uses one connection BEGIN/config/COMMIT and releases it
+  ---
+  duration_ms: 5.3797
+  type: 'test'
+  ...
+# Subtest: failure before COMMIT rolls back and releases
+ok 138 - failure before COMMIT rolls back and releases
+  ---
+  duration_ms: 1.2389
+  type: 'test'
+  ...
+# Subtest: unknown COMMIT outcome never retried and connection discarded
+ok 139 - unknown COMMIT outcome never retried and connection discarded
+  ---
+  duration_ms: 1.1285
+  type: 'test'
+  ...
+# Subtest: SQLSTATE network vs server ERROR distinction
+ok 140 - SQLSTATE network vs server ERROR distinction
+  ---
+  duration_ms: 0.5271
+  type: 'test'
+  ...
+# Subtest: known commit rejection is propagated, never labeled success
+ok 141 - known commit rejection is propagated, never labeled success
+  ---
+  duration_ms: 0.6792
+  type: 'test'
+  ...
+# Subtest: bounded retry budget rejects invalid values
+ok 142 - bounded retry budget rejects invalid values
+  ---
+  duration_ms: 0.3913
+  type: 'test'
+  ...
+# Subtest: DTO validation rejects unknown properties
+ok 143 - DTO validation rejects unknown properties
+  ---
+  duration_ms: 6.2425
+  type: 'test'
+  ...
+# Subtest: DTO validation rejects invalid and oversized values
+ok 144 - DTO validation rejects invalid and oversized values
+  ---
+  duration_ms: 1.2529
+  type: 'test'
+  ...
+1..144
+# tests 144
+# suites 0
+# pass 129
+# fail 15
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8758.3473
+{"suite":"unit","files":31,"declarations":144,"counts":{"discovered":144,"passed":129,"failed":15,"skipped":0,"cancelled":0},"exit":1,"ok":false}

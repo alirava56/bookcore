@@ -175,14 +175,13 @@ test("the interactive preview fits a 320px viewport", async ({ page }) => {
   await dialog.getByRole("button", { name: "بستن" }).press("Enter");
   await expect(dialog).toBeHidden();
 });
-test("sports cards and common questions expand by keyboard", async ({ page }) => {
+test("sports cards navigate and common questions expand by keyboard", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   const sport = page.locator("#sport-pilates");
-  await sport.locator("summary").press("Enter");
-  await expect(sport.getByText("زمان برگزاری و ظرفیت کلاس‌ها را مشخص کنید.")).toBeVisible();
-  await sport.locator("summary").press("Enter");
-  await expect(sport.getByText("زمان برگزاری و ظرفیت کلاس‌ها را مشخص کنید.")).toBeHidden();
+  await sport.getByRole("link", { name: "یوگا و پیلاتس" }).press("Enter");
+  await expect(page).toHaveURL(/\/solutions\/yoga-pilates$/);
+  await page.goBack();
   const faq = page.locator("#faq");
   await faq.getByText("مدیریت ظرفیت جلسات چگونه انجام می‌شود؟", { exact: true }).press("Enter");
   await expect(faq.getByText(/مجموعه ظرفیت هر جلسه/)).toBeVisible();
@@ -218,8 +217,8 @@ test("gym solution leads on desktop and mobile and its CTA reaches the product",
     await section.screenshot({ path: testInfo.outputPath(`solutions-${width}.png`), animations: "disabled", style: screenshotStyle });
   }
   await gym.getByRole("link", { name: "مشاهده راهکار باشگاه‌ها" }).click();
-  await expect(page).toHaveURL(/#features$/);
-  await expect(page.getByRole("heading", { name: "از اولین رزرو تا آخرین سانس" })).toBeInViewport();
+  await expect(page).toHaveURL(/\/solutions\/gyms$/);
+  await expect(page.getByRole("heading", { level: 1, name: /مدیریت رزرو باشگاه ورزشی/ })).toBeVisible();
 });
 
 

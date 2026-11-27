@@ -1,0 +1,20 @@
+
+> bookcore-backend@0.16.0 test:session-domain:isolated
+> node scripts/test-session-domain-pure.cjs
+
+✔ DRAFT may publish or cancel, not finish (1.155ms)
+✔ PUBLISHED may finish or cancel, not republish (0.1719ms)
+✔ terminal Session states forbid every transition (0.1676ms)
+✔ capacity validation rejects below committed, negative and overflow (0.1771ms)
+✔ future half-open intervals require an ordered duration <= 24h (0.2703ms)
+✔ buffer extension applies to both sides without modifying occurrence (2.4601ms)
+✔ cursor is strict, stable and roundtrips same-start tie break (1.0583ms)
+✔ pages enforce strict 31-day windows (0.2105ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 123.2734

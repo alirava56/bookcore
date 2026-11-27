@@ -4,6 +4,24 @@ export function faNumber(value: number) {
   return numbers.format(value);
 }
 
+export type SampleSession = {
+  id: string;
+  title: string;
+  time: string;
+  end?: string;
+  capacity: number;
+  booked: number;
+};
+
+export type DemoDay = {
+  id: string;
+  title: string;
+  date: string;
+  sessions: readonly [SampleSession, ...SampleSession[]];
+};
+
+export type DemoDays = readonly [DemoDay, ...DemoDay[]];
+
 export const sampleDays = [
   {
     id: "monday",
@@ -25,7 +43,6 @@ export const sampleDays = [
       { id: "evening-training", title: "تمرین گروهی", time: "۱۸:۰۰", capacity: 12, booked: 9 },
     ],
   },
-] as const;
+] as const satisfies DemoDays;
 
-export type SampleSession = (typeof sampleDays)[number]["sessions"][number];
 export const today = sampleDays[0];

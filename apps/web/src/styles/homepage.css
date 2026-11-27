@@ -324,7 +324,7 @@
   display: flex;
   flex-direction: column;
 }
-.solution-tile summary {
+.solution-tile-link {
   position: relative;
   isolation: isolate;
   display: flex;
@@ -335,8 +335,7 @@
   list-style: none;
   cursor: pointer;
 }
-.solution-tile summary::-webkit-details-marker { display: none; }
-.solution-tile summary:focus-visible { outline-offset: -4px; }
+.solution-tile-link:focus-visible { outline-offset: -4px; }
 .solution-art {
   position: absolute;
   z-index: -1;
@@ -349,7 +348,7 @@
   mask-image: linear-gradient(90deg, #000 20%, #0009 44%, transparent 86%);
   transition: transform 240ms var(--motion-ease);
 }
-.solution-tile summary:hover .solution-art { transform: scale(1.025); }
+.solution-tile-link:hover .solution-art { transform: scale(1.025); }
 .solution-secondary-copy { display: block; inline-size: 100%; }
 .solution-label {
   display: block;
@@ -381,15 +380,6 @@
   box-shadow: 0 2px 8px #5d25860b;
   transition: rotate var(--motion-fast);
 }
-.solution-tile[open] .solution-chevron { rotate: -90deg; }
-.solution-detail {
-  padding: 12px 20px;
-  border-block-start: 1px solid #e9dff4;
-  background: #faf7ff;
-  color: #5e4d74;
-  font-size: .875rem;
-  line-height: 1.8;
-}
 @media (min-width: 64rem) {
   .solutions-grid {
     grid-template-columns: minmax(0, 1.76fr) minmax(0, 1fr);
@@ -398,11 +388,11 @@
   }
   .solution-featured-item { grid-row: 1 / span 3; }
   .solution-featured { min-block-size: 0; }
-  .solution-tile summary { min-block-size: 110px; }
+  .solution-tile-link { min-block-size: 110px; }
 }
 @media (min-width: 40rem) and (max-width: 63.999rem) {
   .solution-featured { min-block-size: 520px; }
-  .solution-tile summary { min-block-size: 160px; }
+  .solution-tile-link { min-block-size: 160px; }
   .solution-label { font-size: 1.75rem; }
   .solution-subtitle { font-size: 1rem; }
 }
@@ -425,7 +415,7 @@
   .solution-booking-eyebrow { font-size: .75rem; }
   .solution-booking-time, .solution-booking-availability { font-size: .8125rem; }
   .solution-booking-action.button { min-inline-size: 110px; font-size: .875rem; }
-  .solution-tile summary { min-block-size: 148px; padding-inline-start: 16px; padding-inline-end: 70px; }
+  .solution-tile-link { min-block-size: 148px; padding-inline-start: 16px; padding-inline-end: 70px; }
   .solution-label { font-size: clamp(1.0625rem, 4.6vw, 1.25rem); }
   .solution-subtitle { margin-block-start: 6px; font-size: .75rem; }
   .solution-chevron { left: 12px; inline-size: 42px; block-size: 42px; top: calc(50% - 21px); padding: 10px; }

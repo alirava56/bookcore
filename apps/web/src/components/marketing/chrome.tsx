@@ -2,29 +2,32 @@ import { Accordion } from "../ui/accordion";
 import { ButtonLink } from "../ui/buttons";
 import { Container } from "../ui/layout";
 import { Logo } from "./brand";
-import { features, navLinks } from "./content";
+import { features, marketingHref, navLinks } from "./content";
 import { DemoButton } from "./demo";
 import { MobileNavigation } from "./mobile-navigation";
 
-export function Navbar() {
+export function Navbar({ onSolution = false }: { onSolution?: boolean }) {
   return (
     <header className="site-header">
       <Container className="nav-shell liquid-glass">
         <Logo />
         <nav className="desktop-nav" aria-label="ناوبری اصلی">
-          {navLinks.map(({ href, label }) => <a key={href} href={href} tabIndex={0}>{label}</a>)}
+          {navLinks.map(({ href, label }) => (
+            <a key={href} href={marketingHref(href, onSolution)} tabIndex={0}
+              data-section-active={onSolution && href === "#solutions" ? "" : undefined}>{label}</a>
+          ))}
         </nav>
         <div className="nav-actions">
           <ButtonLink href="#sign-in" variant="quiet" className="desktop-sign-in">ورود</ButtonLink>
           <DemoButton compact />
-          <MobileNavigation />
+          <MobileNavigation onSolution={onSolution} />
         </div>
       </Container>
     </header>
   );
 }
 
-export function Footer() {
+export function Footer({ onSolution = false }: { onSolution?: boolean }) {
   return (
     <footer className="site-footer" id="support" tabIndex={-1}>
       <Container>
@@ -38,15 +41,15 @@ export function Footer() {
           <nav aria-label="امکانات در فوتر" className="footer-links">
             <h2>امکانات</h2>
             <ul role="list">
-              {features.map(({ id, title }) => <li key={id}><a tabIndex={0} href={`#${id}`}>{title}</a></li>)}
+              {features.map(({ id, title }) => <li key={id}><a tabIndex={0} href={marketingHref(`#${id}`, onSolution)}>{title}</a></li>)}
             </ul>
           </nav>
 
           <nav aria-label="راهنمای وقتیمو" className="footer-links">
             <h2>راهنما</h2>
             <ul role="list">
-              <li><a tabIndex={0} href="#solutions">راهکارهای ورزشی</a></li>
-              <li><a tabIndex={0} href="#how-it-works">نحوهٔ کار</a></li>
+              <li><a tabIndex={0} href={marketingHref("#solutions", onSolution)}>راهکارهای ورزشی</a></li>
+              <li><a tabIndex={0} href={marketingHref("#how-it-works", onSolution)}>نحوهٔ کار</a></li>
               <li><a tabIndex={0} href="#faq">سؤالات متداول</a></li>
               <li><a tabIndex={0} href="#support-status">وضعیت پشتیبانی</a></li>
             </ul>
