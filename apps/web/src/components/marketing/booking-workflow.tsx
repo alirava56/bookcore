@@ -1,15 +1,13 @@
-import {
-  Building2,
-  CalendarDays,
-  Check,
-  ChevronDown,
-  ChevronLeft,
-  ChevronUp,
-  MapPin,
-  Plus,
-  UserRound,
-  UsersRound,
-} from "lucide-react";
+import { BuildingOfficeIcon as Building2 } from "@phosphor-icons/react/dist/ssr/BuildingOffice";
+import { CalendarDotsIcon as CalendarDays } from "@phosphor-icons/react/dist/ssr/CalendarDots";
+import { CheckIcon as Check } from "@phosphor-icons/react/dist/ssr/Check";
+import { CaretDownIcon as ChevronDown } from "@phosphor-icons/react/dist/ssr/CaretDown";
+import { CaretLeftIcon as ChevronLeft } from "@phosphor-icons/react/dist/ssr/CaretLeft";
+import { CaretUpIcon as ChevronUp } from "@phosphor-icons/react/dist/ssr/CaretUp";
+import { MapPinIcon as MapPin } from "@phosphor-icons/react/dist/ssr/MapPin";
+import { PlusIcon as Plus } from "@phosphor-icons/react/dist/ssr/Plus";
+import { UserIcon as UserRound } from "@phosphor-icons/react/dist/ssr/User";
+import { UsersIcon as UsersRound } from "@phosphor-icons/react/dist/ssr/Users";
 import { Container, Section, SectionHeading } from "../ui/layout";
 import { steps } from "./content";
 import { faNumber, today } from "./sample-data";
@@ -24,7 +22,7 @@ function SetupPreview() {
     >
       <div className="workflow-profile-heading">
         <span className="workflow-preview-icon">
-          <Building2 size={18} aria-hidden="true" />
+          <Building2 weight="fill" size={18} aria-hidden="true" />
         </span>
         <strong>ثبت مجموعه جدید</strong>
         <span className="workflow-gym-photo" aria-hidden="true" />
@@ -37,17 +35,17 @@ function SetupPreview() {
         <div>
           <dt>نوع مجموعه</dt>
           <dd>باشگاه ورزشی</dd>
-          <ChevronDown size={14} aria-hidden="true" />
+          <ChevronDown weight="fill" size={14} aria-hidden="true" />
         </div>
         <div>
           <dt>شعبه / موقعیت</dt>
           <dd>
-            <MapPin size={14} aria-hidden="true" /> شعبه مرکزی
+            <MapPin weight="fill" size={14} aria-hidden="true" /> شعبه مرکزی
           </dd>
         </div>
       </dl>
       <span className="workflow-preview-action">
-        <Check size={15} aria-hidden="true" />
+        <Check weight="fill" size={15} aria-hidden="true" />
         ثبت مجموعه
       </span>
     </div>
@@ -58,7 +56,7 @@ function SchedulePreview() {
   return (
     <div className="workflow-preview-card workflow-session">
       <div className="workflow-session-heading">
-        <CalendarDays size={18} aria-hidden="true" />
+        <CalendarDays weight="fill" size={18} aria-hidden="true" />
         <strong>تنظیم جلسه کلاس گروهی</strong>
       </div>
       <dl className="workflow-fields">
@@ -69,24 +67,24 @@ function SchedulePreview() {
         <div>
           <dt>زمان برگزاری</dt>
           <dd>
-            <CalendarDays size={13} aria-hidden="true" />
+            <CalendarDays weight="fill" size={13} aria-hidden="true" />
             {today.title}، <bdi>{session.time}</bdi>
           </dd>
         </div>
         <div>
           <dt>ظرفیت</dt>
           <dd>
-            <UsersRound size={13} aria-hidden="true" />
+            <UsersRound weight="fill" size={13} aria-hidden="true" />
             {faNumber(session.capacity)} نفر
           </dd>
           <span className="workflow-steppers" aria-hidden="true">
-            <ChevronUp size={11} />
-            <ChevronDown size={11} />
+            <ChevronUp weight="fill" size={11} />
+            <ChevronDown weight="fill" size={11} />
           </span>
         </div>
       </dl>
       <span className="workflow-preview-action">
-        <Plus size={15} aria-hidden="true" />
+        <Plus weight="fill" size={15} aria-hidden="true" />
         افزودن جلسه
       </span>
     </div>
@@ -98,7 +96,7 @@ function BookingPreview() {
     <div className="workflow-preview-card workflow-bookings">
       <div className="workflow-confirmation">
         <span className="workflow-preview-icon">
-          <Check size={23} aria-hidden="true" />
+          <Check weight="fill" size={23} aria-hidden="true" />
         </span>
         <div>
           <strong>رزرو با موفقیت ثبت شد</strong>
@@ -109,13 +107,13 @@ function BookingPreview() {
       </div>
       <div className="workflow-booking-list">
         <p className="workflow-booking-list-heading">
-          <UsersRound size={15} aria-hidden="true" />
+          <UsersRound weight="fill" size={15} aria-hidden="true" />
           رزروهای این جلسه ({faNumber(session.capacity)} نفر)
         </p>
         {["سارا محمدی", "علی رضایی", "مریم نادری"].map((name) => (
           <div className="workflow-booking-row" key={name}>
             <span className="workflow-member-icon">
-              <UserRound size={13} aria-hidden="true" />
+              <UserRound weight="fill" size={13} aria-hidden="true" />
             </span>
             <span>{name}</span>
             <span className="workflow-booking-status">ثبت‌شده</span>
@@ -175,7 +173,7 @@ export function BookingWorkflow() {
                 </div>
                 {id !== "booking" && (
                   <span className="workflow-connector" aria-hidden="true">
-                    <ChevronLeft size={20} />
+                    <ChevronLeft weight="fill" size={20} />
                   </span>
                 )}
               </li>

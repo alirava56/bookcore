@@ -1,6 +1,8 @@
 "use client";
 
-import { CalendarDays, Check, Play } from "lucide-react";
+import { CalendarDotsIcon as CalendarDays } from "@phosphor-icons/react/dist/ssr/CalendarDots";
+import { CheckIcon as Check } from "@phosphor-icons/react/dist/ssr/Check";
+import { PlayIcon as Play } from "@phosphor-icons/react/dist/ssr/Play";
 import { createContext, useContext, useRef, useState, type ReactNode } from "react";
 import { Button } from "../ui/buttons";
 import { EmptyState } from "../ui/feedback";
@@ -44,7 +46,7 @@ function DemoSchedule({ days }: { days: DemoDays }) {
       <div className="demo-selection" aria-live="polite">
         {selected ? (
           <div className="demo-detail">
-            <span className="dashboard-check"><Check size={19} aria-hidden="true" /></span>
+            <span className="dashboard-check"><Check weight="fill" size={19} aria-hidden="true" /></span>
             <div>
               <strong>پیش‌نمایش رزرو {selected.title}</strong>
               <p>{day.date}، ساعت <bdi>{selected.time}</bdi> · {faNumber(selected.capacity - selected.booked)} جای خالی</p>
@@ -78,19 +80,20 @@ export function DemoProvider({ children, days = sampleDays }: { children: ReactN
   );
 }
 
-export function DemoButton({ inverted = false, compact = false, showIcon = true, className = "", children }: {
+export function DemoButton({ inverted = false, compact = false, showIcon = true, className = "", prepareOpen, children }: {
   inverted?: boolean;
   compact?: boolean;
   showIcon?: boolean;
   className?: string;
+  prepareOpen?: () => HTMLButtonElement | null;
   children?: ReactNode;
 }) {
   const open = useContext(DemoContext);
   const Icon = inverted ? CalendarDays : Play;
   return (
     <Button variant={inverted ? "secondary" : "primary"} className={`${compact ? "button-compact" : ""} ${className}`}
-      onClick={(event) => open(event.currentTarget)} aria-haspopup="dialog" aria-controls={demoId}>
-      {showIcon && <Icon size={17} aria-hidden="true" />}{children ?? "مشاهده دمو"}
+      onClick={(event) => open(prepareOpen?.() ?? event.currentTarget)} aria-haspopup="dialog" aria-controls={demoId}>
+      {showIcon && <Icon weight="fill" size={17} aria-hidden="true" />}{children ?? "مشاهده دمو"}
     </Button>
   );
 }

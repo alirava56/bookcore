@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { CaretDownIcon as ChevronDown } from "@phosphor-icons/react/dist/ssr/CaretDown";
 import { useId, type ComponentPropsWithRef, type ReactNode } from "react";
 
 type FieldDetails = { label: string; hint?: string; error?: string; loading?: boolean };
@@ -56,7 +56,7 @@ export function Select({ label, hint, error, loading, id, disabled, "aria-descri
   return <Field {...{ label, hint, error, loading }} id={control.id}>
     <div className="ui-select">
       <select {...props} {...control} disabled={disabled || loading}>{children}</select>
-      {!props.multiple && (!props.size || props.size === 1) && <ChevronDown size={18} aria-hidden="true" />}
+      {!props.multiple && (!props.size || props.size === 1) && <ChevronDown weight="fill" size={18} aria-hidden="true" />}
     </div>
   </Field>;
 }

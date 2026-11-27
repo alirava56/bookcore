@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, CalendarDays, ChevronLeft } from "lucide-react";
+import { ArrowLeftIcon as ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
+import { CalendarDotsIcon as CalendarDays } from "@phosphor-icons/react/dist/ssr/CalendarDots";
+import { CaretLeftIcon as ChevronLeft } from "@phosphor-icons/react/dist/ssr/CaretLeft";
 import { ButtonLink } from "../ui/buttons";
 import { Container, Section, SectionHeading } from "../ui/layout";
 import { solutions } from "./content";
@@ -14,7 +16,7 @@ function BookingSample() {
   return (
     <aside className="solution-booking-sample" aria-label="نمونهٔ رزرو باشگاه">
       <span className="solution-booking-calendar" aria-hidden="true">
-        <CalendarDays size={22} />
+        <CalendarDays weight="fill" size={22} />
       </span>
       <p className="solution-booking-eyebrow">نمونهٔ رزرو</p>
       <h4>{session.title}</h4>
@@ -63,7 +65,7 @@ export function SolutionsSection() {
                 <p className="solution-featured-description">{gym.subtitle}</p>
                 <ButtonLink href={`/solutions/${gym.slug}`} className="solution-featured-action">
                   مشاهده راهکار باشگاه‌ها
-                  <ArrowLeft size={24} aria-hidden="true" />
+                  <ArrowLeft weight="fill" size={24} aria-hidden="true" />
                 </ButtonLink>
               </div>
             </article>
@@ -84,7 +86,7 @@ export function SolutionsSection() {
                     <strong className="solution-label">{title}</strong>
                     <span className="solution-subtitle">{subtitle}</span>
                   </span>
-                  <ChevronLeft className="solution-chevron" size={21} aria-hidden="true" />
+                  <ChevronLeft weight="fill" className="solution-chevron" size={21} aria-hidden="true" />
                 </Link>
               </div>
             </li>

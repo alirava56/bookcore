@@ -48,7 +48,7 @@ for (const [width, height] of viewports) {
     expect(geometry.brokenAnchors).toEqual([]);
     expect(geometry.overflowingText).toEqual([]);
     expect(geometry.smallControls).toEqual([]);
-    for (const image of await page.locator("img").all()) {
+    for (const image of await page.locator("img:visible").all()) {
       await image.scrollIntoViewIfNeeded();
       await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0))
         .toBe(true);
@@ -93,42 +93,157 @@ test("keyboard skip and desktop navigation reach live sections and status", asyn
   await expect(page.getByText("صفحات رسمی قوانین و حریم خصوصی هنوز در دسترس نیستند.")).toBeVisible();
 });
 
-test("mobile drawer supports focus, backdrop, escape, and anchor selection", async ({ page }) => {
+test("mobile drawer supports focus, close button, escape, and anchor selection", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const menu = page.getByRole("button", { name: "باز کردن منو" });
   const drawer = page.getByRole("dialog", { name: "منوی وقتیمو" });
   const close = drawer.getByRole("button", { name: "بستن" });
+  await expect(page.getByRole("banner").getByRole("button", { name: "مشاهده دمو" })).toHaveCount(0);
   await menu.press("Enter");
   await expect(close).toBeFocused();
   await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
+  expect(await drawer.evaluate((panel) => ({
+    horizontal: panel.scrollWidth - panel.clientWidth,
+    vertical: panel.scrollHeight - panel.clientHeight,
+  }))).toEqual({ horizontal: 0, vertical: 0 });
   const duration = await drawer.evaluate((element) => Number.parseFloat(getComputedStyle(element).animationDuration));
   expect(duration).toBeLessThan(0.001);
   await page.keyboard.press("Tab");
-  await expect(drawer.getByRole("link", { name: "امکانات" })).toBeFocused();
+  await expect(drawer.getByRole("link", { name: "خانه", exact: true })).toBeFocused();
   expect((await new axe({ page }).withTags(axeTags).analyze()).violations).toEqual([]);
   await page.keyboard.press("Escape");
   await expect(drawer).toBeHidden();
   await expect(menu).toBeFocused();
   await menu.click();
-  await page.mouse.click(5, 200);
+  expect((await drawer.boundingBox())?.width).toBe(390);
+  await close.click();
   await expect(drawer).toBeHidden();
   await menu.click();
-  await drawer.getByRole("link", { name: "راهکارها" }).click();
+  const solutions = drawer.getByRole("button", { name: "راهکارها", exact: true });
+  const overview = drawer.getByRole("link", { name: "همهٔ راهکارها" });
+  await expect(solutions).toHaveAttribute("aria-expanded", "false");
+  await solutions.press("Enter");
+  await expect(solutions).toHaveAttribute("aria-expanded", "true");
+  await overview.click();
   await expect(drawer).toBeHidden();
   await expect(page).toHaveURL(/#solutions$/);
   await expect(page.locator("#solutions")).toBeFocused();
   await menu.click();
+  await expect(solutions).toHaveAttribute("aria-expanded", "false");
+  await expect(solutions).toHaveAttribute("data-section-active", "");
+  await drawer.getByRole("button", { name: "مشاهده دمو" }).click();
+  await expect(drawer).toBeHidden();
+  await expect(page.getByRole("dialog", { name: "دموی وقتیمو" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(menu).toBeFocused();
+  await menu.click();
   await page.setViewportSize({ width: 1024, height: 844 });
   await expect(page.locator("dialog[open]")).toHaveCount(0);
   await expect(page.getByRole("navigation", { name: "ناوبری اصلی" })).toBeVisible();
+  await expect(page.getByRole("banner").getByRole("button", { name: "مشاهده دمو" })).toBeVisible();
+});
+
+test("the mobile drawer expands industry links and marks the current page", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.goto("/");
+  const menu = page.getByRole("button", { name: "باز کردن منو" });
+  const drawer = page.getByRole("dialog", { name: "منوی وقتیمو" });
+  const solutions = drawer.getByRole("button", { name: "راهکارها", exact: true });
+  const gym = drawer.getByRole("link", { name: "باشگاه‌های ورزشی", exact: true });
+  await menu.click();
+  await expect(gym).toBeHidden();
+  await solutions.press("Enter");
+  await page.keyboard.press("Tab");
+  await expect(gym).toBeFocused();
+  for (const slug of ["gyms", "yoga-pilates", "academies", "pools"]) {
+    const link = drawer.locator(`a[href="/solutions/${slug}"]`);
+    await link.scrollIntoViewIfNeeded();
+    await expect(link).toBeInViewport({ ratio: 0.98 });
+  }
+  await solutions.press("Enter");
+  await expect(gym).toBeHidden();
+  await solutions.click();
+  await gym.click();
+  await expect(page).toHaveURL(/\/solutions\/gyms$/);
+  await expect(drawer).toBeHidden();
+  await menu.click();
+  await expect(solutions).toHaveAttribute("aria-expanded", "false");
+  await expect(solutions).toHaveAttribute("data-section-active", "");
+  await solutions.click();
+  await expect(gym).toHaveAttribute("aria-current", "page");
+});
+
+test("mobile drawer keeps the header and actions visible while the navigation scrolls", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const opener = page.getByRole("button", { name: "باز کردن منو" });
+  const drawer = page.getByRole("dialog", { name: "منوی وقتیمو" });
+  const navigation = drawer.getByRole("navigation", { name: "ناوبری موبایل" });
+  const close = drawer.getByRole("button", { name: "بستن", exact: true });
+  const logo = drawer.locator(".mobile-menu-brand .brand-logo");
+  const demo = drawer.getByRole("button", { name: "مشاهده دمو" });
+  const signin = drawer.getByRole("link", { name: "ورود به حساب" });
+  const fixedControls = [logo, close, demo, signin];
+  const positions = () => Promise.all(fixedControls.map(control => control.boundingBox()));
+
+  for (const viewport of [{ width: 320, height: 568 }, { width: 640, height: 480 }, { width: 390, height: 844 }]) {
+    await page.setViewportSize(viewport);
+    const startScroll = await page.evaluate(() => window.scrollY);
+    await opener.click();
+    await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
+    const original = await positions();
+    const toggle = navigation.getByRole("button", { name: "راهکارها", exact: true });
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+
+    const navigated = await navigation.evaluate(element => {
+      element.scrollTop = element.scrollHeight;
+      return { scrolled: element.scrollTop > 0, horizontal: element.scrollWidth - element.clientWidth };
+    });
+    expect(navigated).toEqual({ scrolled: true, horizontal: 0 });
+    await expect(navigation.getByRole("link", { name: "سؤالات متداول" })).toBeInViewport({ ratio: 0.98 });
+    expect(await positions()).toEqual(original);
+    for (const control of fixedControls) await expect(control).toBeInViewport({ ratio: 0.98 });
+    expect(await page.evaluate(() => window.scrollY)).toBe(startScroll);
+
+    await close.click();
+    await expect(drawer).toBeHidden();
+    await expect(opener).toBeFocused();
+  }
+});
+
+test("the mobile drawer scrolls to its controls on short screens and with larger text", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const { height, fontSize } of [{ height: 340, fontSize: "100%" }, { height: 568, fontSize: "200%" }]) {
+    await page.setViewportSize({ width: 320, height });
+    await page.goto("/");
+    await page.evaluate(size => { document.documentElement.style.fontSize = size; }, fontSize);
+    await page.getByRole("button", { name: "باز کردن منو" }).click();
+    const drawer = page.getByRole("dialog", { name: "منوی وقتیمو" });
+    await drawer.getByRole("button", { name: "راهکارها", exact: true }).click();
+    const controls = [
+      drawer.getByRole("link", { name: "سؤالات متداول" }),
+      drawer.getByRole("link", { name: "ورود به حساب" }),
+      drawer.getByRole("button", { name: "مشاهده دمو" }),
+      drawer.getByRole("button", { name: "بستن", exact: true }),
+    ];
+    for (const control of controls) {
+      await control.scrollIntoViewIfNeeded();
+      await expect(control).toBeInViewport({ ratio: 0.98 });
+    }
+    expect(await drawer.locator(".ui-overlay-inner").evaluate(element =>
+      element.scrollWidth - element.clientWidth,
+    )).toBe(0);
+  }
 });
 
 test("demo CTAs open the same sample and allow a preview without sending data", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  const triggers = [page.getByRole("banner"), page.locator(".hero"), page.locator(".final-section")]
+  const triggers = [page.locator(".hero"), page.locator(".final-section")]
     .map((section) => section.getByRole("button", { name: "مشاهده دمو" }));
   triggers.push(page.getByRole("complementary", { name: "نمونهٔ رزرو باشگاه" }).getByRole("button", { name: "رزرو جلسه" }));
   const writes: string[] = [];
@@ -161,7 +276,8 @@ test("demo CTAs open the same sample and allow a preview without sending data", 
 test("the interactive preview fits a 320px viewport", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 568 });
   await page.goto("/");
-  await page.getByRole("banner").getByRole("button", { name: "مشاهده دمو" }).click();
+  await page.getByRole("button", { name: "باز کردن منو" }).click();
+  await page.getByRole("dialog", { name: "منوی وقتیمو" }).getByRole("button", { name: "مشاهده دمو" }).click();
   const dialog = page.getByRole("dialog", { name: "دموی وقتیمو" });
   await dialog.getByRole("button", { name: /جلسه با مربی/ }).press("Enter");
   await expect(dialog.getByText("پیش‌نمایش رزرو جلسه با مربی")).toBeVisible();

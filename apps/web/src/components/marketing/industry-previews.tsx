@@ -1,4 +1,10 @@
-import { CalendarDays, Clock3, Dumbbell, Layers3, Volleyball, Waves, Wind } from "lucide-react";
+import { CalendarDotsIcon as CalendarDays } from "@phosphor-icons/react/dist/ssr/CalendarDots";
+import { ClockIcon as Clock3 } from "@phosphor-icons/react/dist/ssr/Clock";
+import { BarbellIcon as Dumbbell } from "@phosphor-icons/react/dist/ssr/Barbell";
+import { StackIcon as Layers3 } from "@phosphor-icons/react/dist/ssr/Stack";
+import { VolleyballIcon as Volleyball } from "@phosphor-icons/react/dist/ssr/Volleyball";
+import { WavesIcon as Waves } from "@phosphor-icons/react/dist/ssr/Waves";
+import { WindIcon as Wind } from "@phosphor-icons/react/dist/ssr/Wind";
 import { Badge } from "../ui/feedback";
 import { industries, type IndustrySlug } from "./industry-content";
 import { CapacityBadge } from "./previews";
@@ -20,7 +26,7 @@ function PoolSchedule() {
     <ul role="list" className="industry-lanes">
       {industries.pools.days[0].sessions.map((session) => (
         <li key={session.id}>
-          <div className="industry-lane-time"><Clock3 size={17} aria-hidden="true" /><SessionTime session={session} /></div>
+          <div className="industry-lane-time"><Clock3 weight="fill" size={17} aria-hidden="true" /><SessionTime session={session} /></div>
           <div className="industry-lane-info">
             <strong>{session.title}</strong>
             <span>{faNumber(session.booked)} از {faNumber(session.capacity)} نفر</span>
@@ -54,7 +60,7 @@ function AcademyAgenda() {
     <div className="industry-agenda">
       {industries.academies.days.map((day) => (
         <div key={day.id}>
-          <h3 className="industry-agenda-day"><CalendarDays size={19} aria-hidden="true" />{day.date}</h3>
+          <h3 className="industry-agenda-day"><CalendarDays weight="fill" size={19} aria-hidden="true" />{day.date}</h3>
           <ul role="list">
             {day.sessions.map((session) => (
               <li key={session.id}>
@@ -74,7 +80,7 @@ function GymRoster() {
   const [training, strength] = industries.gyms.days[0].sessions;
   return (
     <div className="industry-roster">
-      <p className="industry-roster-branch"><Layers3 size={18} aria-hidden="true" />شعبهٔ مرکزی <span>· دوشنبه، ۱۰ آذر</span></p>
+      <p className="industry-roster-branch"><Layers3 weight="fill" size={18} aria-hidden="true" />شعبهٔ مرکزی <span>· دوشنبه، ۱۰ آذر</span></p>
       <div className="industry-class-highlight">
         <div>
           <SessionTime session={training} />

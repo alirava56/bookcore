@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react";
+import { CaretDownIcon as ChevronDown } from "@phosphor-icons/react/dist/ssr/CaretDown";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 export function Accordion({ title, children, contentId, ...props }: ComponentPropsWithoutRef<"details"> & {
@@ -7,7 +7,7 @@ export function Accordion({ title, children, contentId, ...props }: ComponentPro
 }) {
   return (
     <details {...props} className={`ui-accordion ${props.className ?? ""}`}>
-      <summary>{title}<ChevronDown size={16} aria-hidden="true" /></summary>
+      <summary>{title}<ChevronDown weight="fill" size={16} aria-hidden="true" /></summary>
       <div id={contentId} tabIndex={contentId ? -1 : undefined} className="ui-accordion-content">{children}</div>
     </details>
   );

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="distant" x1=".15" y1=".05" x2=".66" y2=".86">
+      <stop stop-color="#f8f3ff"/>
+      <stop offset=".45" stop-color="#e7dcfa"/>
+      <stop offset="1" stop-color="#d1bfee"/>
+    </linearGradient>
+    <linearGradient id="white-cloud" x1=".48" y1=".07" x2=".65" y2=".85">
+      <stop stop-color="#fff"/>
+      <stop offset=".35" stop-color="#f7f1fd"/>
+      <stop offset="1" stop-color="#d9c9ef"/>
+    </linearGradient>
+    <linearGradient id="low-cloud" x1=".05" y1=".12" x2=".77" y2=".91">
+      <stop stop-color="#f0e8fc"/>
+      <stop offset=".54" stop-color="#d8c8f2"/>
+      <stop offset="1" stop-color="#c8b7ef"/>
+    </linearGradient>
+    <radialGradient id="light" cy=".28">
+      <stop stop-color="#fff" stop-opacity=".9"/>
+      <stop offset=".55" stop-color="#fff" stop-opacity=".36"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="shade">
+      <stop stop-color="#b9a1e1" stop-opacity=".29"/>
+      <stop offset="1" stop-color="#b9a1e1" stop-opacity="0"/>
+    </radialGradient>
+    <path id="middle" d="
+      M0 179
+      C14 161 31 153 53 157
+      C64 142 81 132 99 133
+      C117 134 128 143 136 153
+      C146 149 158 150 168 156
+      C181 141 195 135 211 136
+      C213 116 229 101 248 101
+      C259 101 267 105 275 111
+      C282 89 299 75 319 75
+      C326 75 332 77 338 79
+      C346 52 366 39 386 41
+      C392 42 396 44 400 46
+      V240H0Z"/>
+    <path id="front" d="
+      M0 158
+      C10 139 30 124 52 126
+      C69 109 91 106 109 116
+      C128 126 136 142 151 157
+      C175 182 203 195 233 199
+      C263 204 289 191 313 185
+      C332 180 347 181 362 168
+      C373 158 386 151 400 151
+      V240H0Z"/>
+    <clipPath id="middle-edge"><use href="#middle"/></clipPath>
+    <clipPath id="front-edge"><use href="#front"/></clipPath>
+  </defs>
+  <path fill="url(#distant)" d="
+    M0 105
+    C12 87 30 76 50 77
+    C66 77 79 86 86 99
+    C101 91 121 94 133 105
+    C146 116 151 125 170 127
+    C193 128 201 111 222 109
+    C232 91 250 80 271 84
+    C291 87 298 99 313 100
+    C325 100 331 95 339 88
+    C354 76 376 74 400 87
+    V240H0Z"/>
+  <use href="#middle" fill="url(#white-cloud)"/>
+  <g clip-path="url(#middle-edge)">
+    <ellipse fill="url(#shade)" cx="306" cy="133" rx="71" ry="61"/>
+    <ellipse fill="url(#light)" cx="352" cy="65" rx="72" ry="57"/>
+    <ellipse fill="url(#light)" cx="270" cy="106" rx="56" ry="55"/>
+    <ellipse fill="url(#light)" cx="95" cy="143" rx="67" ry="56"/>
+  </g>
+  <use href="#front" fill="url(#low-cloud)"/>
+  <g clip-path="url(#front-edge)">
+    <ellipse fill="url(#light)" cx="59" cy="131" rx="79" ry="62"/>
+    <ellipse fill="url(#shade)" cx="162" cy="226" rx="96" ry="51"/>
+  </g>
+</svg>

@@ -223,9 +223,7 @@
 }
 .ui-overlay::backdrop { background: #16204089; }
 .ui-overlay[open] { animation: overlay-in var(--motion-standard) var(--motion-ease); }
-.ui-drawer[open] { animation-name: drawer-in; }
 @keyframes overlay-in { from { opacity: 0; transform: translateY(.375rem); } }
-@keyframes drawer-in { from { opacity: 0; transform: translateX(1rem); } }
 
 .ui-empty {
   display: flex;

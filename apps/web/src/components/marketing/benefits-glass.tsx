@@ -28,7 +28,7 @@ export function BenefitsGlass() {
         <ul className="values-strip liquid-glass" role="list">
           {values.map(({ icon: Icon, title, description }) => (
             <li key={title}>
-              <span className="benefit-icon"><Icon size={25} strokeWidth={2} aria-hidden="true" /></span>
+              <span className="benefit-icon"><Icon weight="fill" size={25} aria-hidden="true" /></span>
               <div><h2>{title}</h2><p>{description}</p></div>
             </li>
           ))}

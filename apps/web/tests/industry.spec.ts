@@ -47,7 +47,9 @@ for (const { slug, tile, title, session, feature } of pages) {
     await expect(heroDemo).toBeFocused();
 
     await page.getByRole("button", { name: "باز کردن منو" }).click();
-    await expect(page.getByRole("dialog", { name: "منوی وقتیمو" }).getByRole("link", { name: "راهکارها" })).toHaveAttribute("href", "/#solutions");
+    const menu = page.getByRole("dialog", { name: "منوی وقتیمو" });
+    await menu.getByRole("button", { name: "راهکارها", exact: true }).click();
+    await expect(menu.getByRole("link", { name: "همهٔ راهکارها" })).toHaveAttribute("href", "/#solutions");
     await page.keyboard.press("Escape");
     await expect(page.locator(".industry-related a")).toHaveCount(3);
     await expect(page.getByRole("contentinfo").getByRole("link", { name: "نحوهٔ کار" })).toHaveAttribute("href", "/#how-it-works");

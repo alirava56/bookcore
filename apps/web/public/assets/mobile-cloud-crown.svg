@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="lavender" x1=".22" y1="0" x2=".8" y2=".95">
+      <stop stop-color="#fff"/>
+      <stop offset=".5" stop-color="#ebe1fc"/>
+      <stop offset="1" stop-color="#d9ccf3"/>
+    </linearGradient>
+    <linearGradient id="pearl" x1="0" y1=".4" x2=".18" y2=".95">
+      <stop stop-color="#fffeff"/>
+      <stop offset=".49" stop-color="#f8f4fe"/>
+      <stop offset="1" stop-color="#f8f4fe" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="light" cy=".32" r=".7">
+      <stop stop-color="#fff" stop-opacity=".78"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <path id="front" d="
+      M0 206
+      C9 190 23 178 43 173
+      C58 169 66 166 75 151
+      C89 128 109 121 129 124
+      C143 126 152 121 161 107
+      C176 85 201 77 222 83
+      C245 89 250 103 270 105
+      C288 108 303 92 322 88
+      C347 82 360 91 374 92
+      C385 93 391 86 400 77
+      V260H0Z"/>
+    <clipPath id="front-edge"><use href="#front"/></clipPath>
+  </defs>
+  <path fill="url(#lavender)" d="
+    M0 0H400V102
+    C375 121 350 115 331 113
+    C293 110 276 133 241 132
+    C212 131 196 112 174 118
+    C151 124 143 147 119 152
+    C98 157 87 149 71 168
+    C52 190 23 191 0 216Z"/>
+  <use href="#front" fill="url(#pearl)"/>
+  <g clip-path="url(#front-edge)">
+    <ellipse fill="url(#light)" cx="68" cy="157" rx="81" ry="45"/>
+    <ellipse fill="url(#light)" cx="185" cy="106" rx="97" ry="64"/>
+  </g>
+</svg>

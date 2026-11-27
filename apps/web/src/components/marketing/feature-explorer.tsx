@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Building2, CalendarCheck2, Clock3, Dumbbell, UsersRound, Waves } from "lucide-react";
+import { BuildingOfficeIcon as Building2 } from "@phosphor-icons/react/dist/ssr/BuildingOffice";
+import { CalendarCheckIcon as CalendarCheck2 } from "@phosphor-icons/react/dist/ssr/CalendarCheck";
+import { ClockIcon as Clock3 } from "@phosphor-icons/react/dist/ssr/Clock";
+import { BarbellIcon as Dumbbell } from "@phosphor-icons/react/dist/ssr/Barbell";
+import { UsersIcon as UsersRound } from "@phosphor-icons/react/dist/ssr/Users";
+import { WavesIcon as Waves } from "@phosphor-icons/react/dist/ssr/Waves";
 import { Badge } from "../ui/feedback";
 import { features } from "./content";
 import { CapacityBadge } from "./previews";
@@ -55,11 +60,11 @@ function ScheduleCalendar() {
         ))}
       </div>
       <aside id="calendar-selection" className="calendar-selection" aria-live="polite" aria-label="جزئیات جلسهٔ انتخاب‌شده">
-        <span className="workbench-icon"><CalendarCheck2 size={22} aria-hidden="true" /></span>
+        <span className="workbench-icon"><CalendarCheck2 weight="fill" size={22} aria-hidden="true" /></span>
         <p>جلسهٔ انتخاب‌شده</p>
         <h4>{selected.title}</h4>
         <span>{selectedDay.date}</span>
-        <span className="calendar-selection-time"><Clock3 size={15} aria-hidden="true" /><bdi>{selected.time}</bdi></span>
+        <span className="calendar-selection-time"><Clock3 weight="fill" size={15} aria-hidden="true" /><bdi>{selected.time}</bdi></span>
         <CapacityBadge session={selected} />
         <progress max={selected.capacity} value={selected.booked} aria-label={`ظرفیت ${selected.title}`} />
         <span>{faNumber(selected.booked)} رزرو از {faNumber(selected.capacity)} نفر</span>
@@ -75,7 +80,7 @@ function WorkspaceRows({ view }: { view: "branches" | "team" }) {
     <ul className="workbench-rows" role="list">
       {rows.map(({ title, description, icon: Icon, tone }) => (
         <li key={title}>
-          <span className={`workbench-icon workbench-icon--${tone}`}><Icon size={19} aria-hidden="true" /></span>
+          <span className={`workbench-icon workbench-icon--${tone}`}><Icon weight="fill" size={19} aria-hidden="true" /></span>
           <div className="workbench-row-copy"><strong>{title}</strong><span>{description}</span></div>
         </li>
       ))}
@@ -133,7 +138,7 @@ export function FeatureExplorer() {
               window.history.replaceState(null, "", "#" + id);
               setActive(id);
             }}>
-            <span className="feature-option-icon"><Icon size={21} aria-hidden="true" /></span>
+            <span className="feature-option-icon"><Icon weight="fill" size={21} aria-hidden="true" /></span>
             <span className="feature-option-copy"><strong>{title}</strong><span>{description}</span></span>
           </button>
         ))}
@@ -141,8 +146,8 @@ export function FeatureExplorer() {
       <div className="product-stage">
         <section id="feature-preview" className="workbench" aria-labelledby="preview-title">
           <div className="workbench-header">
-            <span><CalendarCheck2 size={19} aria-hidden="true" /> وقتیمو</span>
-            <span className="workbench-context"><Building2 size={15} aria-hidden="true" /> مجموعهٔ ورزشی<Badge tone="info">دادهٔ نمونه</Badge></span>
+            <span><CalendarCheck2 weight="fill" size={19} aria-hidden="true" /> وقتیمو</span>
+            <span className="workbench-context"><Building2 weight="fill" size={15} aria-hidden="true" /> مجموعهٔ ورزشی<Badge tone="info">دادهٔ نمونه</Badge></span>
           </div>
           <div className="workbench-body">
             <div className="workbench-intro">

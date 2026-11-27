@@ -1,6 +1,8 @@
-import {
-  CalendarCheck2, CalendarDays, ChartNoAxesColumnIncreasing, Layers3, UsersRound,
-} from "lucide-react";
+import { CalendarCheckIcon as CalendarCheck2 } from "@phosphor-icons/react/dist/ssr/CalendarCheck";
+import { CalendarDotsIcon as CalendarDays } from "@phosphor-icons/react/dist/ssr/CalendarDots";
+import { ChartBarIcon as ChartNoAxesColumnIncreasing } from "@phosphor-icons/react/dist/ssr/ChartBar";
+import { StackIcon as Layers3 } from "@phosphor-icons/react/dist/ssr/Stack";
+import { UsersIcon as UsersRound } from "@phosphor-icons/react/dist/ssr/Users";
 
 export const navLinks = [
   { href: "#features", label: "امکانات" },

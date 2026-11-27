@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowLeft, ChevronLeft } from "lucide-react";
+import { ArrowDownIcon as ArrowDown } from "@phosphor-icons/react/dist/ssr/ArrowDown";
+import { ArrowLeftIcon as ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
+import { CaretLeftIcon as ChevronLeft } from "@phosphor-icons/react/dist/ssr/CaretLeft";
 import { Accordion } from "../ui/accordion";
 import { ButtonLink } from "../ui/buttons";
 import { Container, Section, SectionHeading } from "../ui/layout";
@@ -20,7 +22,7 @@ function RelatedIndustries({ current }: { current: IndustrySlug }) {
           return (
             <li key={slug}>
               <Link href={`/solutions/${slug}`} prefetch={false}>
-                <Icon size={21} aria-hidden="true" />{industries[slug].name}<ArrowLeft size={18} aria-hidden="true" />
+                <Icon weight="fill" size={21} aria-hidden="true" />{industries[slug].name}<ArrowLeft weight="fill" size={18} aria-hidden="true" />
               </Link>
             </li>
           );
@@ -47,24 +49,24 @@ export function IndustryPage({ slug }: { slug: IndustrySlug }) {
             <nav className="industry-breadcrumb" aria-label="مسیر صفحه">
               <ol role="list">
                 <li><Link href="/" prefetch={false}>خانه</Link></li>
-                <li><ChevronLeft size={15} aria-hidden="true" /><span aria-current="page">{content.name}</span></li>
+                <li><ChevronLeft weight="fill" size={15} aria-hidden="true" /><span aria-current="page">{content.name}</span></li>
               </ol>
             </nav>
             <section className="industry-hero" aria-labelledby="industry-title">
               <div className="industry-hero-copy">
-                <p className="industry-eyebrow"><Icon size={20} aria-hidden="true" />راهکار {content.name}</p>
+                <p className="industry-eyebrow"><Icon weight="fill" size={20} aria-hidden="true" />راهکار {content.name}</p>
                 <h1 id="industry-title">{content.title}</h1>
                 <p className="industry-lead">{content.description}</p>
                 <div className="industry-actions">
                   <DemoButton />
-                  <ButtonLink href="#industry-features" variant="secondary">آشنایی با امکانات <ArrowDown size={17} aria-hidden="true" /></ButtonLink>
+                  <ButtonLink href="#industry-features" variant="secondary">آشنایی با امکانات <ArrowDown weight="fill" size={17} aria-hidden="true" /></ButtonLink>
                 </div>
               </div>
               <figure className="industry-art">
                 <Image src={`/assets/solution-${content.image}-v2.webp`} width={1536} height={1024} alt=""
                   sizes="(max-width: 767px) 92vw, (max-width: 1300px) 46vw, 570px" loading="eager" fetchPriority="high" />
                 <figcaption className="industry-art-caption">
-                  <span className="industry-art-icon"><Icon size={23} aria-hidden="true" /></span>
+                  <span className="industry-art-icon"><Icon weight="fill" size={23} aria-hidden="true" /></span>
                   <span><small>جلسهٔ نمونه · <bdi>{first.time}</bdi></small><strong>{first.title}</strong></span>
                   <span className="industry-art-capacity"><strong>{faNumber(first.capacity - first.booked)}</strong><small>جای خالی</small></span>
                 </figcaption>

@@ -19,8 +19,8 @@ export function Navbar({ onSolution = false }: { onSolution?: boolean }) {
         </nav>
         <div className="nav-actions">
           <ButtonLink href="#sign-in" variant="quiet" className="desktop-sign-in">ورود</ButtonLink>
-          <DemoButton compact />
-          <MobileNavigation onSolution={onSolution} />
+          <DemoButton compact className="desktop-demo" />
+          <MobileNavigation onSolution={onSolution} brand={<Logo closeDrawer showEnglish={false} />} />
         </div>
       </Container>
     </header>
