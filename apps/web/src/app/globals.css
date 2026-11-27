@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/components.css";
+@import "../styles/marketing.css";
+@import "../styles/homepage.css";
+
+@layer base {
+  html {
+    color-scheme: light;
+    scroll-padding-block-start: var(--space-6);
+  }
+
+  body {
+    margin: 0;
+    background: var(--surface);
+    color: var(--text);
+    font: 400 var(--type-body)/var(--leading-normal) var(--font-sans);
+  }
+
+  body:has(dialog[open]) { overflow: hidden; }
+  a { text-decoration: none; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  [tabindex="-1"]:focus:not(:focus-visible) { outline: none; }
+  ::selection { background: #dad7ff; color: var(--brand-ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 4;
+  inset-block-start: var(--space-3);
+  inset-inline-start: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--primary);
+  transform: translateY(-150%);
+}
+.skip-link:focus { transform: none; }
